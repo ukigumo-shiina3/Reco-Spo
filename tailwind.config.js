@@ -1,9 +1,13 @@
 module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        fancy: ['Dancing Script'],
+      },
+    },
   },
   variants: {
     extend: {},
