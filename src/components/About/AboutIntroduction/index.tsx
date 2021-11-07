@@ -1,9 +1,11 @@
+import Link from 'next/link';
+
 import Image from 'next/image';
 
 export const AboutIntroduction: React.VFC = () => {
   return (
     <div>
-      <div className='w-screen block '>
+      <div className='w-screen block  '>
         <Image
           src='/top-pic.png'
           quality={100}
@@ -34,9 +36,11 @@ export const AboutIntroduction: React.VFC = () => {
           Spoは田舎暮らしをしてみたい人と、支援制度を利用して町に住んで欲しいという自治体の願いを結びつけるサイトです。
         </p>
         <div className='flex justify-center my-10'>
-          <button className=' bg-red-400 hover:bg-pink-700 text-white text-xs font-bold py-3 px-3 rounded '>
-            自治体の登録はこちらをクリック
-          </button>
+          <Link href='/admins/signup' passHref>
+            <button className=' bg-red-400 hover:bg-pink-700 text-white text-xs font-bold p-3 rounded '>
+              自治体の登録はこちらをクリック
+            </button>
+          </Link>
         </div>
       </div>
     </div>
