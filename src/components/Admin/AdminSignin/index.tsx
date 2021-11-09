@@ -10,12 +10,12 @@ type Props = {
   children: ReactNode;
 };
 
-export const AdminSignup: React.VFC = () => {
+export const AdminSignin: React.VFC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const HandleSignup = async () => {
-    const { user, data, error } = await supabase.auth.signUp({
+  const HandleSignin = async () => {
+    const { user, data, error } = await supabase.auth.signIn({
       email: email,
       password: password,
     });
@@ -36,10 +36,9 @@ export const AdminSignup: React.VFC = () => {
             alt='管理画面画像'
           />
         </div>
-
         <div className='z-10 w-full rounded overflow-hidden shadow-lg  mr-0 ml-auto md:w-6/12 bg-white'>
           <div className='p-10 ml-10'>
-            <div className='font-bold text-2xl text-center mb-2'>新規登録</div>
+            <div className='font-bold text-2xl text-center mb-2'>ログイン</div>
             <label htmlFor='name' className='flex justify-start pt-10 pb-3'>
               メールアドレス
             </label>
@@ -69,15 +68,22 @@ export const AdminSignup: React.VFC = () => {
               className='w-2/3 p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
             />
 
-            <div className='flex justify-center  pl-4 pb-10'>
+            <div className='flex pl-4 pb-10'>
               <Link href='/admins' passHref>
                 <button
-                  onClick={HandleSignup}
+                  onClick={HandleSignin}
                   className='px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg'
                 >
-                  新規登録
+                  ログイン
                 </button>
               </Link>
+              <div className='mt-10'>
+                {/* <p className='text-sm border-b-2 '>ログイン情報をお忘れですか？</p> */}
+                <Link href='/admins/signup' passHref>
+                  <a className='text-sm border-b-2 pt-2'>新規会員登録はこちら</a>
+                </Link>
+              </div>
+              ;
             </div>
           </div>
         </div>
