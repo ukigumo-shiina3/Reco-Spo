@@ -1,22 +1,16 @@
+import React from 'react';
 import Link from 'next/link';
-
-import Image from 'next/image';
 
 export const AboutIntroduction: React.VFC = () => {
   return (
     <div>
       <div className='w-screen block  '>
-        <Image
+        <img
           src='/top-pic.png'
-          quality={100}
-          width={2000}
-          height={700}
-          objectFit='contain'
-          layout='responsive'
           alt='サイト概要のメイン画像'
+          className='w-full h-40 sm:h-60 md:h-96'
         />
       </div>
-
       {/* Reco Spoとは */}
       <div className='container mx-auto'>
         <h1 className='flex justify-center text-2xl my-10'>Reco Spoとは</h1>
