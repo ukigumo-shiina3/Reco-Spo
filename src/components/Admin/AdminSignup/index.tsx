@@ -20,7 +20,7 @@ export const AdminSignup: React.VFC = () => {
 
   return (
     <div>
-      <div className='flex h-full'>
+      <div className='flex h-screen'>
         <div className='hidden md:block z-0 w-1/2 '>
           <Image
             src='/auth-pic.jpg'
@@ -31,8 +31,8 @@ export const AdminSignup: React.VFC = () => {
           />
         </div>
 
-        <div className='z-10 w-full rounded overflow-hidden shadow-lg  mr-0 ml-auto md:w-1/2 bg-white'>
-          <div className='p-10 mx-10'>
+        <div className='z-10 w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto md:w-1/2 bg-gray-200'>
+          <div className='p-10 my-20 bg-white xs:mx-16 md:mx-32'>
             <div className='font-bold text-2xl text-center mb-2'>新規登録</div>
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
               メールアドレス

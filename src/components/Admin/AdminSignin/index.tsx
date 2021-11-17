@@ -21,7 +21,7 @@ export const AdminSignin: React.VFC = () => {
 
   return (
     <div>
-      <div className='flex'>
+      <div className='flex h-screen'>
         <div className='hidden md:block z-0 w-6/12 '>
           <Image
             src='/auth-pic.jpg'
@@ -31,8 +31,8 @@ export const AdminSignin: React.VFC = () => {
             alt='管理画面画像'
           />
         </div>
-        <div className='z-10 w-full rounded overflow-hidden shadow-lg  mr-0 ml-auto md:w-6/12 bg-white'>
-          <div className='p-10 sm:mx-10'>
+        <div className='z-10 w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto md:w-1/2 bg-gray-200'>
+          <div className='p-10 my-20 bg-white xs:mx-16 sm:mx-32'>
             <div className='font-bold text-2xl text-center mb-2'>ログイン</div>
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
               メールアドレス
@@ -72,7 +72,7 @@ export const AdminSignin: React.VFC = () => {
                   ログイン
                 </button>
               </Link>
-              <div className='mt-10 md:ml-5'>
+              <div className='mt-12 md:ml-5'>
                 {/* <p className='text-sm border-b-2 '>ログイン情報をお忘れですか？</p> */}
                 <Link href='/admins/signup' passHref>
                   <a className='text-sm border-b-2 pt-2'>新規会員登録はこちら</a>
