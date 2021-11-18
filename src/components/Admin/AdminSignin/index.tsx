@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { supabase } from 'src/libs/supabase';
+import { useRouter } from 'next/router';
+import { Session } from '@supabase/supabase-js';
 
-export const AdminSignin: React.VFC = () => {
+type AdminSigninProps = {
+  title: string;
+  button: string;
+  session: Session | null;
+};
+
+export const AdminSignin: React.VFC<AdminSigninProps> = (props, session) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const HandleSignin = async () => {
+  const HandleSignin = useCallback(async () => {
     const { user, data, error } = await supabase.auth.signIn({
       email: email,
       password: password,
@@ -17,12 +25,20 @@ export const AdminSignin: React.VFC = () => {
     console.log(user);
     console.log(data);
     console.log(error);
-  };
+  }, [email, password]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    console.group('useEffect');
+    console.log('session: ', session);
+    console.groupEnd();
+  }, [session]);
 
   return (
     <div>
       <div className='flex h-screen'>
-        <div className='hidden md:block z-0 w-6/12 '>
+        <div className='hidden md:block z-0 w-1/2 '>
           <Image
             src='/auth-pic.jpg'
             layout='fill'
@@ -31,9 +47,9 @@ export const AdminSignin: React.VFC = () => {
             alt='管理画面画像'
           />
         </div>
-        <div className='z-10 w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto md:w-1/2 bg-gray-200'>
-          <div className='p-10 my-20 bg-white xs:mx-16 sm:mx-32'>
-            <div className='font-bold text-2xl text-center mb-2'>ログイン</div>
+        <div className='z-10 h-screen w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto my-auto md:w-1/2 bg-gray-200'>
+          <div className='p-10 sm:p-20 my-20 bg-white xs:mx-16 sm:mx-20'>
+            <div className='font-bold text-2xl text-center mb-2'>{props.title}</div>
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
               メールアドレス
             </label>
@@ -69,7 +85,7 @@ export const AdminSignin: React.VFC = () => {
                   onClick={HandleSignin}
                   className='px-6 py-3 mt-10 mr-4 text-white bg-blue-300 rounded-lg'
                 >
-                  ログイン
+                  {props.button}
                 </button>
               </Link>
               <div className='mt-12 md:ml-5'>
