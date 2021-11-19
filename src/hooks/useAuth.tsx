@@ -18,16 +18,12 @@ const useAuth = (requiresAuth: boolean) => {
       return authSession !== prev ? authSession : prev;
     });
 
-    // if (requiresAuth && !authSession) router.push('/admins/signin');
-    // if (requiresAuth && authSession) router.push('/admins');
-
     const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, session) => {
       console.log('session: ', session);
       setSession(session);
       if (requiresAuth && !session) router.push('/admins/signin');
     });
     console.groupEnd();
-    // session?.user ?? null;
     return () => {
       authListener.unsubscribe();
     };
