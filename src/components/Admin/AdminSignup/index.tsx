@@ -4,7 +4,12 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { supabase } from 'src/libs/supabase';
 
-export const AdminSignup: React.VFC = () => {
+type AdminSignupProps = {
+  title: string;
+  button: string;
+};
+
+export const AdminSignup: React.VFC<AdminSignupProps> = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,8 +37,8 @@ export const AdminSignup: React.VFC = () => {
         </div>
 
         <div className='z-10 w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto md:w-1/2 bg-gray-200'>
-          <div className='p-10 my-20 bg-white xs:mx-16 md:mx-32'>
-            <div className='font-bold text-2xl text-center mb-2'>新規登録</div>
+          <div className='p-10 my-20 bg-white xs:mx-16 md:mx-20'>
+            <div className='font-bold text-2xl text-center mb-2'>{props.title}</div>
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
               メールアドレス
             </label>
@@ -43,7 +48,7 @@ export const AdminSignup: React.VFC = () => {
               value={email}
               id='email'
               onChange={(e) => {
-                setEmail(e.target.value);
+                setEmail(e.target.value.trim());
               }}
               placeholder='reco-spo@gmail.com'
               className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
@@ -57,7 +62,7 @@ export const AdminSignup: React.VFC = () => {
               value={password}
               id='password'
               onChange={(e) => {
-                setPassword(e.target.value);
+                setPassword(e.target.value.trim());
               }}
               placeholder='test1234'
               className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
@@ -69,7 +74,7 @@ export const AdminSignup: React.VFC = () => {
                   onClick={HandleSignup}
                   className='px-6 py-3 mt-10 mx-6 text-white bg-blue-300 rounded-lg'
                 >
-                  新規登録
+                  {props.button}
                 </button>
               </Link>
             </div>
