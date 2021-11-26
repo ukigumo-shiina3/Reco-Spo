@@ -1,6 +1,5 @@
 import NextHeadSeo from 'next-head-seo';
 
-// types
 export type MyPageSeoProps = {
   path: string;
   title?: string;
@@ -20,14 +19,10 @@ export const MyPageSeo: React.FC<MyPageSeoProps> = (props) => {
     noTitleTemplate,
   } = props;
 
-  // Set APP_ROOT_URL on enviroment variables
-  // e.g. APP_ROOT_URL=https://example.com
-  // https://nextjs.org/docs/basic-features/environment-variables
   const APP_ROOT_URL = process.env.NEXT_PUBLIC_APP_ROOT_URL;
 
-  // Absolute page url
   const pageUrl = APP_ROOT_URL + path;
-  // Absolute og image url
+
   const ogImageUrl = APP_ROOT_URL + ogImagePath;
 
   return (
