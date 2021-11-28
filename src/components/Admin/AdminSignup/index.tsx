@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
+import { toast, Toaster } from 'react-hot-toast';
 
 type AdminSignupProps = {
   title: string;
@@ -13,7 +13,7 @@ export const AdminSignup: React.VFC<AdminSignupProps> = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const HandleSignup = async () => {
+  const HandleSignup = useCallback(async () => {
     const { user, data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
@@ -21,7 +21,11 @@ export const AdminSignup: React.VFC<AdminSignupProps> = (props) => {
     console.log(user);
     console.log(data);
     console.log(error);
-  };
+
+    toast.success('新規登録が完了しました', {
+      duration: 1000,
+    });
+  }, [email, password]);
 
   return (
     <div>
@@ -78,6 +82,7 @@ export const AdminSignup: React.VFC<AdminSignupProps> = (props) => {
                 </button>
               </Link>
             </div>
+            <Toaster />
           </div>
         </div>
       </div>
