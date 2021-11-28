@@ -1,15 +1,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
+import { Session } from '@supabase/supabase-js';
+
 import { toast, Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 type AdminSignupProps = {
   title: string;
   button: string;
+  session: Session | null;
 };
 
-export const AdminSignup: React.VFC<AdminSignupProps> = (props) => {
+export const AdminSignup: React.VFC<AdminSignupProps> = (props, session) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,6 +30,14 @@ export const AdminSignup: React.VFC<AdminSignupProps> = (props) => {
       duration: 1000,
     });
   }, [email, password]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    console.group('useEffect');
+    console.log('session: ', session);
+    console.groupEnd();
+  }, [session]);
 
   return (
     <div>
