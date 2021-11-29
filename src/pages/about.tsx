@@ -5,13 +5,15 @@ import { Header } from 'src/components/layout/Header';
 
 const About: NextPage = () => {
   return (
-    <div>
+    <>
       <Header />
       <div className='w-screen block '>
         <Image
-          src='/about-pic.jpg'
+          src='/about-pic.png'
+          quality={100}
           width={2000}
-          height={600}
+          height={700}
+          objectFit='contain'
           layout='responsive'
           alt='サイト概要のメイン画像'
         />
@@ -74,7 +76,7 @@ const About: NextPage = () => {
         </p>
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
