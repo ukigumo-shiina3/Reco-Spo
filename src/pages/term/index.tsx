@@ -4,7 +4,7 @@ import { Header } from 'src/components/layout/Header';
 
 const Term: NextPage = () => {
   return (
-    <div>
+    <>
       <Header />
       <div className='mt-5 mx-10 mb-10 py-8 px-10 sm:mx-20 sm:px-20 rounded-lg bg-gray-200'>
         <h1 className='text-3xl font-bold mb-10'>利用規約</h1>
@@ -222,7 +222,7 @@ const Term: NextPage = () => {
         <p className='text-right'>以上</p>
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
