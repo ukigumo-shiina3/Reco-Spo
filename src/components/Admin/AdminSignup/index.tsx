@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { VFC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { Session } from '@supabase/supabase-js';
-
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 
@@ -13,7 +13,7 @@ type AdminSignupProps = {
   session: Session | null;
 };
 
-export const AdminSignup: React.VFC<AdminSignupProps> = (props, session) => {
+export const AdminSignup: VFC<AdminSignupProps> = (props, session) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -27,7 +27,7 @@ export const AdminSignup: React.VFC<AdminSignupProps> = (props, session) => {
     console.log(error);
 
     toast.success('新規登録が完了しました', {
-      duration: 1000,
+      duration: 3000,
     });
   }, [email, password]);
 
