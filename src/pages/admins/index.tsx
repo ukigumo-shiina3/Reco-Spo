@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
+import type { VFC } from 'react';
 import Link from 'next/link';
 import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
+import { useFileUpload } from 'use-file-upload';
 
 type Props = {
   email: string;
@@ -14,7 +16,7 @@ type Props = {
   group: string;
 };
 
-const ProfileEdit: React.VFC<Props> = (props) => {
+const ProfileEdit: VFC<Props> = (props) => {
   const [prefecture, setPrefecture] = useState('');
   const [group, setGroup] = useState('');
   const [email, setEmail] = useState('');
@@ -40,27 +42,42 @@ const ProfileEdit: React.VFC<Props> = (props) => {
         password: password,
       })
       .eq('id', user.id);
-    console.log({ data, error });
-
     if (error) {
-      console.log(error.message);
-      throw error;
+      alert(error);
     }
+    console.log({ data, error });
 
     toast.success('プロフィールが更新されました', {
       duration: 3000,
     });
   }, [prefecture, group, email, password]);
 
+  const defaultSrc =
+    'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png';
+
+  const [files, selectFiles] = useFileUpload();
+
   return (
-    <div>
+    <>
       <div className='flex h-full bg-gray-200'>
         <Sidebar />
         <div className='bg-white h-full ml-auto mr-auto my-20 px-6 overflow-hidden shadow-lg md:w-2/5 md:px-16'>
           <h1 className='text-center pt-5 mt-5 md:text-2xl'>プロフィール編集</h1>
           <div className='pt-5 mt-5'>
-            <img src='/profile-icon.png' alt='image' className='w-16 h-16 rounded-full' />
-            <p className='text-sm pl-4 mt-2'>変更</p>
+            <img
+              src={files?.source || defaultSrc}
+              alt='preview'
+              className='w-16 h-16 rounded-full'
+            />
+            <button
+              onClick={() =>
+                selectFiles({ accept: 'image/*' }, ({ source, name, size, file }) => {
+                  console.log('Files Selected', { name, size, source, file });
+                })
+              }
+            >
+              <p className='text-sm pl-4 mt-2'>変更</p>
+            </button>
           </div>
           <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
             都道府県
@@ -131,7 +148,7 @@ const ProfileEdit: React.VFC<Props> = (props) => {
           <Toaster />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
