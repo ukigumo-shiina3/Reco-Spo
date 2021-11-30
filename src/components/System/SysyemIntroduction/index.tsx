@@ -1,4 +1,6 @@
-export const SysyemIntroduction: React.VFC = () => {
+import type { VFC } from 'react';
+
+export const SysyemIntroduction: VFC = () => {
   return (
     <div>
       <div className='w-screen block'>

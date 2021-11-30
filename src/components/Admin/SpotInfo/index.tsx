@@ -1,6 +1,14 @@
 import { useState } from 'react';
+import type { VFC } from 'react';
 
-export const SpotInfo: React.VFC = () => {
+type Props = {
+  name: string;
+  title: string;
+  prefecture: string;
+  system: string;
+};
+
+export const SpotInfo: VFC<Props> = (props) => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [prefecture, setPrefecture] = useState('');
@@ -18,7 +26,7 @@ export const SpotInfo: React.VFC = () => {
             value={name}
             id='name'
             onChange={(e) => {
-              setName(e.target.value);
+              setName(e.target.value.trim());
             }}
             placeholder='石川県穴水町'
             className='w-full p-2  rounded-l-md placeholder-gray-500'
@@ -32,7 +40,7 @@ export const SpotInfo: React.VFC = () => {
             value={title}
             id='title'
             onChange={(e) => {
-              setTitle(e.target.value);
+              setTitle(e.target.value.trim());
             }}
             placeholder='自然豊かな穴水町での生活を体験してみませんか'
             className='w-full p-2  rounded-l-md placeholder-gray-500'
@@ -46,7 +54,7 @@ export const SpotInfo: React.VFC = () => {
             value={prefecture}
             id='prefecture'
             onChange={(e) => {
-              setPrefecture(e.target.value);
+              setPrefecture(e.target.value.trim());
             }}
             placeholder='都道府県を選択してください'
             className='w-full p-2  rounded-l-md placeholder-gray-500'
@@ -60,7 +68,7 @@ export const SpotInfo: React.VFC = () => {
             value={system}
             id='system'
             onChange={(e) => {
-              setSystem(e.target.value);
+              setSystem(e.target.value.trim());
             }}
             placeholder='カテゴリを選択してください'
             className='w-full p-2  rounded-l-md placeholder-gray-500'

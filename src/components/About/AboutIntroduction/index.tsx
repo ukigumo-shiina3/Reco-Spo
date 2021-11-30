@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
+import type { VFC } from 'react';
 
-export const AboutIntroduction: React.VFC = () => {
+export const AboutIntroduction: VFC = () => {
   return (
     <div>
       <div className='w-screen block'>

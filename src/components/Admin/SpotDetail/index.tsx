@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import type { VFC } from 'react';
 
-export const SpotDetail: React.VFC = () => {
+export const SpotDetail: VFC = () => {
   const [area, setArea] = useState('');
   const [link, setLink] = useState('');
   const [targetPerson, setTargetPerson] = useState('');

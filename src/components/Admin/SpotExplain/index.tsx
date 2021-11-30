@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import type { VFC } from 'react';
 
-export const SpotExplain: React.VFC = () => {
+export const SpotExplain: VFC = () => {
   const [appeal, setAppeal] = useState('');
 
   return (
@@ -14,7 +15,7 @@ export const SpotExplain: React.VFC = () => {
             value={appeal}
             id='appeal'
             onChange={(e) => {
-              setAppeal(e.target.value);
+              setAppeal(e.target.value.trim());
             }}
             placeholder='世界農業遺産「能登の里山里海」に位置する石川県穴水町は美しい山と海に恵まれ、
             穏やかな時間が流れています。

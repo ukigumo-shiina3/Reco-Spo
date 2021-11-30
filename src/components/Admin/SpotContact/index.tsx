@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import type { VFC } from 'react';
 
-export const SpotContact: React.VFC = () => {
+export const SpotContact: VFC = () => {
   const [area, setArea] = useState('');
   const [link, setLink] = useState('');
   const [targetPerson, setTargetPerson] = useState('');
@@ -19,7 +20,7 @@ export const SpotContact: React.VFC = () => {
             value={area}
             id='area'
             onChange={(e) => {
-              setArea(e.target.value);
+              setArea(e.target.value.trim());
             }}
             placeholder='927-8601'
             className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -33,7 +34,7 @@ export const SpotContact: React.VFC = () => {
             value={link}
             id='link'
             onChange={(e) => {
-              setLink(e.target.value);
+              setLink(e.target.value.trim());
             }}
             placeholder='石川県鳳珠郡穴水町字川島ラの174番地'
             className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -47,7 +48,7 @@ export const SpotContact: React.VFC = () => {
             value={targetPerson}
             id='target_person'
             onChange={(e) => {
-              setTargetPerson(e.target.value);
+              setTargetPerson(e.target.value.trim());
             }}
             placeholder='穴水町観光交流課'
             className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -61,7 +62,7 @@ export const SpotContact: React.VFC = () => {
             value={usageFee}
             id='usageFee'
             onChange={(e) => {
-              setUsageFee(e.target.value);
+              setUsageFee(e.target.value.trim());
             }}
             placeholder='0768-52-3671'
             className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -75,16 +76,11 @@ export const SpotContact: React.VFC = () => {
             value={term}
             id='term'
             onChange={(e) => {
-              setTerm(e.target.value);
+              setTerm(e.target.value.trim());
             }}
             placeholder='test@gmai.com'
             className='w-full p-2 rounded-l-md placeholder-gray-500'
           />
-          <div className='text-center pb-10'>
-            <button className=' px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg'>
-              投稿する
-            </button>
-          </div>
         </div>
       </div>
     </div>
