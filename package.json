@@ -39,6 +39,7 @@
     "react-hook-form": "^7.20.2",
     "react-hot-toast": "^2.1.1",
     "react-icons": "^4.3.1",
+    "react-image-crop": "^9.0.5",
     "styled-components": "^5.3.3",
     "use-file-upload": "^1.0.11"
   },
