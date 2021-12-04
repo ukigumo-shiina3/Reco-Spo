@@ -11,8 +11,8 @@ import { toast, Toaster } from 'react-hot-toast';
 type AdminSigninProps = {
   title: string;
   button: string;
-  // email: string;
-  // password: string;
+  email: string;
+  password: string;
   session: Session | null;
 };
 
@@ -30,9 +30,16 @@ export const AdminSignin: VFC<AdminSigninProps> = (props, session) => {
     console.log(data);
     console.log(error);
 
-    toast.success('ログインが完了しました', {
-      duration: 3000,
-    });
+    if (email == '' || password == '') {
+      toast.error('ログイン情報を入力してください');
+      router.push('/admins/signin');
+    } else {
+      if (data) {
+        toast.success('ログインが完了しました', {
+          duration: 3000,
+        });
+      }
+    }
   }, [email, password]);
 
   const router = useRouter();

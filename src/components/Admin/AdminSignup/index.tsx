@@ -26,9 +26,15 @@ export const AdminSignup: VFC<AdminSignupProps> = (props, session) => {
     console.log(data);
     console.log(error);
 
-    toast.success('新規登録が完了しました', {
-      duration: 3000,
-    });
+    if (email == '' || password == '') {
+      toast.error('新規登録情報を入力してください');
+      router.push('/admins/signup');
+    } else email.length > 3 && password.length > 8;
+    {
+      toast.success('新規登録が完了しました', {
+        duration: 3000,
+      });
+    }
   }, [email, password]);
 
   const router = useRouter();
