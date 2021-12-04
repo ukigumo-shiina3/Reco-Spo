@@ -1,12 +1,10 @@
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { Footer } from 'src/components/layout/Footer';
-import { Header } from 'src/components/layout/Header';
+import { UserLayout } from 'src/components/layout/UserLayout';
 
 const System: NextPage = () => {
   return (
-    <>
-      <Header />
+    <UserLayout>
       <div className='w-screen block'>
         <Image
           src='/system-pic.jpg'
@@ -130,9 +128,7 @@ const System: NextPage = () => {
         <p className='mb-4 text-sm'>・起業・継業、就職、就農などに対しての補助金制度です。</p>
         <p className='mb-4 text-sm'>・漁師や船員など特定の仕事に対しての補助金もあります。</p>
       </div>
-
-      <Footer />
-    </>
+    </UserLayout>
   );
 };
 

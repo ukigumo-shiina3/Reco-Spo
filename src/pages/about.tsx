@@ -1,12 +1,10 @@
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { Footer } from 'src/components/layout/Footer';
-import { Header } from 'src/components/layout/Header';
+import { UserLayout } from 'src/components/layout/UserLayout';
 
 const About: NextPage = () => {
   return (
-    <>
-      <Header />
+    <UserLayout>
       <div className='w-screen block '>
         <Image
           src='/about-pic.png'
@@ -75,8 +73,7 @@ const About: NextPage = () => {
           ・最大5つの画像とアピールポイント、物件詳細、お問い合わせ先の情報を入力できます。
         </p>
       </div>
-      <Footer />
-    </>
+    </UserLayout>
   );
 };
 

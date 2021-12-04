@@ -1,17 +1,14 @@
 import { NextPage } from 'next';
-import { Footer } from 'src/components/layout/Footer';
-import { Header } from 'src/components/layout/Header';
 import { SpotCard } from 'src/components/Spot/SpotCard';
 import { SpotPagination } from 'src/components/Spot/SpotPagination';
+import { UserLayout } from 'src/components/layout/UserLayout';
 
 const Spots: NextPage = () => {
   return (
-    <>
-      <Header />
+    <UserLayout>
       <SpotCard />
       <SpotPagination />
-      <Footer />
-    </>
+    </UserLayout>
   );
 };
 

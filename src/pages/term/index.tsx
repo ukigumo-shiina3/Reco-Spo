@@ -1,11 +1,9 @@
 import { NextPage } from 'next';
-import { Footer } from 'src/components/layout/Footer';
-import { Header } from 'src/components/layout/Header';
+import { UserLayout } from 'src/components/layout/UserLayout';
 
 const Term: NextPage = () => {
   return (
-    <>
-      <Header />
+    <UserLayout>
       <div className='mt-5 mx-10 mb-10 py-8 px-10 sm:mx-20 sm:px-20 rounded-lg bg-gray-200'>
         <h1 className='text-3xl font-bold mb-10'>利用規約</h1>
         <p>
@@ -202,8 +200,7 @@ const Term: NextPage = () => {
         </ol>
         <p className='text-right'>以上</p>
       </div>
-      <Footer />
-    </>
+    </UserLayout>
   );
 };
 

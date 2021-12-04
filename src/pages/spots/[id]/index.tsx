@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { Footer } from 'src/components/layout/Footer';
-import { Header } from 'src/components/layout/Header';
 import { SpotCarousel } from 'src/components/Spot/SpotCarousel/indexl';
 import { SpotShow } from 'src/components/Spot/SpotShow';
+import { UserLayout } from 'src/components/layout/UserLayout';
 
 const SpotsId: NextPage = () => {
   return (
-    <div>
-      <Header />
+    <UserLayout>
       <div className='w-screen block '>
         <Image
           src='/about-pic.png'
@@ -20,12 +18,11 @@ const SpotsId: NextPage = () => {
           alt='サイト概要のメイン画像'
         />
       </div>
-      <div className='px-16 py-8'>
+      <div className='sm:px-16 sm:py-8'>
         <SpotCarousel />
         <SpotShow />
       </div>
-      <Footer />
-    </div>
+    </UserLayout>
   );
 };
 
