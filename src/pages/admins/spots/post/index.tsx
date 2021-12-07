@@ -10,7 +10,16 @@ type Props = {
   // prefecture_id: number;
   // system_id: number;
   appeal: string;
-  test: string;
+  area: string;
+  link: string;
+  target_person: string;
+  usage_fee: string;
+  term: string;
+  postal_code: string;
+  address: string;
+  manager: string;
+  tel: string;
+  email: string;
 };
 
 const SpotsPost: VFC<Props> = (props) => {
@@ -55,14 +64,34 @@ const SpotsPost: VFC<Props> = (props) => {
     });
     console.log({ data, error });
 
-    if (error) {
-      console.log(error.message);
-      throw error;
-    }
-    if (data) {
-      toast.success('投稿に成功しました', {
-        duration: 3000,
-      });
+    if (name.length === 0) {
+      toast.error('スポット名を入力してください');
+    } else if (title.length === 0) {
+      toast.error('スポットタイトルを入力してください');
+    } else if (appeal.length === 0) {
+      toast.error('アピールポイントを入力してください');
+    } else if (area.length === 0) {
+      toast.error('物件所在地を入力してください');
+    } else if (link.length === 0) {
+      toast.error('物件関連リンクを入力してください');
+    } else if (targetPerson.length === 0) {
+      toast.error('対象者を入力してください');
+    } else if (usageFee.length === 0) {
+      toast.error('利用料金を入力してください');
+    } else if (term.length === 0) {
+      toast.error('利用期間を入力してください');
+    } else if (postal_code.length === 0) {
+      toast.error('郵便番号を入力してください');
+    } else if (address.length === 0) {
+      toast.error('住所を入力してください');
+    } else if (manager.length === 0) {
+      toast.error('管理者名を入力してください');
+    } else if (tel.length === 0) {
+      toast.error('電話番号を入力してください');
+    } else if (email.length === 0) {
+      toast.error('メールアドレスを入力してください');
+    } else {
+      toast.success('スポットを登録しました');
     }
   }, [
     name,
@@ -112,7 +141,7 @@ const SpotsPost: VFC<Props> = (props) => {
               <img
                 src='/image-upload.png'
                 alt='画像アップロードアイコン'
-                className='w-hull h-12 sm:h-24'
+                className='w-hull h-18 sm:h-24'
               />
             </div>
 
@@ -248,7 +277,7 @@ const SpotsPost: VFC<Props> = (props) => {
                 />
               </div>
               <div className='mb-5'>
-                <label htmlFor='スポット画像'>利用料</label>
+                <label htmlFor='スポット画像'>利用料金</label>
                 <input
                   type='text'
                   name='usageFee'
@@ -262,7 +291,7 @@ const SpotsPost: VFC<Props> = (props) => {
                 />
               </div>
               <div className='mb-5'>
-                <label htmlFor='スポット画像'>期間</label>
+                <label htmlFor='スポット画像'>利用期間</label>
                 <input
                   type='text'
                   name='term'
