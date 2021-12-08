@@ -44,54 +44,44 @@ const SpotsPost: VFC<Props> = (props) => {
   const HandleSpotPost = useCallback(async () => {
     console.log(user?.id);
 
-    const { data, error } = await supabase.from('spots').insert({
-      name: name,
-      title: title,
-      admin_id: user?.id,
-      // prefecture: prefecture,
-      // system: system,
-      appeal: appeal,
-      area: area,
-      link: link,
-      target_person: targetPerson,
-      usage_fee: usageFee,
-      term: term,
-      postal_code: postal_code,
-      address: address,
-      manager: manager,
-      tel: tel,
-      email: email,
-    });
-    console.log({ data, error });
-
-    if (name.length === 0) {
-      toast.error('スポット名を入力してください');
-    } else if (title.length === 0) {
-      toast.error('スポットタイトルを入力してください');
-    } else if (appeal.length === 0) {
-      toast.error('アピールポイントを入力してください');
-    } else if (area.length === 0) {
-      toast.error('物件所在地を入力してください');
-    } else if (link.length === 0) {
-      toast.error('物件関連リンクを入力してください');
-    } else if (targetPerson.length === 0) {
-      toast.error('対象者を入力してください');
-    } else if (usageFee.length === 0) {
-      toast.error('利用料金を入力してください');
-    } else if (term.length === 0) {
-      toast.error('利用期間を入力してください');
-    } else if (postal_code.length === 0) {
-      toast.error('郵便番号を入力してください');
-    } else if (address.length === 0) {
-      toast.error('住所を入力してください');
-    } else if (manager.length === 0) {
-      toast.error('管理者名を入力してください');
-    } else if (tel.length === 0) {
-      toast.error('電話番号を入力してください');
-    } else if (email.length === 0) {
-      toast.error('メールアドレスを入力してください');
+    if (
+      name === '' ||
+      title === '' ||
+      appeal === '' ||
+      area === '' ||
+      link === '' ||
+      targetPerson === '' ||
+      usageFee === '' ||
+      term === '' ||
+      postal_code === '' ||
+      address === '' ||
+      manager === '' ||
+      tel === '' ||
+      email === ''
+    ) {
+      toast.error('入力されていない項目があります', {});
     } else {
-      toast.success('スポットを登録しました');
+      const { data, error } = await supabase.from('spots').insert({
+        name: name,
+        title: title,
+        admin_id: user?.id,
+        // prefecture: prefecture,
+        // system: system,
+        appeal: appeal,
+        area: area,
+        link: link,
+        target_person: targetPerson,
+        usage_fee: usageFee,
+        term: term,
+        postal_code: postal_code,
+        address: address,
+        manager: manager,
+        tel: tel,
+        email: email,
+      });
+      console.log({ data, error });
+
+      toast.success('スポットを登録しました', {});
     }
   }, [
     name,
