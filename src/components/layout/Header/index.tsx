@@ -1,8 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { VFC } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
 
 export const Header: VFC = () => {
+  const HandleProgress = () => {
+    toast('この機能は現在開発中です', {
+      position: 'top-center',
+      icon: '🚧',
+    });
+  };
+
   return (
     <div>
       <div className='flex justify-center'>
@@ -67,21 +75,24 @@ export const Header: VFC = () => {
             </div>
           </a>
         </Link>
-        <Link href='/map' passHref>
-          <a className='px-2 pb-10 text-sm'>
-            <div className='flex'>
-              <Image
-                src='/map-icon.png'
-                quality={100}
-                width={24}
-                height={24}
-                alt='マップ検索アイコン'
-              />
-              <div className='pl-1 pt-0.5'>マップ検索</div>
-            </div>
-          </a>
-        </Link>
+        {/* <Link href='/map' passHref> */}
+        <a className='px-2 pb-10 text-sm'>
+          <div className='flex'>
+            <Image
+              src='/map-icon.png'
+              quality={100}
+              width={24}
+              height={24}
+              alt='マップ検索アイコン'
+            />
+            <button onClick={HandleProgress} className='pl-1 pt-0.5'>
+              マップ検索
+            </button>
+          </div>
+        </a>
+        {/* </Link> */}
       </div>
+      <Toaster />
     </div>
   );
 };
