@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
@@ -7,8 +7,6 @@ import { toast, Toaster } from 'react-hot-toast';
 type Props = {
   name: string;
   title: string;
-  // prefecture_id: number;
-  // system_id: number;
   appeal: string;
   area: string;
   link: string;
@@ -20,13 +18,30 @@ type Props = {
   manager: string;
   tel: string;
   email: string;
+  prefecture_name: string;
+  system_name: string;
+};
+
+const user = supabase.auth.user();
+
+const getPrefecture = async () => {
+  const { data, error } = await supabase.from('prefectures').select('prefecture_name');
+
+  // const { data, error } = await supabase.from('spots').select('prefecure_id');
+  // if (data) {
+  //   setPrefectureName(data);
+  // }
+
+  if (error) {
+    alert(error);
+  }
+  console.log({ data, error });
 };
 
 const SpotsPost: VFC<Props> = (props) => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
-  // const [prefecture, setPrefecture] = useState('');
-  // const [system, setSystem] = useState('');
+  const [prefecture_name, setPrefectureName] = useState<[]>([]);
   const [appeal, setAppeal] = useState('');
   const [area, setArea] = useState('');
   const [link, setLink] = useState('');
@@ -39,7 +54,17 @@ const SpotsPost: VFC<Props> = (props) => {
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
 
-  const user = supabase.auth.user();
+  const getPrefectureList = useCallback(
+    async (prefecture_name: string) => {
+      const data = await getPrefecture(prefecture_name);
+      setPrefectureName(data);
+    },
+    [setPrefectureName],
+  );
+
+  // useEffect(() => {
+  //   getPrefectureList(prefecture_name);
+  // }, [user, getPrefectureList]);
 
   const HandleSpotPost = useCallback(async () => {
     console.log(user?.id);
@@ -65,8 +90,6 @@ const SpotsPost: VFC<Props> = (props) => {
         name: name,
         title: title,
         admin_id: user?.id,
-        // prefecture: prefecture,
-        // system: system,
         appeal: appeal,
         area: area,
         link: link,
@@ -110,7 +133,7 @@ const SpotsPost: VFC<Props> = (props) => {
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
-            <div className='flex flex-wrap gap-2 mt-5'>
+            <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
               <div className='bg-white w-16 h-16'>
                 <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
               </div>
@@ -150,7 +173,7 @@ const SpotsPost: VFC<Props> = (props) => {
                       setName(e.target.value.trim());
                     }}
                     placeholder='穴水町'
-                    className='w-full p-2  rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-l-md placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
@@ -164,27 +187,27 @@ const SpotsPost: VFC<Props> = (props) => {
                       setTitle(e.target.value.trim());
                     }}
                     placeholder='自然豊かな穴水町での生活を体験してみませんか'
-                    className='w-full p-2  rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-l-md placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
-                  <label htmlFor='prefecture'>都道府県</label>
-                  <input
-                    type='text'
-                    name='prefecture'
-                    // value={prefecture}
-                    id='prefecture'
-                    // onChange={(e) => {
-                    //   setPrefecture(e.target.value.trim());
-                    // }}
+                  <label htmlFor='prefecture_name'>都道府県名</label>
+                  <select
+                    // type='select'
+                    name='prefecture_name'
+                    value={prefecture_name}
+                    id='prefecture_name'
+                    onChange={(e) => {
+                      setPrefectureName(e.target.value.trim());
+                    }}
                     placeholder='都道府県を選択してください'
-                    className='w-full p-2  rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-l-md placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='system'>カテゴリ名</label>
-                  <input
-                    type='text'
+                  <select
+                    // type='select'
                     name='system'
                     // value={system}
                     id='system'
@@ -192,7 +215,7 @@ const SpotsPost: VFC<Props> = (props) => {
                     //   setSystem(e.target.value.trim());
                     // }}
                     placeholder='カテゴリを選択してください'
-                    className='w-full p-2  rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-l-md placeholder-gray-500'
                   />
                 </div>
               </div>
@@ -215,7 +238,7 @@ const SpotsPost: VFC<Props> = (props) => {
             そんな穴水町の暮らしぶりを気軽に体験して頂けるように「短期移住体験住宅」をご用意いたしました。
             空港や駅へのアクセスも良く、暮らしやすい場所で移住体験ができます。
             田舎への移住をお考えの方はこの機会にぜひご利用下さい。'
-                  className='w-full h-24  p-2  rounded-l-md placeholder-gray-500'
+                  className='w-full h-24  p-2 rounded-l-md placeholder-gray-500'
                 />
               </div>
             </div>
@@ -235,7 +258,7 @@ const SpotsPost: VFC<Props> = (props) => {
                     setArea(e.target.value);
                   }}
                   placeholder='石川県穴水町'
-                  className='w-full p-2  rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -249,7 +272,7 @@ const SpotsPost: VFC<Props> = (props) => {
                     setLink(e.target.value);
                   }}
                   placeholder='https://test.com'
-                  className='w-full p-2  rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -263,7 +286,7 @@ const SpotsPost: VFC<Props> = (props) => {
                     setTargetPerson(e.target.value);
                   }}
                   placeholder='町外から当町への移住を希望する人物'
-                  className='w-full p-2  rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -277,7 +300,7 @@ const SpotsPost: VFC<Props> = (props) => {
                     setUsageFee(e.target.value);
                   }}
                   placeholder='無料'
-                  className='w-full p-2  rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -291,7 +314,7 @@ const SpotsPost: VFC<Props> = (props) => {
                     setTerm(e.target.value);
                   }}
                   placeholder='最長７泊８日'
-                  className='w-full p-2  rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md placeholder-gray-500'
                 />
               </div>
             </div>
