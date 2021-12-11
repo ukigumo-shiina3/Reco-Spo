@@ -26,22 +26,16 @@ const user = supabase.auth.user();
 
 const getPrefecture = async () => {
   const { data, error } = await supabase.from('prefectures').select('prefecture_name');
-
-  // const { data, error } = await supabase.from('spots').select('prefecure_id');
-  // if (data) {
-  //   setPrefectureName(data);
-  // }
-
   if (error) {
     alert(error);
   }
-  console.log({ data, error });
+  return data;
 };
 
 const SpotsPost: VFC<Props> = (props) => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
-  const [prefecture_name, setPrefectureName] = useState<[]>([]);
+  const [prefecture_name, setPrefectureName] = useState([]);
   const [appeal, setAppeal] = useState('');
   const [area, setArea] = useState('');
   const [link, setLink] = useState('');
@@ -56,15 +50,15 @@ const SpotsPost: VFC<Props> = (props) => {
 
   const getPrefectureList = useCallback(
     async (prefecture_name: string) => {
-      const data = await getPrefecture(prefecture_name);
-      setPrefectureName(data);
+      const data = await getPrefecture();
+      console.log(data);
     },
     [setPrefectureName],
   );
 
-  // useEffect(() => {
-  //   getPrefectureList(prefecture_name);
-  // }, [user, getPrefectureList]);
+  useEffect(() => {
+    getPrefectureList(prefecture_name);
+  }, [user, getPrefectureList]);
 
   const HandleSpotPost = useCallback(async () => {
     console.log(user?.id);
@@ -192,18 +186,25 @@ const SpotsPost: VFC<Props> = (props) => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefecture_name'>都道府県名</label>
-                  <select
-                    // type='select'
+                  {console.log(prefecture_name)})
+                  {prefecture_name.length === 0 ? null : (
+                    <select className='w-full p-2 rounded-l-md placeholder-gray-500'>
+                      {prefecture_name.map((value) => (
+                        <option>{value['prefecture_name']}</option>
+                      ))}
+
+                      {/* // type='select'
                     name='prefecture_name'
-                    value={prefecture_name}
+                    value={prefecture_name[0]}
                     id='prefecture_name'
                     onChange={(e) => {
                       setPrefectureName(e.target.value.trim());
-                    }}
-                    placeholder='都道府県を選択してください'
-                    className='w-full p-2 rounded-l-md placeholder-gray-500'
-                  />
+                    }} */}
+                      {/* placeholder='都道府県を選択してください' */}
+                    </select>
+                  )}
                 </div>
+                {console.log(prefecture_name)}
                 <div className='mb-5'>
                   <label htmlFor='system'>カテゴリ名</label>
                   <select
