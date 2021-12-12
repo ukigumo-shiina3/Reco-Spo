@@ -48,58 +48,57 @@ const SpotsPost: VFC<Props> = (props) => {
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
 
-  const getPrefectureList = useCallback(
-    async (prefecture_name: string) => {
-      const data = await getPrefecture();
-      console.log(data);
-    },
-    [setPrefectureName],
-  );
+  const fetchPrefectureList = useCallback(async () => {
+    const data: string[] | null = await getPrefecture();
+    setPrefectureName(data || []);
+    // console.log(data);
+  }, [setPrefectureName]);
 
   useEffect(() => {
-    getPrefectureList(prefecture_name);
-  }, [user, getPrefectureList]);
+    fetchPrefectureList();
+  }, [user, fetchPrefectureList]);
 
   const HandleSpotPost = useCallback(async () => {
     console.log(user?.id);
 
-    if (
-      name === '' ||
-      title === '' ||
-      appeal === '' ||
-      area === '' ||
-      link === '' ||
-      targetPerson === '' ||
-      usageFee === '' ||
-      term === '' ||
-      postal_code === '' ||
-      address === '' ||
-      manager === '' ||
-      tel === '' ||
-      email === ''
-    ) {
-      toast.error('入力されていない項目があります', {});
-    } else {
-      const { data, error } = await supabase.from('spots').insert({
-        name: name,
-        title: title,
-        admin_id: user?.id,
-        appeal: appeal,
-        area: area,
-        link: link,
-        target_person: targetPerson,
-        usage_fee: usageFee,
-        term: term,
-        postal_code: postal_code,
-        address: address,
-        manager: manager,
-        tel: tel,
-        email: email,
-      });
-      console.log({ data, error });
+    // if (
+    //   name === '' ||
+    //   title === '' ||
+    //   appeal === '' ||
+    //   area === '' ||
+    //   link === '' ||
+    //   targetPerson === '' ||
+    //   usageFee === '' ||
+    //   term === '' ||
+    //   postal_code === '' ||
+    //   address === '' ||
+    //   manager === '' ||
+    //   tel === '' ||
+    //   email === ''
+    // ) {
+    //   toast.error('入力されていない項目があります', {});
+    // } else {
+    const { data, error } = await supabase.from('spots').insert({
+      name: name,
+      title: title,
+      admin_id: user?.id,
+      appeal: appeal,
+      area: area,
+      link: link,
+      target_person: targetPerson,
+      usage_fee: usageFee,
+      term: term,
+      postal_code: postal_code,
+      address: address,
+      manager: manager,
+      tel: tel,
+      email: email,
+      prefecture_name: prefecture_name,
+    });
+    console.log({ data, error });
 
-      toast.success('スポットを登録しました', {});
-    }
+    toast.success('スポットを登録しました', {});
+    // }
   }, [
     name,
     title,
@@ -115,6 +114,8 @@ const SpotsPost: VFC<Props> = (props) => {
     tel,
     email,
   ]);
+
+  // const handlePrefectureName =
 
   if (user) {
     return (
@@ -186,25 +187,17 @@ const SpotsPost: VFC<Props> = (props) => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefecture_name'>都道府県名</label>
-                  {console.log(prefecture_name)})
-                  {prefecture_name.length === 0 ? null : (
-                    <select className='w-full p-2 rounded-l-md placeholder-gray-500'>
+                  {console.log(prefecture_name)}
+                  {prefecture_name.length == 0 ? null : (
+                    <select>
+                      {/* onChange={handlePrefectureName} */}
                       {prefecture_name.map((value) => (
-                        <option>{value['prefecture_name']}</option>
+                        <option value={value['id']}>{value['prefecture_name']}</option>
                       ))}
-
-                      {/* // type='select'
-                    name='prefecture_name'
-                    value={prefecture_name[0]}
-                    id='prefecture_name'
-                    onChange={(e) => {
-                      setPrefectureName(e.target.value.trim());
-                    }} */}
-                      {/* placeholder='都道府県を選択してください' */}
                     </select>
                   )}
                 </div>
-                {console.log(prefecture_name)}
+                {/* {console.log(prefecture_name)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>カテゴリ名</label>
                   <select
