@@ -18,14 +18,14 @@ type Props = {
   manager: string;
   tel: string;
   email: string;
-  prefecture_name: string;
+  prefectures: string;
   system_name: string;
 };
 
 const user = supabase.auth.user();
 
-const getPrefecture = async () => {
-  const { data, error } = await supabase.from('prefectures').select('prefecture_name');
+const getPrefecturesName = async () => {
+  const { data, error } = await supabase.from('prefectures').select('prefectures');
   if (error) {
     alert(error);
   }
@@ -35,7 +35,7 @@ const getPrefecture = async () => {
 const SpotsPost: VFC<Props> = (props) => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
-  const [prefecture_name, setPrefectureName] = useState([]);
+  const [prefectures, setPrefectures] = useState<{ id: string; name: string }[]>([]);
   const [appeal, setAppeal] = useState('');
   const [area, setArea] = useState('');
   const [link, setLink] = useState('');
@@ -48,15 +48,15 @@ const SpotsPost: VFC<Props> = (props) => {
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
 
-  const fetchPrefectureList = useCallback(async () => {
-    const data: string[] | null = await getPrefecture();
-    setPrefectureName(data || []);
+  const fetchPrefecturesListName = useCallback(async () => {
+    const data: string[] | null = await getPrefecturesName();
+    setPrefectures(data || []);
     // console.log(data);
-  }, [setPrefectureName]);
+  }, [setPrefectures]);
 
   useEffect(() => {
-    fetchPrefectureList();
-  }, [user, fetchPrefectureList]);
+    fetchPrefecturesListName();
+  }, [user, fetchPrefecturesListName]);
 
   const HandleSpotPost = useCallback(async () => {
     console.log(user?.id);
@@ -93,7 +93,7 @@ const SpotsPost: VFC<Props> = (props) => {
       manager: manager,
       tel: tel,
       email: email,
-      prefecture_name: prefecture_name,
+      prefectures: prefectures,
     });
     console.log({ data, error });
 
@@ -114,8 +114,6 @@ const SpotsPost: VFC<Props> = (props) => {
     tel,
     email,
   ]);
-
-  // const handlePrefectureName =
 
   if (user) {
     return (
@@ -186,18 +184,26 @@ const SpotsPost: VFC<Props> = (props) => {
                   />
                 </div>
                 <div className='mb-5'>
-                  <label htmlFor='prefecture_name'>都道府県名</label>
-                  {console.log(prefecture_name)}
-                  {prefecture_name.length == 0 ? null : (
-                    <select>
-                      {/* onChange={handlePrefectureName} */}
-                      {prefecture_name.map((value) => (
-                        <option value={value['id']}>{value['prefecture_name']}</option>
+                  <label htmlFor='prefectures'>都道府県名</label>
+
+                  {/* prefecture_name */}
+                  {prefectures.length == 0 ? null : (
+                    <select
+                      value={prefectures}
+                      onChange={(e) => {
+                        setPrefectures([e.target.value]);
+                      }}
+                      className='w-full p-2 rounded-l-md placeholder-gray-500'
+                    >
+                      {prefectures.map((value) => (
+                        <option key={value} value={value['prefectures']}>
+                          {value['prefectures']}
+                        </option>
                       ))}
                     </select>
                   )}
                 </div>
-                {/* {console.log(prefecture_name)} */}
+                {/* {console.log(prefectures)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>カテゴリ名</label>
                   <select
