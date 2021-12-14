@@ -33,20 +33,20 @@ const getPrefecturesName = async () => {
 };
 
 const SpotsPost: VFC<Props> = (props) => {
-  const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
+  const [name, setName] = useState<String>('');
+  const [title, setTitle] = useState<String>('');
   const [prefectures, setPrefectures] = useState<{ id: string; name: string }[]>([]);
-  const [appeal, setAppeal] = useState('');
-  const [area, setArea] = useState('');
-  const [link, setLink] = useState('');
-  const [targetPerson, setTargetPerson] = useState('');
-  const [usageFee, setUsageFee] = useState('');
-  const [term, setTerm] = useState('');
-  const [postal_code, setPostalCode] = useState('');
-  const [address, setAddress] = useState('');
-  const [manager, setManager] = useState('');
-  const [tel, setTel] = useState('');
-  const [email, setEmail] = useState('');
+  const [appeal, setAppeal] = useState<String>('');
+  const [area, setArea] = useState<String>('');
+  const [link, setLink] = useState<String>('');
+  const [targetPerson, setTargetPerson] = useState<String>('');
+  const [usageFee, setUsageFee] = useState<String>('');
+  const [term, setTerm] = useState<String>('');
+  const [postal_code, setPostalCode] = useState<String>('');
+  const [address, setAddress] = useState<String>('');
+  const [manager, setManager] = useState<String>('');
+  const [tel, setTel] = useState<String>('');
+  const [email, setEmail] = useState<String>('');
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data: string[] | null = await getPrefecturesName();

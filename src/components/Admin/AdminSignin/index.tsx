@@ -9,7 +9,7 @@ import { Session } from '@supabase/supabase-js';
 import { toast, Toaster } from 'react-hot-toast';
 import { AdminAuthLayout } from 'src/components/layout/AdminAuthLayout';
 
-type AdminSigninProps = {
+type Props = {
   title: string;
   button: string;
   email: string;
@@ -17,9 +17,9 @@ type AdminSigninProps = {
   session: Session | null;
 };
 
-export const AdminSignin: VFC<AdminSigninProps> = (props, session) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export const AdminSignin: VFC<Props> = (props, session) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const HandleSignin = useCallback(async () => {
     const { user, data, error } = await supabase.auth.signIn({

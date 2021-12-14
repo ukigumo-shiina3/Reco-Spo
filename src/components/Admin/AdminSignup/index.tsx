@@ -8,15 +8,15 @@ import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { AdminAuthLayout } from 'src/components/layout/AdminAuthLayout';
 
-type AdminSignupProps = {
+type Props = {
   title: string;
   button: string;
   session: Session | null;
 };
 
-export const AdminSignup: VFC<AdminSignupProps> = (props, session) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export const AdminSignup: VFC<Props> = (props, session) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const HandleSignup = useCallback(async () => {
     const { user, data, error } = await supabase.auth.signUp({

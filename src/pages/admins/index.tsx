@@ -7,20 +7,23 @@ import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { useFileUpload } from 'use-file-upload';
+// import Avatar from 'src/components/Avator';
 
 type Props = {
   email: string;
   password: string;
-  image_id: number;
+  avatar_url: string;
   prefecture: string;
   group: string;
 };
 
 const ProfileEdit: VFC<Props> = (props) => {
-  const [prefecture, setPrefecture] = useState('');
-  const [group, setGroup] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [image, setImage] = useState('');
+  const [avatar_url, setAvatarUrl] = useState<string>('');
+  const [prefecture, setPrefecture] = useState<string>('');
+  const [group, setGroup] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const router = useRouter();
   const session = useAuth(true);
@@ -32,24 +35,29 @@ const ProfileEdit: VFC<Props> = (props) => {
     console.log(user?.id);
 
     if (!user) return;
-    const { data, error } = await supabase
-      .from('admins')
-      .update({
-        // image_id: image_id,
-        prefecture: prefecture,
-        group: group,
-        email: email,
-        password: password,
-      })
-      .eq('id', user.id);
-    if (error) {
-      alert(error);
-    }
-    console.log({ data, error });
 
-    toast.success('プロフィールが更新されました', {
-      duration: 3000,
-    });
+    if (avatar_url === '' || prefecture === '' || group === '' || email === '' || password === '') {
+      toast.error('入力されていない項目があります');
+    } else {
+      const { data, error } = await supabase
+        .from('admins')
+        .update({
+          avatar_url: avatar_url,
+          prefecture: prefecture,
+          group: group,
+          email: email,
+          password: password,
+        })
+        .eq('id', user.id);
+      if (error) {
+        alert(error);
+      }
+      console.log({ data, error });
+
+      toast.success('プロフィールが更新されました', {
+        duration: 3000,
+      });
+    }
   }, [prefecture, group, email, password]);
 
   const defaultSrc =
@@ -60,7 +68,7 @@ const ProfileEdit: VFC<Props> = (props) => {
   return (
     <>
       <div className='flex h-full bg-gray-200'>
-        <Sidebar />
+        <Sidebar group={group} />
         <div className='bg-white h-full ml-auto mr-auto my-20 px-6 overflow-hidden shadow-lg md:w-2/5 md:px-16'>
           <h1 className='text-center pt-5 mt-5 md:text-2xl'>プロフィール編集</h1>
           <div className='pt-5 mt-5'>
@@ -69,15 +77,21 @@ const ProfileEdit: VFC<Props> = (props) => {
               alt='preview'
               className='w-16 h-16 rounded-full'
             />
-            <button
-              onClick={() =>
-                selectFiles({ accept: 'image/*' }, ({ source, name, size, file }) => {
-                  console.log('Files Selected', { name, size, source, file });
-                })
+
+            <input
+              type='button'
+              // value='{avatar_url}'
+              onClick={
+                () =>
+                  selectFiles({ accept: 'image/*' }, ({ source, name, size, file }) => {
+                    console.log('Files Selected', { name, size, source, file });
+                  })
+                // onChange={(e) => {
+                //   setAvatarUrl(e.target.value.trim());
+                // }}
               }
-            >
-              <p className='text-sm pl-4 mt-2'>変更</p>
-            </button>
+            />
+            <p className='text-sm pl-4'>変更</p>
           </div>
           <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
             都道府県
@@ -104,7 +118,7 @@ const ProfileEdit: VFC<Props> = (props) => {
             onChange={(e) => {
               setGroup(e.target.value.trim());
             }}
-            placeholder='飽海郡遊佐町'
+            placeholder='遊佐町役場'
             className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
           />
           <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
