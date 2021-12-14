@@ -3,24 +3,7 @@ import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-
-type Props = {
-  name: string;
-  title: string;
-  appeal: string;
-  area: string;
-  link: string;
-  target_person: string;
-  usage_fee: string;
-  term: string;
-  postal_code: string;
-  address: string;
-  manager: string;
-  tel: string;
-  email: string;
-  prefectures: string;
-  system_name: string;
-};
+import { Post } from 'src/types/post';
 
 const user = supabase.auth.user();
 
@@ -32,7 +15,7 @@ const getPrefecturesName = async () => {
   return data;
 };
 
-const SpotsPost: VFC<Props> = (props) => {
+const SpotsPost: VFC<Post> = (props) => {
   const [name, setName] = useState<String>('');
   const [title, setTitle] = useState<String>('');
   const [prefectures, setPrefectures] = useState<{ id: string; name: string }[]>([]);

@@ -1,13 +1,5 @@
 import NextHeadSeo from 'next-head-seo';
-
-export type MyPageSeoProps = {
-  path: string;
-  title?: string;
-  description?: string;
-  ogImagePath?: string;
-  noindex?: boolean;
-  noTitleTemplate?: boolean;
-};
+import { MyPageSeoProps } from 'src/types/seo';
 
 export const MyPageSeo: React.FC<MyPageSeoProps> = (props) => {
   const {

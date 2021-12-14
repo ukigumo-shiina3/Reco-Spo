@@ -3,18 +3,12 @@ import Image from 'next/image';
 import type { VFC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
-import { Session } from '@supabase/supabase-js';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { AdminAuthLayout } from 'src/components/layout/AdminAuthLayout';
+import { Signup } from 'src/types/signup';
 
-type Props = {
-  title: string;
-  button: string;
-  session: Session | null;
-};
-
-export const AdminSignup: VFC<Props> = (props, session) => {
+export const AdminSignup: VFC<Signup> = (props, session) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 

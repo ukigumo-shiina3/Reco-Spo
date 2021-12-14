@@ -7,17 +7,10 @@ import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { useFileUpload } from 'use-file-upload';
+import type { Signin } from 'src/types/signin';
 // import Avatar from 'src/components/Avator';
 
-type Props = {
-  email: string;
-  password: string;
-  avatar_url: string;
-  prefecture: string;
-  group: string;
-};
-
-const ProfileEdit: VFC<Props> = (props) => {
+const ProfileEdit: VFC<Signin> = (props) => {
   // const [image, setImage] = useState('');
   const [avatar_url, setAvatarUrl] = useState<string>('');
   const [prefecture, setPrefecture] = useState<string>('');
