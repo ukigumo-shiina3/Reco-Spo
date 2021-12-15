@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { VFC } from 'react';
 
 export const SysyemIntroduction: VFC = () => {

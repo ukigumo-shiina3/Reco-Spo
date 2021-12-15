@@ -1,19 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState, VFC } from 'react';
 import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { Post } from 'src/types/post';
+import { getPrefecturesName } from 'src/hooks/usePostSelect';
 
 const user = supabase.auth.user();
-
-const getPrefecturesName = async () => {
-  const { data, error } = await supabase.from('prefectures').select('prefectures');
-  if (error) {
-    alert(error);
-  }
-  return data;
-};
 
 const SpotsPost: VFC<Post> = (props) => {
   const [name, setName] = useState<String>('');
