@@ -3,10 +3,18 @@ import Link from 'next/link';
 import type { VFC } from 'react';
 import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
+import { toast, Toaster } from 'react-hot-toast';
 
-export const Sidebar: VFC = () => {
+type Props = {
+  group: string;
+};
+
+export const Sidebar: VFC<Props> = (props) => {
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
+    toast.success('ログアウトが完了しました', {
+      duration: 3000,
+    });
   }, []);
 
   return (
@@ -25,7 +33,12 @@ export const Sidebar: VFC = () => {
           />
           <div className='text-white p-3'>
             <p className='text-xs pb-2 md:text-sm'>ようこそ</p>
-            <p className='text-xs pb-2 md:text-sm'>自治体担当者様</p>
+
+            {props.group ? (
+              <p className='text-xs pb-2 md:text-sm'>{props.group}</p>
+            ) : (
+              <p className='text-xs pb-2 md:text-sm'>自治体担当者様</p>
+            )}
           </div>
         </div>
         <div className='flex flex-col'>
@@ -48,6 +61,7 @@ export const Sidebar: VFC = () => {
             <button onClick={HandleLogout}>ログアウト</button>
           </a>
         </div>
+        <Toaster />
       </div>
     </div>
   );
