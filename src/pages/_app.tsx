@@ -7,7 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <>
       <NextHeadSeo
         og={{
           type: 'article',
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <Component {...pageProps} />
       </ChakraProvider>
-    </div>
+    </>
   );
 }
 
