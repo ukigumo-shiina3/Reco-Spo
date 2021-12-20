@@ -1,4 +1,4 @@
-export type SpotCardSumarry = {
+export type SpotCardSummary = {
   id: number;
   name: string;
   title: string;
