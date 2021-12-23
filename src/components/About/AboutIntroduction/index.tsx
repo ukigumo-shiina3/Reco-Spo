@@ -34,7 +34,7 @@ export const AboutIntroduction: VFC = () => {
         </div>
         <div className='flex justify-center my-10 sm:my-14'>
           <Link href='/admins/signup' passHref>
-            <button className=' bg-red-400 hover:bg-pink-700 text-white text-xs font-bold p-3 rounded sm:text-xl'>
+            <button className=' bg-red-400 hover:bg-pink-700 text-white text-xs font-bold p-4 rounded sm:text-xl sm:p-5'>
               自治体の登録はこちらをクリック
             </button>
           </Link>
