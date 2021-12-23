@@ -17,6 +17,11 @@ type Props = {
   session: Session | null;
 };
 
+export type AdminSignin = {
+  email: string;
+  password: string;
+};
+
 export const AdminSignin: VFC<Props> = (props, session) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -67,7 +72,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
         />
       </div>
       <div className='z-10 h-screen w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto my-auto md:w-1/2 bg-gray-200'>
-        <div className='p-10 md:p-15 my-20  bg-white xs:mx-16 sm:mx-20'>
+        <div className='p-5 my-20 bg-white xs:mx-16 sm:p-15 sm:mx-20'>
           <div className='font-bold text-2xl text-center mb-2'>{props.title}</div>
           <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
             メールアドレス
