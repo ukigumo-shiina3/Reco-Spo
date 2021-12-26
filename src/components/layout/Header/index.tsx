@@ -4,7 +4,7 @@ import type { VFC } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 
 export const Header: VFC = () => {
-  const HandleProgress = () => {
+  const handleProgress = () => {
     toast('この機能は現在開発中です', {
       position: 'top-center',
       icon: '🚧',
@@ -85,7 +85,7 @@ export const Header: VFC = () => {
               height={24}
               alt='マップ検索アイコン'
             />
-            <button onClick={HandleProgress} className='pl-1 pt-0.5'>
+            <button onClick={handleProgress} className='pl-1 pt-0.5'>
               マップ検索
             </button>
           </div>
