@@ -26,7 +26,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const HandleSignin = useCallback(async () => {
+  const handleSignin = useCallback(async () => {
     const { user, data, error } = await supabase.auth.signIn({
       email: email,
       password: password,
@@ -106,7 +106,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
           <div className='flex pr-4 pb-10'>
             <Link href='/admins' passHref>
               <button
-                onClick={HandleSignin}
+                onClick={handleSignin}
                 className='px-5 py-1 mt-10 mr-4 text-white bg-blue-300 rounded-lg'
               >
                 {props.button}
