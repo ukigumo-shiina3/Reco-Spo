@@ -1,5 +1,5 @@
 export type SpotCardSummary = {
-  id: number;
+  id: string;
   name: string;
   title: string;
   area: string;
