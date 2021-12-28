@@ -5,13 +5,34 @@ import NextHeadSeo from 'next-head-seo';
 import { MyPageSeo } from 'src/components/Seo/MyPageSeo';
 import { SpotCard } from 'src/components/Spot/SpotCard';
 import { UserLayout } from 'src/components/layout/UserLayout';
+import { getSpots } from 'src/hooks/useSpotCardSelect';
+import { useCallback, useEffect, useState } from 'react';
+import { Spot } from 'src/types/spot';
+// import { supabase } from 'src/libs/supabase';
 
-const Index: NextPage = () => {
+const Index: NextPage<Pick<Spot, 'id' | 'name' | 'title' | 'area'>> = () => {
+  // const user = supabase.auth.user();
+
+  const [name, setName] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [area, setArea] = useState<string>('');
+
+  const fetchSpot = useCallback(async () => {
+    const data = await getSpots();
+    console.log(data);
+    setName(name);
+    setTitle(title);
+    setArea(area);
+  }, [name, title, area]);
+
+  useEffect(() => {
+    fetchSpot();
+  }, [fetchSpot]);
+
   return (
     <UserLayout>
       <NextHeadSeo
         title='Reco Spo'
-        // canonical='https://example.com/hello'
         og={{
           title: 'Reco Spo',
         }}
@@ -24,7 +45,8 @@ const Index: NextPage = () => {
       />
       <AboutIntroduction />
       <SysyemIntroduction />
-      <SpotCard />
+
+      <SpotCard id={'1'} name={'穴水町'} title={title} area={area} />
     </UserLayout>
   );
 };
