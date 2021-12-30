@@ -4,38 +4,52 @@ import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { Post } from 'src/types/post';
-import { getPrefecturesName } from 'src/hooks/usePostSelect';
+import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
+import { NextPage } from 'next';
+import Account from 'src/components/Profile';
+import { Session } from '@supabase/supabase-js';
 
 const user = supabase.auth.user();
 
-const SpotsPost: VFC<Post> = (props) => {
-  const [name, setName] = useState<String>('');
-  const [title, setTitle] = useState<String>('');
-  const [prefectures, setPrefectures] = useState<{ id: string; name: string }[]>([]);
-  const [appeal, setAppeal] = useState<String>('');
-  const [area, setArea] = useState<String>('');
-  const [link, setLink] = useState<String>('');
-  const [targetPerson, setTargetPerson] = useState<String>('');
-  const [usageFee, setUsageFee] = useState<String>('');
-  const [term, setTerm] = useState<String>('');
-  const [postal_code, setPostalCode] = useState<String>('');
-  const [address, setAddress] = useState<String>('');
-  const [manager, setManager] = useState<String>('');
-  const [tel, setTel] = useState<String>('');
-  const [email, setEmail] = useState<String>('');
+const SpotsPost: NextPage = () => {
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [prefecture_id, setPrefectureId] = useState('');
+  // const [prefectures_name, setPrefecturesName] = useState<{ prefectures_name: string }[]>([]);
+  // const [prefectures_name, setPrefecturesName] = useState<{ id: string; prefectures_name: string }[]>([]);
+  const [prefectures_name, setPrefecturesName] = useState([]);
+  const [appeal, setAppeal] = useState('');
+  const [area, setArea] = useState('');
+  const [link, setLink] = useState('');
+  const [targetPerson, setTargetPerson] = useState('');
+  const [usageFee, setUsageFee] = useState('');
+  const [term, setTerm] = useState('');
+  const [postal_code, setPostalCode] = useState('');
+  const [address, setAddress] = useState('');
+  const [manager, setManager] = useState('');
+  const [tel, setTel] = useState('');
+  const [email, setEmail] = useState('');
+  const [session, setSession] = useState<Session | null>(null);
 
   const fetchPrefecturesListName = useCallback(async () => {
-    const data: string[] | null = await getPrefecturesName();
-    setPrefectures(data || []);
+    const data: string[] | null = await getPrefectures();
+    setPrefecturesName(data || []);
     // console.log(data);
-  }, [setPrefectures]);
+  }, [setPrefecturesName]);
 
   useEffect(() => {
     fetchPrefecturesListName();
   }, [user, fetchPrefecturesListName]);
 
-  const HandleSpotPost = useCallback(async () => {
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
+      setSession(session);
+    });
+  }, []);
+
+  const handleSpotPost = useCallback(async () => {
     console.log(user?.id);
 
     // if (
@@ -70,7 +84,7 @@ const SpotsPost: VFC<Post> = (props) => {
       manager: manager,
       tel: tel,
       email: email,
-      prefectures: prefectures,
+      prefecture_id: prefecture_id,
     });
     console.log({ data, error });
 
@@ -90,6 +104,7 @@ const SpotsPost: VFC<Post> = (props) => {
     manager,
     tel,
     email,
+    prefecture_id,
   ]);
 
   if (user) {
@@ -97,10 +112,11 @@ const SpotsPost: VFC<Post> = (props) => {
       <>
         <div className='flex bg-gray-100 h-full'>
           <Sidebar />
-          <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-16 overflow-hidden shadow-lg '>
+          <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             {/* スポット投稿 */}
             <h1 className='text-3xl mt-24'>スポット投稿</h1>
-            <h2 className='flex mt-5'>
+            {/* <Account key={session.user.id} session={session} /> */}
+            {/* <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
             <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
@@ -126,7 +142,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 alt='画像アップロードアイコン'
                 className='w-hull h-18 sm:h-24'
               />
-            </div>
+            </div> */}
 
             {/* スポット情報 */}
             <div>
@@ -136,9 +152,7 @@ const SpotsPost: VFC<Post> = (props) => {
                   <label htmlFor='name'>スポット名</label>
                   <input
                     type='text'
-                    name='name'
                     value={name}
-                    id='name'
                     onChange={(e) => {
                       setName(e.target.value.trim());
                     }}
@@ -150,9 +164,7 @@ const SpotsPost: VFC<Post> = (props) => {
                   <label htmlFor='title'>スポットタイトル</label>
                   <input
                     type='text'
-                    name='title'
                     value={title}
-                    id='title'
                     onChange={(e) => {
                       setTitle(e.target.value.trim());
                     }}
@@ -161,33 +173,37 @@ const SpotsPost: VFC<Post> = (props) => {
                   />
                 </div>
                 <div className='mb-5'>
-                  <label htmlFor='prefectures'>都道府県名</label>
+                  <label htmlFor='prefectures_name'>都道府県名</label>
+                  {/* {console.log(prefectures_name)} */}
 
-                  {/* prefecture_name */}
-                  {prefectures.length == 0 ? null : (
+                  {prefectures_name.length == 0 ? null : (
                     <select
-                      value={prefectures}
+                      value={prefectures_name}
                       onChange={(e) => {
-                        setPrefectures([e.target.value]);
+                        setPrefectureId(e.target.value);
+                        console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-l-md placeholder-gray-500'
                     >
-                      {prefectures.map((value) => (
-                        <option key={value} value={value['prefectures']}>
-                          {value['prefectures']}
+                      {prefectures_name.map((value) => (
+                        <option key={value} value={value['id']}>
+                          {/* {console.log(value['id'])} */}
+
+                          {value['prefectures_name']}
+                          {/* {console.log(value['prefectures_name'])} */}
                         </option>
                       ))}
                     </select>
                   )}
                 </div>
-                {/* {console.log(prefectures)} */}
+                {/* {console.log(prefectures_name)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>カテゴリ名</label>
                   <select
                     // type='select'
-                    name='system'
+
                     // value={system}
-                    id='system'
+
                     // onChange={(e) => {
                     //   setSystem(e.target.value.trim());
                     // }}
@@ -204,9 +220,7 @@ const SpotsPost: VFC<Post> = (props) => {
               <div className='mb-5'>
                 <label htmlFor='appeal'>アピールポイント</label>
                 <textarea
-                  name='appeal'
                   value={appeal}
-                  id='appeal'
                   onChange={(e) => {
                     setAppeal(e.target.value.trim());
                   }}
@@ -228,9 +242,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='area'>物件所在地</label>
                 <input
                   type='text'
-                  name='area'
                   value={area}
-                  id='area'
                   onChange={(e) => {
                     setArea(e.target.value);
                   }}
@@ -242,9 +254,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='スポット画像'>物件関連リンク</label>
                 <input
                   type='text'
-                  name='link'
                   value={link}
-                  id='link'
                   onChange={(e) => {
                     setLink(e.target.value);
                   }}
@@ -256,9 +266,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='スポット画像'>対象者</label>
                 <input
                   type='text'
-                  name='target_person'
                   value={targetPerson}
-                  id='target_person'
                   onChange={(e) => {
                     setTargetPerson(e.target.value);
                   }}
@@ -270,9 +278,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='スポット画像'>利用料金</label>
                 <input
                   type='text'
-                  name='usageFee'
                   value={usageFee}
-                  id='usageFee'
                   onChange={(e) => {
                     setUsageFee(e.target.value);
                   }}
@@ -284,9 +290,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='スポット画像'>利用期間</label>
                 <input
                   type='text'
-                  name='term'
                   value={term}
-                  id='term'
                   onChange={(e) => {
                     setTerm(e.target.value);
                   }}
@@ -303,9 +307,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='postal_code'>郵便番号</label>
                 <input
                   type='text'
-                  name='postal_code'
                   value={postal_code}
-                  id='postal_code'
                   onChange={(e) => {
                     setPostalCode(e.target.value.trim());
                   }}
@@ -317,9 +319,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='address'>住所</label>
                 <input
                   type='text'
-                  name='address'
                   value={address}
-                  id='address'
                   onChange={(e) => {
                     setAddress(e.target.value.trim());
                   }}
@@ -331,9 +331,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='manager'>担当者</label>
                 <input
                   type='text'
-                  name='manager'
                   value={manager}
-                  id='manager'
                   onChange={(e) => {
                     setManager(e.target.value.trim());
                   }}
@@ -345,9 +343,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='tel'>電話番号</label>
                 <input
                   type='text'
-                  name='tel'
                   value={tel}
-                  id='tel'
                   onChange={(e) => {
                     setTel(e.target.value.trim());
                   }}
@@ -359,9 +355,7 @@ const SpotsPost: VFC<Post> = (props) => {
                 <label htmlFor='email'>メールアドレス</label>
                 <input
                   type='text'
-                  name='email'
                   value={email}
-                  id='email'
                   onChange={(e) => {
                     setEmail(e.target.value.trim());
                   }}
@@ -373,7 +367,7 @@ const SpotsPost: VFC<Post> = (props) => {
 
             <div className='text-center pb-10'>
               <button
-                onClick={HandleSpotPost}
+                onClick={handleSpotPost}
                 className='text-sm px-5 py-4 mt-10 mr-4 text-white bg-blue-300 rounded-lg'
               >
                 投稿する

@@ -99,9 +99,9 @@ const ProfileEdit: VFC<Signin> = (props) => {
           </label>
           <input
             type='text'
-            name='prefecture'
+          
             value={prefecture}
-            id='prefecture'
+
             onChange={(e) => {
               setPrefecture(e.target.value.trim());
             }}
@@ -113,9 +113,9 @@ const ProfileEdit: VFC<Signin> = (props) => {
           </label>
           <input
             type='text'
-            name='group'
+    
             value={group}
-            id='group'
+        
             onChange={(e) => {
               setGroup(e.target.value.trim());
             }}
@@ -127,9 +127,9 @@ const ProfileEdit: VFC<Signin> = (props) => {
           </label>
           <input
             type='text'
-            name='email'
+ 
             value={email}
-            id='email'
+         
             // defaultValue={admins.email}
             onChange={(e) => {
               setEmail(e.target.value.trim());
@@ -142,9 +142,9 @@ const ProfileEdit: VFC<Signin> = (props) => {
           </label>
           <input
             type='text'
-            name='password'
+       
             value={password}
-            id='password'
+
             onChange={(e) => {
               setPassword(e.target.value.trim());
             }}

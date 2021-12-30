@@ -79,9 +79,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
           </label>
           <input
             type='text'
-            name='email'
             value={email}
-            id='email'
             onChange={(e) => {
               setEmail(e.target.value.trim());
             }}
@@ -93,9 +91,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
           </label>
           <input
             type='text'
-            name='password'
             value={password}
-            id='password'
             onChange={(e) => {
               setPassword(e.target.value.trim());
             }}
