@@ -90,6 +90,11 @@ const SpotsPost: NextPage = () => {
 
     toast.success('スポットを登録しました', {});
     // }
+
+    // 都道府県名の絞り込み
+    const prefectureFilter = prefectures_name.filter((prefectures) => {
+      return prefectures.id === prefecture_id;
+    });
   }, [
     name,
     title,
