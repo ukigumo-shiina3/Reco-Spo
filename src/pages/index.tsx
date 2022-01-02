@@ -7,42 +7,21 @@ import { SpotCard } from 'src/components/Spot/SpotCard';
 import { UserLayout } from 'src/components/layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useCallback, useEffect, useState } from 'react';
-import { supabase } from 'src/libs/supabase';
+import { Spot } from 'src/types/spot';
 
 type spotData = {
-  admin_id: string;
-  name: string;
-  title: string;
-  area: string;
+  spot: Array<spotData>;
 };
 
 const Index: NextPage = () => {
-  // const user = supabase.auth.user();
-
-  // const [admin_id, setAdminId] = useState<string>('');
-  const [admin_id, setAdminId] = useState<spotData[]>([]);
-  const [name, setName] = useState<spotData[]>([]);
-  const [title, setTitle] = useState<spotData[]>([]);
-  const [area, setArea] = useState<spotData[]>([]);
+  const [spot, setSpot] = useState<spotData[]>([]);
+  // const [spot, setSpot] = useState<spotData>();
 
   const fetchSpot = useCallback(async () => {
     const data: string[] | undefined = await getSpots();
-    console.log(data);
-
-    setAdminId(data || []);
-    // console.log(admin_id);
-    setName(data || []);
-    // setName(data.name);
-    setTitle(data || []);
-    setArea(data || []);
-  }, [admin_id, name, title, area]);
-
-  // let data: spotData = {
-  //   admin_id: admin_id,
-  //   name: '',
-  //   title: '',
-  //   area: '',
-  // };
+    // console.log(data);
+    setSpot(data || []);
+  }, []);
 
   useEffect(() => {
     fetchSpot();
@@ -65,10 +44,10 @@ const Index: NextPage = () => {
       <AboutIntroduction />
       <SysyemIntroduction />
 
-      <SpotCard admin_id={'1'} name={'穴水町'} title={'お試し暮らし'} area={'石川県'} />
-      {/* <SpotCard admin_id={admin_id} name={name} title={title} area={area} /> */}
+      {/* <SpotCard admin_id={'1'} name={'穴水町'} title={'お試し暮らし'} area={'石川県'} /> */}
+      <SpotCard spot={spot} />
 
-      {/* {console.log(admin_id)} */}
+      {/* {console.log(spot)} */}
     </UserLayout>
   );
 };

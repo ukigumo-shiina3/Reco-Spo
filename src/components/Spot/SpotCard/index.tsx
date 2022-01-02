@@ -2,12 +2,12 @@ import React, { VFC } from 'react';
 import { Box, Flex, Image, Badge, useColorModeValue } from '@chakra-ui/react';
 import { PrefectureButton } from 'src/components/Category/PrefectureButton';
 import { SystemButton } from 'src/components/Category/SystemButton';
-import { Spot } from 'src/types/spot';
+import { spotData } from 'src/types/spotData';
 
-export const SpotCard: VFC<Pick<Spot, 'id' | 'name' | 'title' | 'area'>> = (props) => {
+export const SpotCard: VFC<spotData[]> = (props) => {
   console.log(props);
 
-  const { name, title, area } = props;
+  const { spot } = props;
   const property = {
     imageUrl: 'spot-pic.jpeg',
     imageAlt: 'props.image_url',
@@ -49,12 +49,12 @@ export const SpotCard: VFC<Pick<Spot, 'id' | 'name' | 'title' | 'area'>> = (prop
             >
               <div className='flex mb-2 mr-2'>
                 <Image src='/map-marker-icon.png' alt='地図マーカーアイコン' />
-                <div className='mt-1 ml-1'> {name}</div>
+                <div className='mt-1 ml-1'> {spot.name}</div>
               </div>
             </Box>
           </Box>
           <Box mt='10' mb='5' as='h4' fontSize='lg' lineHeight='tight'>
-            <div className='text-md'>{title}</div>
+            <div className='text-md'>{spot.data}</div>
           </Box>
           <Box>
             <div className='flex justify-between mb-2 mr-2'>
@@ -65,14 +65,13 @@ export const SpotCard: VFC<Pick<Spot, 'id' | 'name' | 'title' | 'area'>> = (prop
                   src='/admin-test-pic.jpg'
                   alt='props.image_url'
                 />
-                <div className='ml-2 mt-4'>{area}</div>
+                <div className='ml-2 mt-4'>{spot.area}</div>
               </div>
               <Box as='span' color='black.600' fontSize='md'></Box>
               <div className='flex text-right mt-3'>
                 <div className='mt-1'>
                   <Image src='/heart-line.png' width={5} height={5} alt='ハートアイコン' />
                 </div>
-                {/* <i className='ri-heart-line'></i> */}
                 <div className='text-lg ml-1'>{property.heart}</div>
               </div>
             </div>
