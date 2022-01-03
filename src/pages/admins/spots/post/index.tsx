@@ -8,6 +8,7 @@ import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import Account from 'src/components/Profile';
 import { Session } from '@supabase/supabase-js';
+import { getSystems } from 'src/hooks/usePostSystemSelect';
 
 const user = supabase.auth.user();
 
@@ -16,6 +17,8 @@ const SpotsPost: NextPage = () => {
   const [title, setTitle] = useState('');
   const [prefecture_id, setPrefectureId] = useState('');
   const [prefectures_name, setPrefecturesName] = useState([]);
+  const [system_id, setSystemId] = useState('');
+  const [systems_name, setSystemsName] = useState([]);
   const [appeal, setAppeal] = useState('');
   const [area, setArea] = useState('');
   const [link, setLink] = useState('');
@@ -38,6 +41,16 @@ const SpotsPost: NextPage = () => {
   useEffect(() => {
     fetchPrefecturesListName();
   }, [user, fetchPrefecturesListName]);
+
+  const fetchSystemsListName = useCallback(async () => {
+    const data: string[] | null = await getSystems();
+    setSystemsName(data || []);
+    // console.log(data);
+  }, [setSystemsName]);
+
+  useEffect(() => {
+    fetchSystemsListName();
+  }, [user, fetchSystemsListName]);
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -83,17 +96,12 @@ const SpotsPost: NextPage = () => {
       tel: tel,
       email: email,
       prefecture_id: prefecture_id,
+      system_id: system_id,
     });
     console.log({ data, error });
 
     toast.success('スポットを登録しました', {});
     // }
-
-    // 都道府県名の絞り込み
-    const prefecturesFilter = prefectures_name.filter((prefectures) => {
-      return prefectures.id === prefecture_id;
-    });
-    console.log(prefecturesFilter);
   }, [
     name,
     title,
@@ -109,6 +117,7 @@ const SpotsPost: NextPage = () => {
     tel,
     email,
     prefecture_id,
+    system_id,
   ]);
 
   if (user) {
@@ -201,15 +210,24 @@ const SpotsPost: NextPage = () => {
                 {/* {console.log(prefectures_name)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>カテゴリ名</label>
-                  <select
-                    // type='select'
-                    // value={system}
-                    // onChange={(e) => {
-                    //   setSystem(e.target.value.trim());
-                    // }}
-                    placeholder='カテゴリを選択してください'
-                    className='w-full p-2 rounded-l-md placeholder-gray-500'
-                  />
+                  {systems_name.length == 0 ? null : (
+                    <select
+                      value={system_id}
+                      onChange={(e) => {
+                        setSystemId(e.target.value);
+                        console.log(e.target.value);
+                      }}
+                      className='w-full p-2 rounded-l-md placeholder-gray-500'
+                    >
+                      {systems_name.map((value) => (
+                        <option key={value} value={value['id']}>
+                          {/* {console.log(value['id'])} */}
+                          {value['systems_name']}
+                          {/* {console.log(value['systems_name'])} */}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               </div>
             </div>
