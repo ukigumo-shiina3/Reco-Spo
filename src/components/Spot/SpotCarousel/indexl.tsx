@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, VFC } from 'react';
 import { Text, Box, Flex, useColorModeValue, Image, HStack } from '@chakra-ui/react';
 
-export const SpotCarousel: React.VFC = () => {
+export const SpotCarousel: VFC = () => {
   const arrowStyles = {
     cursor: 'pointer',
     pos: 'absolute',

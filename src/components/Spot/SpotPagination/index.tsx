@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import { chakra, Flex, useColorModeValue, Icon } from '@chakra-ui/react';
-
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-export const SpotPagination: React.VFC = () => {
+export const SpotPagination: VFC = () => {
   const PagButton = (props) => {
     const activeStyle = {
       bg: useColorModeValue('brand.600', 'brand.500'),
