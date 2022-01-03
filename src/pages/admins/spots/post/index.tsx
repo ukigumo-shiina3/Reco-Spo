@@ -15,8 +15,6 @@ const SpotsPost: NextPage = () => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [prefecture_id, setPrefectureId] = useState('');
-  // const [prefectures_name, setPrefecturesName] = useState<{ prefectures_name: string }[]>([]);
-  // const [prefectures_name, setPrefecturesName] = useState<{ id: string; prefectures_name: string }[]>([]);
   const [prefectures_name, setPrefecturesName] = useState([]);
   const [appeal, setAppeal] = useState('');
   const [area, setArea] = useState('');
@@ -92,9 +90,10 @@ const SpotsPost: NextPage = () => {
     // }
 
     // 都道府県名の絞り込み
-    const prefectureFilter = prefectures_name.filter((prefectures) => {
+    const prefecturesFilter = prefectures_name.filter((prefectures) => {
       return prefectures.id === prefecture_id;
     });
+    console.log(prefecturesFilter);
   }, [
     name,
     title,
@@ -180,10 +179,9 @@ const SpotsPost: NextPage = () => {
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
                   {/* {console.log(prefectures_name)} */}
-
                   {prefectures_name.length == 0 ? null : (
                     <select
-                      value={prefectures_name}
+                      value={prefecture_id}
                       onChange={(e) => {
                         setPrefectureId(e.target.value);
                         console.log(e.target.value);
@@ -193,7 +191,6 @@ const SpotsPost: NextPage = () => {
                       {prefectures_name.map((value) => (
                         <option key={value} value={value['id']}>
                           {/* {console.log(value['id'])} */}
-
                           {value['prefectures_name']}
                           {/* {console.log(value['prefectures_name'])} */}
                         </option>
@@ -206,9 +203,7 @@ const SpotsPost: NextPage = () => {
                   <label htmlFor='system'>カテゴリ名</label>
                   <select
                     // type='select'
-
                     // value={system}
-
                     // onChange={(e) => {
                     //   setSystem(e.target.value.trim());
                     // }}
@@ -238,7 +233,6 @@ const SpotsPost: NextPage = () => {
                 />
               </div>
             </div>
-            {/* <SpotInfo name={name} title={title} /> */}
 
             {/* スポット詳細 */}
             <h2 className='mt-10'>スポット詳細</h2>
