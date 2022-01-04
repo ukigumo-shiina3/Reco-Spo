@@ -1,7 +1,8 @@
 import { supabase } from 'src/libs/supabase';
+import { SpotData } from 'src/types/spotData';
 
 export const getSpots = async () => {
-  const { data, error } = await supabase.from('spots').select('*');
+  const { data, error } = await supabase.from<SpotData>('spots').select('*');
   if (!data) {
     return;
   }
