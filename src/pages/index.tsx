@@ -7,25 +7,21 @@ import { SpotCard } from 'src/components/Spot/SpotCard';
 import { UserLayout } from 'src/components/layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useCallback, useEffect, useState } from 'react';
-import { Spot } from 'src/types/spot';
-
-type spotData = {
-  spot: Array<spotData>;
-};
+import { SpotData } from 'src/types/spotData';
 
 const Index: NextPage = () => {
-  const [spot, setSpot] = useState<spotData[]>([]);
-  // const [spot, setSpot] = useState<spotData>();
+  const [spots, setSpots] = useState<SpotData[]>([]);
 
   const fetchSpot = useCallback(async () => {
-    const data: string[] | undefined = await getSpots();
+    const data = await getSpots();
     // console.log(data);
-    setSpot(data || []);
+    setSpots(data || []);
   }, []);
 
   useEffect(() => {
     fetchSpot();
-  }, [fetchSpot]);
+  }, []);
+  console.log(spots);
 
   return (
     <UserLayout>
@@ -44,10 +40,9 @@ const Index: NextPage = () => {
       <AboutIntroduction />
       <SysyemIntroduction />
 
-      {/* <SpotCard admin_id={'1'} name={'穴水町'} title={'お試し暮らし'} area={'石川県'} /> */}
-      <SpotCard spot={spot} />
-
-      {/* {console.log(spot)} */}
+      {spots.map((spot) => {
+        return <SpotCard key={spot.id} spot={spot} />;
+      })}
     </UserLayout>
   );
 };
