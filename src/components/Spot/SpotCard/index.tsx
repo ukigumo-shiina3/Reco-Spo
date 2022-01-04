@@ -2,12 +2,15 @@ import React, { VFC } from 'react';
 import { Box, Flex, Image, Badge, useColorModeValue } from '@chakra-ui/react';
 import { PrefectureButton } from 'src/components/Category/PrefectureButton';
 import { SystemButton } from 'src/components/Category/SystemButton';
-import { spotData } from 'src/types/spotData';
+import { SpotData } from 'src/types/spotData';
 
-export const SpotCard: VFC<spotData[]> = (props) => {
-  console.log(props);
+type SpotCardProps = {
+  spot: SpotData;
+};
 
-  const { spot } = props;
+export const SpotCard: VFC<SpotCardProps> = (props) => {
+  // console.log(props);
+
   const property = {
     imageUrl: 'spot-pic.jpeg',
     imageAlt: 'props.image_url',
@@ -16,7 +19,7 @@ export const SpotCard: VFC<spotData[]> = (props) => {
 
   return (
     <Flex
-      bg={useColorModeValue('#F9FAFB', 'gray.600')}
+      bg={useColorModeValue('#FFF', 'white')}
       p={50}
       w='full'
       alignItems='center'
@@ -49,12 +52,12 @@ export const SpotCard: VFC<spotData[]> = (props) => {
             >
               <div className='flex mb-2 mr-2'>
                 <Image src='/map-marker-icon.png' alt='地図マーカーアイコン' />
-                <div className='mt-1 ml-1'> {spot.name}</div>
+                <div className='mt-1 ml-1'> {props.spot.name}</div>
               </div>
             </Box>
           </Box>
           <Box mt='10' mb='5' as='h4' fontSize='lg' lineHeight='tight'>
-            <div className='text-md'>{spot.data}</div>
+            <div className='text-md'>{props.spot.title}</div>
           </Box>
           <Box>
             <div className='flex justify-between mb-2 mr-2'>
@@ -65,7 +68,7 @@ export const SpotCard: VFC<spotData[]> = (props) => {
                   src='/admin-test-pic.jpg'
                   alt='props.image_url'
                 />
-                <div className='ml-2 mt-4'>{spot.area}</div>
+                <div className='ml-2 mt-4'>{props.spot.area}</div>
               </div>
               <Box as='span' color='black.600' fontSize='md'></Box>
               <div className='flex text-right mt-3'>
