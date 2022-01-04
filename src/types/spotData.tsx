@@ -1,5 +1,5 @@
-export type spotData = {
-  admin_id: string;
+export type SpotData = {
+  id: string;
   name: string;
   title: string;
   area: string;

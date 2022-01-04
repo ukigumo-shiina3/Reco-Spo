@@ -1,5 +1,6 @@
 export type Spot = {
   id: string;
+  admin_id: string;
   name: string;
   title: string;
   image_url: string;
@@ -14,4 +15,6 @@ export type Spot = {
   manager: string;
   tel: string;
   email: string;
+  prefecture_id: string;
+  system_id: string;
 };
