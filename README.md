@@ -22,6 +22,10 @@ https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
 
 ## 設計書
 
+### ER図
+
+https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
+
 ### テーブル定義書　
 
 https://docs.google.com/spreadsheets/d/1eQOAis1HpEIBGZF8tvFJJLJ5TxZNYRh1RelUl1a2RA0/edit?usp=sharing
