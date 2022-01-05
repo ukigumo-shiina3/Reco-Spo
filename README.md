@@ -40,7 +40,15 @@ https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
 
 ## 設計書
 
+<<<<<<< HEAD
 ### ER 図
+=======
+### ER図
+
+https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
+
+### テーブル定義書　
+>>>>>>> 3027e35c102f04523b6a61a55fdf7594a0800443
 
 https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
 
