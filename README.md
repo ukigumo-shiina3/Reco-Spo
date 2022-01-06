@@ -4,7 +4,7 @@
   <a href="https://www.typescriptlang.org/"><img src="https://cdn.worldvectorlogo.com/logos/typescript.svg" height="50px;" /></a>
   <a href="https://nextjs.org/"><img src="https://cdn.worldvectorlogo.com/logos/nextjs-3.svg" height="50px;" /></a>
   <a href="https://ja.reactjs.org/"><img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" height="50px;" /></a>
-  <a href="https://supabase.com/"><img src="https://raw.githubusercontent.com/supabase/supabase/master/web/static/supabase-light-rounded-corner-background.svg" height="50px;" /></a>
+  <a href="https://supabase.com/"><img src="./public/supabase.svg" height="50px;" /></a>
 </p>
 <p align="left">
   <a href="https://www.figma.com/"><img src="https://cdn.worldvectorlogo.com/logos/figma-1.svg" height="50px;" /></a>
