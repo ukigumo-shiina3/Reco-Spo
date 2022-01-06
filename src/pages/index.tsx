@@ -40,9 +40,11 @@ const Index: NextPage = () => {
       <AboutIntroduction />
       <SysyemIntroduction />
 
-      {spots.map((spot) => {
-        return <SpotCard key={spot.id} spot={spot} />;
-      })}
+      <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
+        {spots.map((spot) => {
+          return <SpotCard key={spot.id} spot={spot} />;
+        })}
+      </div>
     </UserLayout>
   );
 };

@@ -21,9 +21,10 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
     <Flex
       bg={useColorModeValue('#FFF', 'white')}
       p={50}
-      w='full'
-      alignItems='center'
-      justifyContent='center'
+      w={500}
+      alignItems='right'
+      justifyContent='right'
+      flexWrap='wrap'
     >
       <Box
         bg={useColorModeValue('white', 'gray.800')}
