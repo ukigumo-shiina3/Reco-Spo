@@ -11,7 +11,7 @@
   <a href="https://vercel.com/"><img src="https://user-images.githubusercontent.com/65433193/118944114-3b393980-b98f-11eb-84a5-fc9a1db8ea6b.png" height="50px;" /></a
   <a href="https://eslint.org/"><img src="https://cdn.worldvectorlogo.com/logos/eslint-1.svg" height="50px;" /></a>
   <a href="https://prettier.io/"><img src="https://cdn.worldvectorlogo.com/logos/prettier-2.svg" height="50px;" /></a>
-  <a href="https://tailwindcss.com"><img src="/tailwind-css.svg" height="50px;"></a>
+  <a href="https://tailwindcss.com"><img src="./public/tailwind-css.svg" height="50px;"></a>
   <a href="https://chakra-ui.com/"><img src="https://bestofjs.org/logos/chakra-ui.svg" height="50px;"></a>
 
 </p><br />
