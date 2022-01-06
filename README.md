@@ -1,3 +1,7 @@
+<h2 align="left">Reco Spo</h2>
+
+<br/>
+
 ## 使用技術
 
 <p align="left">
@@ -27,6 +31,8 @@
 | ストレージ       | Supabase Storage           |
 | Linter/Formatter | ESLint/Prettier            |
 
+<br/>
+
 ## サイト概要
 
 ・田舎暮らしをしてみたい人と、支援制度を利用して町に居住して欲しいという自治体の願いを結びつけるサイトです。
@@ -45,11 +51,15 @@
 
 ② 若いうちからリタイア後の人生を考え、セカンドライフとして田舎に住みゆっくり余生を過ごしたいと検討している人
 
+<br/>
+
 ## デザイン
 
 ### Figma デザインカンプ
 
 https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
+
+<br/>
 
 ## 設計書
 
