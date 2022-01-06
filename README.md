@@ -14,6 +14,17 @@
   <a href="https://chakra-ui.com/"><img src="https://bestofjs.org/logos/chakra-ui.svg" height="50px;"></a>
 </p><br />
 
+| 領域             | 技術やツール               |
+| ---------------- | -------------------------- |
+| デザイン/設計    | Figma                      |
+| フロントエンド   | Next.js(React)/TypeScript/ |
+| バックエンド     | Supabase(PostgreSQL)       |
+| スタイル         | Tailwind Css/Chakra UI     |
+| Hosting          | Vercel                     |
+| 認証             | Supabase Authentication    |
+| ストレージ       | Supabase Storage           |
+| Linter/Formatter | ESLint/Prettier            |
+
 ## サイト概要
 
 ・田舎暮らしをしてみたい人と、支援制度を利用して町に居住して欲しいという自治体の願いを結びつけるサイトです。
@@ -40,15 +51,7 @@ https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
 
 ## 設計書
 
-<<<<<<< HEAD
 ### ER 図
-=======
-### ER図
-
-https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
-
-### テーブル定義書　
->>>>>>> 3027e35c102f04523b6a61a55fdf7594a0800443
 
 https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
 
