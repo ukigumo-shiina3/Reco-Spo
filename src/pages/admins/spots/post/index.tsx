@@ -129,7 +129,7 @@ const SpotsPost: NextPage = () => {
             {/* スポット投稿 */}
             <h1 className='text-3xl mt-24'>スポット投稿</h1>
             {/* <Account key={session.user.id} session={session} /> */}
-            {/* <h2 className='flex mt-5'>
+            <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
             <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
@@ -155,7 +155,7 @@ const SpotsPost: NextPage = () => {
                 alt='画像アップロードアイコン'
                 className='w-hull h-18 sm:h-24'
               />
-            </div> */}
+            </div>
 
             {/* スポット情報 */}
             <div>
@@ -209,7 +209,7 @@ const SpotsPost: NextPage = () => {
                 </div>
                 {/* {console.log(prefectures_name)} */}
                 <div className='mb-5'>
-                  <label htmlFor='system'>カテゴリ名</label>
+                  <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
                     <select
                       value={system_id}
