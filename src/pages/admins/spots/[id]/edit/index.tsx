@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState, VFC } from 'react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
@@ -8,8 +8,8 @@ import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
 import { getSystems } from 'src/hooks/usePostSystemSelect';
-import { getSpots } from 'src/hooks/useSpotCardSelect';
-import { SpotData } from 'src/types/spotData';
+import { getSpotsEdit } from 'src/hooks/useSpotEditSelect';
+import { Spot } from 'src/types/spot';
 
 const user = supabase.auth.user();
 
@@ -32,12 +32,11 @@ const SpotsEdit: NextPage = () => {
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
   const [session, setSession] = useState<Session | null>(null);
-  const [spot, setSpot] = useState<SpotData[]>([]);
+  const [spot, setSpot] = useState<Spot[]>([]);
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data: string[] | null = await getPrefectures();
     setPrefecturesName(data || []);
-    // console.log(data);
   }, [setPrefecturesName]);
 
   useEffect(() => {
@@ -47,7 +46,6 @@ const SpotsEdit: NextPage = () => {
   const fetchSystemsListName = useCallback(async () => {
     const data: string[] | null = await getSystems();
     setSystemsName(data || []);
-    // console.log(data);
   }, [setSystemsName]);
 
   useEffect(() => {
@@ -55,7 +53,7 @@ const SpotsEdit: NextPage = () => {
   }, [user, fetchSystemsListName]);
 
   const fetchSpot = useCallback(async () => {
-    const data: string[] | undefined = await getSpots();
+    const data = await getSpotsEdit();
     console.log(data);
     setSpot(data || []);
   }, []);
@@ -72,27 +70,10 @@ const SpotsEdit: NextPage = () => {
     });
   }, []);
 
-  const handleSpotPost = useCallback(async () => {
+  const handleSpotEdit = useCallback(async () => {
     console.log(user?.id);
 
-    // if (
-    //   name === '' ||
-    //   title === '' ||
-    //   appeal === '' ||
-    //   area === '' ||
-    //   link === '' ||
-    //   targetPerson === '' ||
-    //   usageFee === '' ||
-    //   term === '' ||
-    //   postal_code === '' ||
-    //   address === '' ||
-    //   manager === '' ||
-    //   tel === '' ||
-    //   email === ''
-    // ) {
-    //   toast.error('入力されていない項目があります', {});
-    // } else {
-    const { data, error } = await supabase.from('spots').upsert({
+    const { data, error } = await supabase.from('spots').update({
       name: name,
       title: title,
       admin_id: user?.id,
@@ -112,8 +93,7 @@ const SpotsEdit: NextPage = () => {
     });
     console.log({ data, error });
 
-    toast.success('スポットを登録しました', {});
-    // }
+    toast.success('スポットを編集しました', {});
   }, [
     name,
     title,
@@ -138,9 +118,8 @@ const SpotsEdit: NextPage = () => {
         <div className='flex bg-gray-100 h-full'>
           <Sidebar />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
-            {/* スポット投稿 */}
             <h1 className='text-3xl mt-24'>スポット編集</h1>
-            {/* <Account key={session.user.id} session={session} /> */}
+            {/* スポット画像 */}
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
@@ -181,8 +160,7 @@ const SpotsEdit: NextPage = () => {
                     onChange={(e) => {
                       setName(e.target.value.trim());
                     }}
-                    placeholder='穴水町'
-                    className='w-full p-2 rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-l-md'
                   />
                 </div>
                 <div className='mb-5'>
@@ -193,33 +171,27 @@ const SpotsEdit: NextPage = () => {
                     onChange={(e) => {
                       setTitle(e.target.value.trim());
                     }}
-                    placeholder='自然豊かな穴水町での生活を体験してみませんか'
-                    className='w-full p-2 rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-l-md'
                   />
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
-                  {/* {console.log(prefectures_name)} */}
                   {prefectures_name.length == 0 ? null : (
                     <select
                       value={prefecture_id}
                       onChange={(e) => {
                         setPrefectureId(e.target.value);
-                        console.log(e.target.value);
                       }}
-                      className='w-full p-2 rounded-l-md placeholder-gray-500'
+                      className='w-full p-2 rounded-l-md'
                     >
                       {prefectures_name.map((value) => (
                         <option key={value} value={value['id']}>
-                          {/* {console.log(value['id'])} */}
                           {value['prefectures_name']}
-                          {/* {console.log(value['prefectures_name'])} */}
                         </option>
                       ))}
                     </select>
                   )}
                 </div>
-                {/* {console.log(prefectures_name)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
@@ -227,15 +199,12 @@ const SpotsEdit: NextPage = () => {
                       value={system_id}
                       onChange={(e) => {
                         setSystemId(e.target.value);
-                        console.log(e.target.value);
                       }}
-                      className='w-full p-2 rounded-l-md placeholder-gray-500'
+                      className='w-full p-2 rounded-l-md'
                     >
                       {systems_name.map((value) => (
                         <option key={value} value={value['id']}>
-                          {/* {console.log(value['id'])} */}
                           {value['systems_name']}
-                          {/* {console.log(value['systems_name'])} */}
                         </option>
                       ))}
                     </select>
@@ -254,12 +223,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setAppeal(e.target.value.trim());
                   }}
-                  placeholder='世界農業遺産「能登の里山里海」に位置する石川県穴水町は美しい山と海に恵まれ、
-            穏やかな時間が流れています。
-            そんな穴水町の暮らしぶりを気軽に体験して頂けるように「短期移住体験住宅」をご用意いたしました。
-            空港や駅へのアクセスも良く、暮らしやすい場所で移住体験ができます。
-            田舎への移住をお考えの方はこの機会にぜひご利用下さい。'
-                  className='w-full h-24  p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full h-24  p-2 rounded-l-md'
                 />
               </div>
             </div>
@@ -275,8 +239,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setArea(e.target.value);
                   }}
-                  placeholder='石川県穴水町'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -287,8 +250,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setLink(e.target.value);
                   }}
-                  placeholder='https://test.com'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -299,8 +261,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setTargetPerson(e.target.value);
                   }}
-                  placeholder='町外から当町への移住を希望する人物'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -311,8 +272,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setUsageFee(e.target.value);
                   }}
-                  placeholder='無料'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -323,8 +283,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setTerm(e.target.value);
                   }}
-                  placeholder='最長７泊８日'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
             </div>
@@ -340,8 +299,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setPostalCode(e.target.value.trim());
                   }}
-                  placeholder='927-8601'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -352,8 +310,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setAddress(e.target.value.trim());
                   }}
-                  placeholder='石川県鳳珠郡穴水町字川島ラの174番地'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -364,8 +321,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setManager(e.target.value.trim());
                   }}
-                  placeholder='穴水町観光交流課'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -376,8 +332,7 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setTel(e.target.value.trim());
                   }}
-                  placeholder='0768-52-3671'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
               <div className='mb-5'>
@@ -388,18 +343,17 @@ const SpotsEdit: NextPage = () => {
                   onChange={(e) => {
                     setEmail(e.target.value.trim());
                   }}
-                  placeholder='test@gmai.com'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-l-md'
                 />
               </div>
             </div>
 
             <div className='text-center pb-10'>
               <button
-                onClick={handleSpotPost}
+                onClick={handleSpotEdit}
                 className='text-sm px-5 py-4 mt-10 mr-4 text-white bg-blue-300 rounded-lg'
               >
-                投稿する
+                編集する
               </button>
             </div>
             <Toaster />
