@@ -13,7 +13,7 @@ import { Spot } from 'src/types/spot';
 
 const user = supabase.auth.user();
 
-const SpotsEdit: NextPage = () => {
+const SpotsEdit: NextPage<Spot> = () => {
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [prefecture_id, setPrefectureId] = useState('');
@@ -60,7 +60,7 @@ const SpotsEdit: NextPage = () => {
 
   useEffect(() => {
     fetchSpot();
-  }, [fetchSpot]);
+  }, []);
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -155,19 +155,21 @@ const SpotsEdit: NextPage = () => {
                 <div className='mb-5'>
                   <label htmlFor='name'>スポット名</label>
                   <input
-                    type='text'
-                    value={name}
+                    // defaultValue={name}
+                    defaultValue={spot.name}
+                    // value={name}
                     onChange={(e) => {
                       setName(e.target.value.trim());
                     }}
                     className='w-full p-2 rounded-l-md'
                   />
+                  {console.log(name)}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='title'>スポットタイトル</label>
                   <input
                     type='text'
-                    value={title}
+                    defaultValue={title}
                     onChange={(e) => {
                       setTitle(e.target.value.trim());
                     }}
@@ -178,7 +180,7 @@ const SpotsEdit: NextPage = () => {
                   <label htmlFor='prefectures_name'>都道府県名</label>
                   {prefectures_name.length == 0 ? null : (
                     <select
-                      value={prefecture_id}
+                      defaultValue={prefecture_id}
                       onChange={(e) => {
                         setPrefectureId(e.target.value);
                       }}
@@ -196,7 +198,7 @@ const SpotsEdit: NextPage = () => {
                   <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
                     <select
-                      value={system_id}
+                      defaultValue={system_id}
                       onChange={(e) => {
                         setSystemId(e.target.value);
                       }}
@@ -219,7 +221,7 @@ const SpotsEdit: NextPage = () => {
               <div className='mb-5'>
                 <label htmlFor='appeal'>アピールポイント</label>
                 <textarea
-                  value={appeal}
+                  defaultValue={appeal}
                   onChange={(e) => {
                     setAppeal(e.target.value.trim());
                   }}
@@ -235,7 +237,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='area'>物件所在地</label>
                 <input
                   type='text'
-                  value={area}
+                  defaultValue={area}
                   onChange={(e) => {
                     setArea(e.target.value);
                   }}
@@ -246,7 +248,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='スポット画像'>物件関連リンク</label>
                 <input
                   type='text'
-                  value={link}
+                  defaultValue={link}
                   onChange={(e) => {
                     setLink(e.target.value);
                   }}
@@ -257,7 +259,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='スポット画像'>対象者</label>
                 <input
                   type='text'
-                  value={targetPerson}
+                  defaultValue={targetPerson}
                   onChange={(e) => {
                     setTargetPerson(e.target.value);
                   }}
@@ -268,7 +270,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='スポット画像'>利用料金</label>
                 <input
                   type='text'
-                  value={usageFee}
+                  defaultValue={usageFee}
                   onChange={(e) => {
                     setUsageFee(e.target.value);
                   }}
@@ -279,7 +281,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='スポット画像'>利用期間</label>
                 <input
                   type='text'
-                  value={term}
+                  defaultValue={term}
                   onChange={(e) => {
                     setTerm(e.target.value);
                   }}
@@ -295,7 +297,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='postal_code'>郵便番号</label>
                 <input
                   type='text'
-                  value={postal_code}
+                  defaultValue={postal_code}
                   onChange={(e) => {
                     setPostalCode(e.target.value.trim());
                   }}
@@ -306,7 +308,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='address'>住所</label>
                 <input
                   type='text'
-                  value={address}
+                  defaultValue={address}
                   onChange={(e) => {
                     setAddress(e.target.value.trim());
                   }}
@@ -317,7 +319,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='manager'>担当者</label>
                 <input
                   type='text'
-                  value={manager}
+                  defaultValue={manager}
                   onChange={(e) => {
                     setManager(e.target.value.trim());
                   }}
@@ -328,7 +330,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='tel'>電話番号</label>
                 <input
                   type='text'
-                  value={tel}
+                  defaultValue={tel}
                   onChange={(e) => {
                     setTel(e.target.value.trim());
                   }}
@@ -339,7 +341,7 @@ const SpotsEdit: NextPage = () => {
                 <label htmlFor='email'>メールアドレス</label>
                 <input
                   type='text'
-                  value={email}
+                  defaultValue={email}
                   onChange={(e) => {
                     setEmail(e.target.value.trim());
                   }}
