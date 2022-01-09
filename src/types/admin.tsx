@@ -1,4 +1,4 @@
-export type Signin = {
+export type Admin = {
   email: string;
   password: string;
   // avatar_url: string;
