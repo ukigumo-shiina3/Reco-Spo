@@ -32,7 +32,7 @@ const SpotsEdit: NextPage<Spot> = () => {
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
   const [session, setSession] = useState<Session | null>(null);
-  const [spot, setSpot] = useState<Spot[]>([]);
+  const [spot, setSpot] = useState<Spot | null>(null);
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data: string[] | null = await getPrefectures();
@@ -154,16 +154,17 @@ const SpotsEdit: NextPage<Spot> = () => {
               <div className='mt-10 text-xs'>
                 <div className='mb-5'>
                   <label htmlFor='name'>スポット名</label>
-                  <input
-                    // defaultValue={name}
-                    defaultValue={spot.name}
-                    // value={name}
-                    onChange={(e) => {
-                      setName(e.target.value.trim());
-                    }}
-                    className='w-full p-2 rounded-l-md'
-                  />
-                  {console.log(name)}
+                  {spot ? (
+                    <input
+                      // defaultValue={name}
+                      defaultValue={spot.name}
+                      // value={name}
+                      onChange={(e) => {
+                        setName(e.target.value.trim());
+                      }}
+                      className='w-full p-2 rounded-l-md'
+                    />
+                  ) : null}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='title'>スポットタイトル</label>
