@@ -8,8 +8,9 @@ import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
 import { getSystems } from 'src/hooks/usePostSystemSelect';
-import { getSpotsEdit } from 'src/hooks/useSpotEditSelect';
+
 import { Spot } from 'src/types/spot';
+import { getSpotsDetail } from 'src/hooks/useSpotEditSelect';
 
 const user = supabase.auth.user();
 
@@ -53,7 +54,7 @@ const SpotsEdit: NextPage<Spot> = () => {
   }, [user, fetchSystemsListName]);
 
   const fetchSpot = useCallback(async () => {
-    const data = await getSpotsEdit();
+    const data = await getSpotsDetail(spot?.id || '');
     console.log(data);
     setSpot(data || []);
   }, []);
@@ -156,9 +157,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                   <label htmlFor='name'>スポット名</label>
                   {spot ? (
                     <input
-                      // defaultValue={name}
                       defaultValue={spot.name}
-                      // value={name}
                       onChange={(e) => {
                         setName(e.target.value.trim());
                       }}
