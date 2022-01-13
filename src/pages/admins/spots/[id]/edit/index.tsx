@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
@@ -10,10 +10,13 @@ import { Session } from '@supabase/supabase-js';
 import { getSystems } from 'src/hooks/usePostSystemSelect';
 import { Spot } from 'src/types/spot';
 import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
+import { useRouter } from 'next/router';
 
 const user = supabase.auth.user();
 
 const SpotsEdit: NextPage<Spot> = () => {
+  const router = useRouter();
+
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [prefecture_id, setPrefectureId] = useState('');
@@ -33,6 +36,7 @@ const SpotsEdit: NextPage<Spot> = () => {
   const [email, setEmail] = useState('');
   const [session, setSession] = useState<Session | null>(null);
   const [spot, setSpot] = useState<Spot | null>(null);
+  const [id, setId] = useState<string>();
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data: string[] | null = await getPrefectures();
@@ -60,8 +64,16 @@ const SpotsEdit: NextPage<Spot> = () => {
   }, []);
 
   useEffect(() => {
-    fetchSpot();
-  }, []);
+    if (router.asPath !== router.route) {
+      setId(String(router.query.id));
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (id) {
+      fetchSpot(router.query.id as string);
+    }
+  }, [id]);
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -94,7 +106,7 @@ const SpotsEdit: NextPage<Spot> = () => {
           email: email,
         })
         .eq('id', id);
-      console.log({ data, error });
+      // console.log({ data, error });
 
       toast.success('スポットを編集しました', {});
     },
