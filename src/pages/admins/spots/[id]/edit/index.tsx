@@ -8,9 +8,8 @@ import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
 import { getSystems } from 'src/hooks/usePostSystemSelect';
-
 import { Spot } from 'src/types/spot';
-import { getSpotsDetail } from 'src/hooks/useSpotEditSelect';
+import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
 
 const user = supabase.auth.user();
 
@@ -46,6 +45,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const fetchSystemsListName = useCallback(async () => {
     const data: string[] | null = await getSystems();
+
     setSystemsName(data || []);
   }, [setSystemsName]);
 
@@ -53,8 +53,8 @@ const SpotsEdit: NextPage<Spot> = () => {
     fetchSystemsListName();
   }, [user, fetchSystemsListName]);
 
-  const fetchSpot = useCallback(async () => {
-    const data = await getSpotsDetail(spot?.id || '');
+  const fetchSpot = useCallback(async (id: string) => {
+    const data = await getSpotsDetail(id);
     console.log(data);
     setSpot(data || []);
   }, []);
@@ -71,47 +71,51 @@ const SpotsEdit: NextPage<Spot> = () => {
     });
   }, []);
 
-  const handleSpotEdit = useCallback(async () => {
-    console.log(user?.id);
+  const handleSpotEdit = useCallback(
+    async (id: string) => {
+      const { data, error } = await supabase
+        .from('spots')
+        .update({
+          admin_id: user?.id,
+          prefecture_id: prefecture_id,
+          system_id: system_id,
+          name: name,
+          title: title,
+          appeal: appeal,
+          area: area,
+          link: link,
+          target_person: targetPerson,
+          usage_fee: usageFee,
+          term: term,
+          postal_code: postal_code,
+          address: address,
+          manager: manager,
+          tel: tel,
+          email: email,
+        })
+        .eq('id', id);
+      console.log({ data, error });
 
-    const { data, error } = await supabase.from('spots').update({
-      name: name,
-      title: title,
-      admin_id: user?.id,
-      appeal: appeal,
-      area: area,
-      link: link,
-      target_person: targetPerson,
-      usage_fee: usageFee,
-      term: term,
-      postal_code: postal_code,
-      address: address,
-      manager: manager,
-      tel: tel,
-      email: email,
-      prefecture_id: prefecture_id,
-      system_id: system_id,
-    });
-    console.log({ data, error });
-
-    toast.success('スポットを編集しました', {});
-  }, [
-    name,
-    title,
-    appeal,
-    area,
-    link,
-    targetPerson,
-    usageFee,
-    term,
-    postal_code,
-    address,
-    manager,
-    tel,
-    email,
-    prefecture_id,
-    system_id,
-  ]);
+      toast.success('スポットを編集しました', {});
+    },
+    [
+      prefecture_id,
+      system_id,
+      name,
+      title,
+      appeal,
+      area,
+      link,
+      targetPerson,
+      usageFee,
+      term,
+      postal_code,
+      address,
+      manager,
+      tel,
+      email,
+    ],
+  );
 
   if (user) {
     return (
@@ -164,6 +168,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                       className='w-full p-2 rounded-l-md'
                     />
                   ) : null}
+                  {/* {console.log(spot)} */}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='title'>スポットタイトル</label>
