@@ -59,7 +59,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const fetchSpot = useCallback(async (id: string) => {
     const data = await getSpotsDetail(id);
-    console.log(data);
+    // console.log(data);
     setSpot(data || []);
   }, []);
 
@@ -67,13 +67,15 @@ const SpotsEdit: NextPage<Spot> = () => {
     if (router.asPath !== router.route) {
       setId(String(router.query.id));
     }
+    // console.log(router.query.id);
   }, [router]);
 
   useEffect(() => {
     if (id) {
       fetchSpot(router.query.id as string);
     }
-  }, [id]);
+    // console.log(router.query.id);
+  }, [id, fetchSpot, router.query.id]);
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -83,51 +85,50 @@ const SpotsEdit: NextPage<Spot> = () => {
     });
   }, []);
 
-  const handleSpotEdit = useCallback(
-    async (id: string) => {
-      const { data, error } = await supabase
-        .from('spots')
-        .update({
-          admin_id: user?.id,
-          prefecture_id: prefecture_id,
-          system_id: system_id,
-          name: name,
-          title: title,
-          appeal: appeal,
-          area: area,
-          link: link,
-          target_person: targetPerson,
-          usage_fee: usageFee,
-          term: term,
-          postal_code: postal_code,
-          address: address,
-          manager: manager,
-          tel: tel,
-          email: email,
-        })
-        .eq('id', id);
-      // console.log({ data, error });
+  const handleSpotEdit = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('spots')
+      .update({
+        admin_id: user?.id,
+        prefecture_id: prefecture_id,
+        system_id: system_id,
+        name: name,
+        title: title,
+        appeal: appeal,
+        area: area,
+        link: link,
+        target_person: targetPerson,
+        usage_fee: usageFee,
+        term: term,
+        postal_code: postal_code,
+        address: address,
+        manager: manager,
+        tel: tel,
+        email: email,
+      })
+      .eq('id', id)
+      .single();
+    console.log({ data, error });
 
-      toast.success('スポットを編集しました', {});
-    },
-    [
-      prefecture_id,
-      system_id,
-      name,
-      title,
-      appeal,
-      area,
-      link,
-      targetPerson,
-      usageFee,
-      term,
-      postal_code,
-      address,
-      manager,
-      tel,
-      email,
-    ],
-  );
+    toast.success('スポットを編集しました', {});
+  }, [
+    prefecture_id,
+    system_id,
+    name,
+    title,
+    appeal,
+    area,
+    link,
+    targetPerson,
+    usageFee,
+    term,
+    postal_code,
+    address,
+    manager,
+    tel,
+    email,
+  ]);
+  // console.log({ spot });
 
   if (user) {
     return (
@@ -180,18 +181,20 @@ const SpotsEdit: NextPage<Spot> = () => {
                       className='w-full p-2 rounded-l-md'
                     />
                   ) : null}
-                  {/* {console.log(spot)} */}
+                  {console.log(spot)}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='title'>スポットタイトル</label>
-                  <input
-                    type='text'
-                    defaultValue={title}
-                    onChange={(e) => {
-                      setTitle(e.target.value.trim());
-                    }}
-                    className='w-full p-2 rounded-l-md'
-                  />
+                  {spot ? (
+                    <input
+                      type='text'
+                      defaultValue={spot.title}
+                      onChange={(e) => {
+                        setTitle(e.target.value.trim());
+                      }}
+                      className='w-full p-2 rounded-l-md'
+                    />
+                  ) : null}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
@@ -237,13 +240,15 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='mt-10 text-xs'>
               <div className='mb-5'>
                 <label htmlFor='appeal'>アピールポイント</label>
-                <textarea
-                  defaultValue={appeal}
-                  onChange={(e) => {
-                    setAppeal(e.target.value.trim());
-                  }}
-                  className='w-full h-24  p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <textarea
+                    defaultValue={spot.appeal}
+                    onChange={(e) => {
+                      setAppeal(e.target.value.trim());
+                    }}
+                    className='w-full h-24  p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
             </div>
 
@@ -252,58 +257,68 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='mt-10 text-xs'>
               <div className='mb-5'>
                 <label htmlFor='area'>物件所在地</label>
-                <input
-                  type='text'
-                  defaultValue={area}
-                  onChange={(e) => {
-                    setArea(e.target.value);
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.area}
+                    onChange={(e) => {
+                      setArea(e.target.value);
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>物件関連リンク</label>
-                <input
-                  type='text'
-                  defaultValue={link}
-                  onChange={(e) => {
-                    setLink(e.target.value);
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.link}
+                    onChange={(e) => {
+                      setLink(e.target.value);
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>対象者</label>
-                <input
-                  type='text'
-                  defaultValue={targetPerson}
-                  onChange={(e) => {
-                    setTargetPerson(e.target.value);
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.target_person}
+                    onChange={(e) => {
+                      setTargetPerson(e.target.value);
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>利用料金</label>
-                <input
-                  type='text'
-                  defaultValue={usageFee}
-                  onChange={(e) => {
-                    setUsageFee(e.target.value);
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.usageee}
+                    onChange={(e) => {
+                      setUsageFee(e.target.value);
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>利用期間</label>
-                <input
-                  type='text'
-                  defaultValue={term}
-                  onChange={(e) => {
-                    setTerm(e.target.value);
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.term}
+                    onChange={(e) => {
+                      setTerm(e.target.value);
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
             </div>
 
@@ -312,58 +327,68 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='mt-10 text-xs'>
               <div className='mb-5'>
                 <label htmlFor='postal_code'>郵便番号</label>
-                <input
-                  type='text'
-                  defaultValue={postal_code}
-                  onChange={(e) => {
-                    setPostalCode(e.target.value.trim());
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.postal_code}
+                    onChange={(e) => {
+                      setPostalCode(e.target.value.trim());
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='address'>住所</label>
-                <input
-                  type='text'
-                  defaultValue={address}
-                  onChange={(e) => {
-                    setAddress(e.target.value.trim());
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.address}
+                    onChange={(e) => {
+                      setAddress(e.target.value.trim());
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='manager'>担当者</label>
-                <input
-                  type='text'
-                  defaultValue={manager}
-                  onChange={(e) => {
-                    setManager(e.target.value.trim());
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.manager}
+                    onChange={(e) => {
+                      setManager(e.target.value.trim());
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='tel'>電話番号</label>
-                <input
-                  type='text'
-                  defaultValue={tel}
-                  onChange={(e) => {
-                    setTel(e.target.value.trim());
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.tel}
+                    onChange={(e) => {
+                      setTel(e.target.value.trim());
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
               <div className='mb-5'>
                 <label htmlFor='email'>メールアドレス</label>
-                <input
-                  type='text'
-                  defaultValue={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value.trim());
-                  }}
-                  className='w-full p-2 rounded-l-md'
-                />
+                {spot ? (
+                  <input
+                    type='text'
+                    defaultValue={spot.email}
+                    onChange={(e) => {
+                      setEmail(e.target.value.trim());
+                    }}
+                    className='w-full p-2 rounded-l-md'
+                  />
+                ) : null}
               </div>
             </div>
 
