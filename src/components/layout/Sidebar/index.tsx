@@ -1,15 +1,43 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
+import { getSpotsId } from 'src/hooks/useSpotIdSelect';
+import { Spot } from 'src/types/spot';
+import { useRouter } from 'next/router';
 
 type Props = {
   group: string;
 };
 
 export const Sidebar: VFC<Props> = (props) => {
+  const router = useRouter();
+
+  const [spot, setSpot] = useState<Spot | null>(null);
+  const [id, setId] = useState<string>();
+
+  const fetchSpot = useCallback(async (id: string) => {
+    const data = await getSpotsId(id);
+    console.log(data);
+
+    setSpot(data || []);
+  }, []);
+
+  useEffect(() => {
+    if (router.asPath !== router.route) {
+      setId(String(router.query.id));
+    }
+  }, [router]);
+  console.log(router.query.id);
+
+  useEffect(() => {
+    if (id) {
+      fetchSpot(router.query.id as string);
+    }
+  }, [id, fetchSpot, router.query.id]);
+
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
     toast.success('ログアウトが完了しました', {
@@ -43,7 +71,7 @@ export const Sidebar: VFC<Props> = (props) => {
         </div>
         <div className='flex flex-col'>
           <Link href='/admins/' passHref>
-            <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+            <a className='text-xs text-center text-white hover:bg-blue-400 py-8 lg:text-sm '>
               プロフィール編集
             </a>
           </Link>
@@ -52,12 +80,16 @@ export const Sidebar: VFC<Props> = (props) => {
               スポット投稿
             </a>
           </Link>
-          {/* <Link href={`/${spots.id}`} passHref> */}
-          <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
-            スポット編集
-          </a>
-          {/* </Link> */}
-          <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+          {/* <Link href='/admins/sosts/[id]/edit' passHref> */}
+          {spot ? (
+            <Link href={`/admins/spots/${spot.id}/edit`}>
+              {/* {console.log(spot)} */}
+              <a className='text-xs text-center text-white hover:bg-blue-400 py-8 lg:text-sm '>
+                スポット編集
+              </a>
+            </Link>
+          ) : null}
+          <a className='text-xs text-center text-white hover:bg-blue-400 py-8 lg:text-sm '>
             <button onClick={HandleLogout}>ログアウト</button>
           </a>
         </div>
