@@ -20,8 +20,7 @@ export const Sidebar: VFC<Props> = (props) => {
 
   const fetchSpot = useCallback(async (id: string) => {
     const data = await getSpotsId(id);
-    console.log(data);
-
+    // console.log(data);
     setSpot(data || []);
   }, []);
 
@@ -30,7 +29,7 @@ export const Sidebar: VFC<Props> = (props) => {
       setId(String(router.query.id));
     }
   }, [router]);
-  console.log(router.query.id);
+  console.log(router.query);
 
   useEffect(() => {
     if (id) {
@@ -80,15 +79,26 @@ export const Sidebar: VFC<Props> = (props) => {
               スポット投稿
             </a>
           </Link>
-          {/* <Link href='/admins/sosts/[id]/edit' passHref> */}
           {spot ? (
-            <Link href={`/admins/spots/${spot.id}/edit`}>
-              {/* {console.log(spot)} */}
+            <span
+              onClick={() => {
+                router.push({
+                  pathname: `/admins/spots/[id]/edit`,
+                  query: { id: spot.id },
+                });
+              }}
+            >
               <a className='text-xs text-center text-white hover:bg-blue-400 py-8 lg:text-sm '>
                 スポット編集
               </a>
-            </Link>
+            </span>
           ) : null}
+          {/* // <Link href={{ pathname: `/admins/spots/[id]/edit`, query: { id: spot.id } }}>
+          //   {console.log(spot)}
+          //   <a className='text-xs text-center text-white hover:bg-blue-400 py-8 lg:text-sm '>
+          //     スポット編集
+          //   </a>
+          // </Link> */}
           <a className='text-xs text-center text-white hover:bg-blue-400 py-8 lg:text-sm '>
             <button onClick={HandleLogout}>ログアウト</button>
           </a>
