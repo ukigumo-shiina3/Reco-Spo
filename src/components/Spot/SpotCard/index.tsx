@@ -1,15 +1,29 @@
-import React, { VFC } from 'react';
+import React, { useCallback, useEffect, useState, VFC } from 'react';
 import { Box, Flex, Image, Badge, useColorModeValue } from '@chakra-ui/react';
 import { PrefectureButton } from 'src/components/Category/PrefectureButton';
 import { SystemButton } from 'src/components/Category/SystemButton';
 import { SpotData } from 'src/types/spotData';
+import { getCategory } from 'src/hooks/useCategorySelect';
+import { Category } from 'src/types/Category';
 
 type SpotCardProps = {
   spot: SpotData;
 };
 
 export const SpotCard: VFC<SpotCardProps> = (props) => {
-  // console.log(props);
+  const [category, setCategory] = useState<Category[]>([]);
+  // console.log(category);
+
+  const fetchCategory = useCallback(async () => {
+    const data = await getCategory();
+    // console.log(data);
+    setCategory(data || []);
+  }, []);
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+  // console.log(category);
 
   const property = {
     imageUrl: 'spot-pic.jpeg',
@@ -36,8 +50,8 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
         <div className='relative text-center text-xs  md:w-30 h-50'>
           <Image src={property.imageUrl} alt={property.imageAlt} roundedTop='lg' />
           <div className='absolute flex flex-col text-white text-center top-0 left-0 '>
-            <PrefectureButton />
-            <SystemButton />
+            <PrefectureButton category={category} />
+            <SystemButton category={category} />
           </div>
         </div>
 
