@@ -4,14 +4,13 @@ import { PrefectureButton } from 'src/components/Category/PrefectureButton';
 import { SystemButton } from 'src/components/Category/SystemButton';
 import { SpotData } from 'src/types/spotData';
 import { getCategory } from 'src/hooks/useCategorySelect';
-import { Category } from 'src/types/Category';
 
 type SpotCardProps = {
   spot: SpotData;
 };
 
 export const SpotCard: VFC<SpotCardProps> = (props) => {
-  const [category, setCategory] = useState<Category[]>([]);
+  const [category, setCategory] = useState();
   // console.log(category);
 
   const fetchCategory = useCallback(async () => {
@@ -50,8 +49,8 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
         <div className='relative text-center text-xs  md:w-30 h-50'>
           <Image src={property.imageUrl} alt={property.imageAlt} roundedTop='lg' />
           <div className='absolute flex flex-col text-white text-center top-0 left-0 '>
-            <PrefectureButton category={category} />
-            <SystemButton category={category} />
+            {category ? <PrefectureButton category={category} /> : ''}
+            {category ? <SystemButton category={category} /> : ''}
           </div>
         </div>
 
