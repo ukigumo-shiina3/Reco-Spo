@@ -4,10 +4,10 @@ import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
+import { getPrefectures } from 'src/hooks/usePrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
-import { getSystems } from 'src/hooks/usePostSystemSelect';
+import { getSystems } from 'src/hooks/useSystemSelect';
 import { getSpotsEdit } from 'src/hooks/useSpotEditSelect';
 import { Spot } from 'src/types/spot';
 
