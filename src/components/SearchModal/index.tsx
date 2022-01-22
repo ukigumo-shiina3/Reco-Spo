@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react';
-import { Button, IconX } from '@supabase/ui';
 import { Fragment, useCallback, useEffect, useState, VFC } from 'react';
 import { getPrefectures } from 'src/hooks/usePrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
@@ -59,57 +59,65 @@ const SearchModal: VFC = () => {
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <div className='inline-block w-full sm:w-96 max-w-md py-8 px-16 my-8 overflow-hidden text-left align-middle transition-all transform border border-gray-300 shadow-xl bg-gray-50 rounded-xl'>
-                <div className='flex'>
+              <div className='inline-block w-full max-w-md p-8 my-8 overflow-hidden text-left align-middle transition-all transform border border-gray-300 shadow-xl bg-gray-50 rounded-xl'>
+                <div className='flex justify-center border-b-4 border-gray-400'>
                   <div className=''>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl font-medium leading-6 text-center text-gray-900 pb-10'
+                      className='text-2xl text-center font-medium leading-6 text-gray-900 pb-10 mt-8'
                     >
                       絞り込み検索
                     </Dialog.Title>
                   </div>
-                  <div className='w-16 pl-8'>
-                    <Button
-                      block
-                      type='default'
-                      size='large'
-                      icon={<IconX />}
-                      onClick={closeModal}
-                    ></Button>
+                  <div className='w-16 pl-8 mt-8'>
+                    <button className='' onClick={closeModal}>
+                      <div className=''>
+                        <img
+                          src='/close-icon.png'
+                          alt='クローズアイコン'
+                          className='m-auto w-8 h-8 ml-8'
+                        />
+                      </div>
+                    </button>
                   </div>
                 </div>
 
-                <div className='mt-4'>
-                  <button className='text-md text-center bg-red-400 rounded-l-md text-white py-4 px-8 border-2'>
+                <div className='mt-8'>
+                  <button className='text-md text-center bg-red-400 rounded-lg text-white py-4 px-8 border-2'>
                     都道府県
                   </button>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-3'>
                   {prefectures_name.map((value) => (
-                    <option key={value} value={value['id']}>
+                    <option
+                      className='border-2 rounded-lg border-gray-300 py-2 px-4'
+                      key={value}
+                      value={value['id']}
+                    >
                       {value['prefectures_name']}
                     </option>
                   ))}
                 </div>
-                <div className='mt-4'>
-                  <button className='text-md text-center bg-red-400 rounded-l-md text-white py-4 px-8'>
+                <div className='mt-12'>
+                  <button className='text-md text-center bg-red-400 rounded-lg text-white py-4 px-8'>
                     制度
                   </button>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-3'>
                   {systems_name.map((value) => (
-                    <option key={value} value={value['id']}>
+                    <option
+                      className='border-2 rounded-lg border-gray-300 py-2 px-4'
+                      key={value}
+                      value={value['id']}
+                    >
                       {value['systems_name']}
                     </option>
                   ))}
                 </div>
-                <div className='flex justify-center mt-4'>
-                  <div className='w-32 p-2'>
-                    <Button block size='large'>
-                      絞り込む
-                    </Button>
-                  </div>
+                <div className='flex justify-center mt-12'>
+                  <button className='text-md text-center bg-blue-400 rounded-lg text-white py-4 px-8'>
+                    絞り込む
+                  </button>
                 </div>
               </div>
             </Transition.Child>
