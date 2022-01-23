@@ -5,11 +5,11 @@ import { UserLayout } from 'src/components/layout/UserLayout';
 import { SearchButton } from 'src/components/Button/SearchButton';
 // import { SearchModal } from 'src/components/SearchModal';
 import { useCallback, useEffect, useState } from 'react';
-import { SpotData } from 'src/types/spotData';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
+import { Spot } from 'src/types/spot';
 
 const Spots: NextPage = () => {
-  const [spots, setSpots] = useState<SpotData[]>([]);
+  const [spots, setSpots] = useState<Spot[]>([]);
 
   const fetchSpot = useCallback(async () => {
     const data = await getSpots();
