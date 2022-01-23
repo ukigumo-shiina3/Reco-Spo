@@ -3,7 +3,7 @@ import { chakra, Flex, useColorModeValue, Icon } from '@chakra-ui/react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 export const SpotPagination: VFC = () => {
-  const PagButton = (props) => {
+  const PagButton = (props: any) => {
     const activeStyle = {
       bg: useColorModeValue('brand.600', 'brand.500'),
       color: useColorModeValue('white', 'gray.200'),

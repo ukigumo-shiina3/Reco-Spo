@@ -7,7 +7,6 @@ import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { useFileUpload } from 'use-file-upload';
-import type { Signin } from 'src/types/signin';
 import { ProfileEditForm } from 'src/components/Admin/ProfileEdit';
 // import Avatar from 'src/components/Photo/PhotoUpload';
 

@@ -16,7 +16,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   const fetchCategory = useCallback(async () => {
     const data = await getCategory();
     // console.log(data);
-    setCategory(data || []);
+    // setCategory(data || []);
   }, []);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
           <Image src={property.imageUrl} alt={property.imageAlt} roundedTop='lg' />
           <div className='absolute flex flex-col text-white text-center top-0 left-0 '>
             {category ? <PrefectureButton category={category} /> : ''}
-            {category ? <SystemButton category={category} /> : ''}
+            {/* {category ? <SystemButton category={category} /> : ''} */}
           </div>
         </div>
 

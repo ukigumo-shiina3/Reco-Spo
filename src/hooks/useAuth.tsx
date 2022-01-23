@@ -25,7 +25,7 @@ const useAuth = (requiresAuth: boolean) => {
     });
     console.groupEnd();
     return () => {
-      authListener.unsubscribe();
+      // authListener.unsubscribe();
     };
   }, []);
 
