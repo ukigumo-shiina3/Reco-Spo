@@ -33,10 +33,10 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
           <Image src={property.imageUrl} alt={property.imageAlt} roundedTop='lg' />
           <div className='absolute flex flex-col text-white text-center top-0 left-0 '>
             <button className='bg-red-400 text-white text-xs font-bold py-2 px-5 rounded '>
-              {props.spot.prefectures.prefectures_name}{' '}
+              {props.spot.prefectures.prefectures_name}
             </button>
             <button className='bg-yellow-400 text-white text-xs font-bold py-2 px-5 rounded '>
-              {props.spot.systems.systems_name}{' '}
+              {props.spot.systems.systems_name}
             </button>
           </div>
         </div>
