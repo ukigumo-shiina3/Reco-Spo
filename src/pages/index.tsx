@@ -7,21 +7,19 @@ import { SpotCard } from 'src/components/Spot/SpotCard';
 import { UserLayout } from 'src/components/layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useCallback, useEffect, useState } from 'react';
-import { SpotData } from 'src/types/spotData';
+import { Spot } from 'src/types/spotData';
 
 const Index: NextPage = () => {
-  const [spots, setSpots] = useState<SpotData[]>([]);
+  const [spots, setSpots] = useState<Spot[]>([]);
 
-  const fetchSpot = useCallback(async () => {
+  const fetchSpot = async () => {
     const data = await getSpots();
-    // console.log(data);
-    setSpots(data || []);
-  }, []);
+    setSpots(data);
+  };
 
   useEffect(() => {
-    fetchSpot();
+    fetchSpot().then();
   }, []);
-  console.log(spots);
 
   return (
     <UserLayout>
