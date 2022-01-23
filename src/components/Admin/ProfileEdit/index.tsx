@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { VFC } from 'react';
-import { Signin } from 'src/types/signin';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
 import { Sidebar } from 'src/components/layout/Sidebar';
+import { Admin } from 'src/types/admin';
 
-export const ProfileEditForm: VFC<Signin> = (props) => {
+export const ProfileEditForm: VFC<Admin> = (props) => {
   const {
     email,
     password,

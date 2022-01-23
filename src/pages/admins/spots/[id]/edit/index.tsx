@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import { Sidebar } from 'src/components/layout/Sidebar';
@@ -36,7 +37,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data: string[] | null = await getPrefectures();
-    setPrefecturesName(data || []);
+    // setPrefecturesName(data || []);
   }, [setPrefecturesName]);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const fetchSystemsListName = useCallback(async () => {
     const data: string[] | null = await getSystems();
-    setSystemsName(data || []);
+    // setSystemsName(data || []);
   }, [setSystemsName]);
 
   useEffect(() => {
@@ -116,7 +117,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     return (
       <>
         <div className='flex bg-gray-100 h-full'>
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             <h1 className='text-3xl mt-24'>スポット編集</h1>
             {/* スポット画像 */}
@@ -155,9 +156,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 <div className='mb-5'>
                   <label htmlFor='name'>スポット名</label>
                   <input
-                    // defaultValue={name}
-                    defaultValue={spot.name}
-                    // value={name}
+                    defaultValue={name}
                     onChange={(e) => {
                       setName(e.target.value.trim());
                     }}
