@@ -1,4 +1,4 @@
-## 使用技術
+## 🏗 使用技術
 
 <p align="left">
   <a href="https://www.typescriptlang.org/"><img src="https://cdn.worldvectorlogo.com/logos/typescript.svg" height="50px;" /></a>
