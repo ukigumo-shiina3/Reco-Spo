@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import type { VFC } from 'react';
 import Link from 'next/link';
-import { Sidebar } from 'src/components/layout/Sidebar';
+import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
