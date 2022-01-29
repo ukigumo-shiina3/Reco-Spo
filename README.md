@@ -33,7 +33,7 @@
 
 <br/>
 
-## サイト概要
+## 🌐 サイト概要
 
 ### Reco Spo とは
 
@@ -71,7 +71,7 @@
 
 <br/>
 
-## 使い方
+## 💬 使い方
 
 ◆ 自治体
 
@@ -97,7 +97,7 @@
 
 <br/>
 
-## デザイン
+## 🎨 デザイン
 
 ### Figma デザインカンプ
 
@@ -105,7 +105,7 @@ https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
 
 <br/>
 
-## 設計書
+## 📄 設計書
 
 ### ER 図
 
