@@ -1,7 +1,3 @@
-<h2 align="left">Reco Spo</h2>
-
-<br/>
-
 ## 使用技術
 
 <p align="left">
