@@ -2,7 +2,7 @@
 import { VFC } from 'react';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
-import { Sidebar } from 'src/components/layout/Sidebar';
+import { Sidebar } from 'src/components/Layout/Sidebar';
 import { Admin } from 'src/types/admin';
 
 export const ProfileEditForm: VFC<Admin> = (props) => {

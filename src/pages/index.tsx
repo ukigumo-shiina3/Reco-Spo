@@ -4,7 +4,7 @@ import { SysyemIntroduction } from 'src/components/System/SysyemIntroduction';
 import NextHeadSeo from 'next-head-seo';
 import { MyPageSeo } from 'src/components/Seo/MyPageSeo';
 import { SpotCard } from 'src/components/Spot/SpotCard';
-import { UserLayout } from 'src/components/layout/UserLayout';
+import { UserLayout } from 'src/components/Layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
