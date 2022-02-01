@@ -2,7 +2,7 @@ import { VFC } from 'react';
 import { Signin } from 'src/types/signin';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
-import { Sidebar } from 'src/components/layout/Sidebar';
+import { Sidebar } from 'src/components/Layout/Sidebar';
 
 export const ProfileEditForm: VFC<Signin> = (props) => {
   const {

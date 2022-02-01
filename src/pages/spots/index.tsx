@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { SpotCard } from 'src/components/Spot/SpotCard';
 import { SpotPagination } from 'src/components/Spot/SpotPagination';
-import { UserLayout } from 'src/components/layout/UserLayout';
+import { UserLayout } from 'src/components/Layout/UserLayout';
 import { SearchButton } from 'src/components/Button/SearchButton';
 import { SearchModal } from 'src/components/SearchModal';
 import { useCallback, useEffect, useState } from 'react';
