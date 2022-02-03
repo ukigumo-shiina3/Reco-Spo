@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useCallback, useEffect, useState, VFC } from 'react';
-import { getPrefectures } from 'src/hooks/usePrefectureSelect';
+import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
 import { SearchButton } from '../Button/SearchButton';
 

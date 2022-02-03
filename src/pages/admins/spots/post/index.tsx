@@ -4,7 +4,7 @@ import { Sidebar } from 'src/components/layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { getPrefectures } from 'src/hooks/usePrefectureSelect';
+import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import Account from 'src/components/Profile';
 import { Session } from '@supabase/supabase-js';
