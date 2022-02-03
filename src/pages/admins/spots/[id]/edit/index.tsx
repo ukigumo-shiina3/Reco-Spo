@@ -4,13 +4,13 @@ import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
-import { getSystems } from 'src/hooks/usePostSystemSelect';
 import { Spot } from 'src/types/spot';
 import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
 import { useRouter } from 'next/router';
+import { getPrefectures } from "src/hooks/usePostPrefectureSelect'";
+import { getSystems } from 'src/hooks/useSystemSelect';
 
 const user = supabase.auth.user();
 
