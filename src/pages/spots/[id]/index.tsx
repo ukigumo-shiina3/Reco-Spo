@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { SpotCarousel } from 'src/components/Spot/SpotCarousel/indexl';
 import { SpotShow } from 'src/components/Spot/SpotShow';
-import { UserLayout } from 'src/components/layout/UserLayout';
+import { UserLayout } from 'src/components/Layout/UserLayout';
 
 const SpotsId: NextPage = () => {
   return (

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { AdminAuthLayout } from 'src/components/layout/AdminAuthLayout';
+import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
 import { Signup } from 'src/types/signup';
 
 export const AdminSignup: VFC<Signup> = (props, session) => {
@@ -60,9 +60,7 @@ export const AdminSignup: VFC<Signup> = (props, session) => {
           </label>
           <input
             type='text'
-           
             value={email}
-      
             onChange={(e) => {
               setEmail(e.target.value.trim());
             }}
@@ -74,9 +72,7 @@ export const AdminSignup: VFC<Signup> = (props, session) => {
           </label>
           <input
             type='text'
-        
             value={password}
-          
             onChange={(e) => {
               setPassword(e.target.value.trim());
             }}

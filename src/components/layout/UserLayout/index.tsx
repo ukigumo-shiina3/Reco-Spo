@@ -1,5 +1,5 @@
-import { Header } from 'src/components/layout/Header';
-import { Footer } from 'src/components/layout/Footer';
+import { Header } from 'src/components/Layout/Header';
+import { Footer } from 'src/components/Layout/Footer';
 import { VFC } from 'react';
 
 type Props = {

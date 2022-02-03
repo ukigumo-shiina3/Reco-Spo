@@ -8,7 +8,7 @@ import { getSpots } from 'src/hooks/useSpotCardSelect';
 import SearchModal from 'src/components/SearchModal';
 
 const Spots: NextPage = () => {
-  const [spots, setSpots] = useState<SpotData[]>([]);
+  const [spots, setSpots] = useState<Spot[]>([]);
 
   const fetchSpot = useCallback(async () => {
     const data = await getSpots();
@@ -21,7 +21,7 @@ const Spots: NextPage = () => {
 
   return (
     <UserLayout>
-      <SearchModal />
+      {/* <SearchModal /> */}
       <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
         {spots.map((spot) => {
           console.log(spot);

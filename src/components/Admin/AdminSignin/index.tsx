@@ -7,7 +7,7 @@ import { supabase } from 'src/libs/supabase';
 import { useRouter } from 'next/router';
 import { Session } from '@supabase/supabase-js';
 import { toast, Toaster } from 'react-hot-toast';
-import { AdminAuthLayout } from 'src/components/layout/AdminAuthLayout';
+import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
 
 type Props = {
   title: string;

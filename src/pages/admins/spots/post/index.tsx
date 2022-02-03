@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState, VFC } from 'react';
-import { Sidebar } from 'src/components/layout/Sidebar';
+import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
-import Account from 'src/components/Profile';
 import { Session } from '@supabase/supabase-js';
 import { getSystems } from 'src/hooks/useSystemSelect';
 
@@ -34,7 +33,7 @@ const SpotsPost: NextPage = () => {
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data: string[] | null = await getPrefectures();
-    setPrefecturesName(data || []);
+    // setPrefecturesName(data || []);
     // console.log(data);
   }, [setPrefecturesName]);
 
@@ -44,7 +43,7 @@ const SpotsPost: NextPage = () => {
 
   const fetchSystemsListName = useCallback(async () => {
     const data: string[] | null = await getSystems();
-    setSystemsName(data || []);
+    // setSystemsName(data || []);
     // console.log(data);
   }, [setSystemsName]);
 
@@ -124,7 +123,7 @@ const SpotsPost: NextPage = () => {
     return (
       <>
         <div className='flex bg-gray-100 h-full'>
-          <Sidebar />
+          <Sidebar group={''} />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             {/* スポット投稿 */}
             <h1 className='text-3xl mt-24'>スポット投稿</h1>
