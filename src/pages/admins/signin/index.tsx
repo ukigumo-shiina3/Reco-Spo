@@ -4,7 +4,9 @@ import useAuth from 'src/hooks/useAuth';
 
 const Signin: NextPage = () => {
   const session = useAuth(true);
-  return <AdminSignin session={session} title='ログイン' button='ログイン' />;
+  return (
+    <AdminSignin session={session} title='ログイン' button='ログイン' email={''} password={''} />
+  );
 };
 
 export default Signin;

@@ -49,9 +49,9 @@ export const SpotCarousel: VFC = () => {
   const nextSlide = () => {
     setCurrentSlide((s) => (s === slidesCount - 1 ? 0 : s + 1));
   };
-  const setSlide = (slide) => {
-    setCurrentSlide(slide);
-  };
+  // const setSlide = (slide) => {
+  //   setCurrentSlide(slide);
+  // };
   const carouselStyle = {
     transition: 'all .5s',
     ml: `-${currentSlide * 100}%`,
@@ -76,13 +76,13 @@ export const SpotCarousel: VFC = () => {
             </Box>
           ))}
         </Flex>
-        <Text {...arrowStyles} left='0' onClick={prevSlide}>
+        {/* <Text {...arrowStyles} left='0' onClick={prevSlide}>
           &#10094;
         </Text>
         <Text {...arrowStyles} right='0' onClick={nextSlide}>
           &#10095;
-        </Text>
-        <HStack justify='center' pos='absolute' bottom='8px' w='full'>
+        </Text> */}
+        {/* <HStack justify='center' pos='absolute' bottom='8px' w='full'>
           {Array.from({ length: slidesCount }).map((_, slide) => (
             <Box
               key={`dots-${slide}`}
@@ -97,7 +97,7 @@ export const SpotCarousel: VFC = () => {
               onClick={() => setSlide(slide)}
             ></Box>
           ))}
-        </HStack>
+        </HStack> */}
       </Flex>
     </Flex>
   );
