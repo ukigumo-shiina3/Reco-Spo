@@ -21,7 +21,7 @@ const Spots: NextPage = () => {
 
   return (
     <UserLayout>
-      {/* <SearchModal /> */}
+      <SearchModal />
       <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
         {spots.map((spot) => {
           console.log(spot);
