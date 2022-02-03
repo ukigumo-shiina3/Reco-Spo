@@ -9,7 +9,7 @@ import { Session } from '@supabase/supabase-js';
 import { Spot } from 'src/types/spot';
 import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
 import { useRouter } from 'next/router';
-import { getPrefectures } from "src/hooks/usePostPrefectureSelect'";
+import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
 
 const user = supabase.auth.user();
