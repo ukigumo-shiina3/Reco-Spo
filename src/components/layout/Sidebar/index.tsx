@@ -9,7 +9,6 @@ type Props = {
   group: string;
 };
 
-export const Sidebar: VFC<Props> = (props) => {
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
     toast.success('ログアウトが完了しました', {

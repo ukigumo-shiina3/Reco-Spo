@@ -1,22 +1,28 @@
 import { useRouter } from 'next/router';
 import type { VFC } from 'react';
-import Link from 'next/link';
-import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useFileUpload } from 'use-file-upload';
 import { ProfileEditForm } from 'src/components/Admin/ProfileEdit';
+import { Admin } from 'src/types/admin';
 // import Avatar from 'src/components/Photo/PhotoUpload';
 
 const ProfileEdit: VFC = () => {
-  // const [image, setImage] = useState('');
   // const [avatar_url, setAvatarUrl] = useState<string>('');
-  const [prefecture, setPrefecture] = useState<string>('');
-  const [group, setGroup] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+
+  const [admin, admin] = useState<Admin>({
+    email: '',
+    password: '',
+    prefecture: '',
+    group: '',
+    setPrefecture: (prefecture: string) => {},
+    setGroup: (group: string) => {},
+    setEmail: (email: string) => {},
+    setPassword: (password: string) => {},
+    handleProfileEdit: () => {},
+  });
 
   const router = useRouter();
   const session = useAuth(true);
@@ -29,17 +35,17 @@ const ProfileEdit: VFC = () => {
 
     if (!user) return;
 
-    if (prefecture === '' || group === '' || password === '') {
+    if (admin.prefecture === '' || admin.group === '' || admin.password === '') {
       toast.error('入力されていない項目があります');
     } else {
       const { data, error } = await supabase
         .from('admins')
         .update({
           // avatar_url: avatar_url,
-          prefecture: prefecture,
-          group: group,
-          email: email,
-          password: password,
+          prefecture: admin.prefecture,
+          group: admin.group,
+          email: admin.email,
+          password: admin.password,
         })
         .eq('id', user.id);
       if (error) {
@@ -51,7 +57,7 @@ const ProfileEdit: VFC = () => {
         duration: 3000,
       });
     }
-  }, [prefecture, group, email, password, user]);
+  }, [admin.prefecture, admin.group, admin.email, admin.password, user]);
 
   // const defaultSrc =
   //   'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png';
@@ -61,15 +67,15 @@ const ProfileEdit: VFC = () => {
   return (
     <>
       <ProfileEditForm
-        group={group}
-        prefecture={prefecture}
-        email={email}
-        password={password}
-        setPrefecture={setPrefecture}
-        setGroup={setGroup}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        handleProfileEdit={handleProfileEdit}
+        group={admin.group}
+        prefecture={admin.prefecture}
+        email={admin.email}
+        password={admin.password}
+        setPrefecture={admin.setPrefecture}
+        setGroup={admin.setGroup}
+        setEmail={admin.setEmail}
+        setPassword={admin.setPassword}
+        handleProfileEdit={admin.handleProfileEdit}
       />
     </>
   );
