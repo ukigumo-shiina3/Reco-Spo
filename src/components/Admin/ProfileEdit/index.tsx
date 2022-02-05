@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { VFC } from 'react';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
@@ -6,16 +5,16 @@ import { Sidebar } from 'src/components/Layout/Sidebar';
 import { Admin } from 'src/types/admin';
 
 export const ProfileEditForm: VFC<Admin> = (props) => {
-  const { email, password, prefecture, group, setAdmin, handleProfileEdit } = props;
+
 
   const defaultSrc =
     'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png';
 
   return (
-    <div className='flex bg-gray-100 h-full'>
+    <div className='flex h-full bg-gray-200'>
       <Sidebar group={group} />
-      <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg '>
-        <h1 className='text-3xl mt-24'>プロフィール編集</h1>
+      <div className='bg-white h-full ml-auto mr-auto my-20 px-6 overflow-hidden shadow-lg md:w-2/5 md:px-16'>
+        <h1 className='text-center pt-5 mt-5 md:text-2xl'>プロフィール編集</h1>
         <div className='pt-5 mt-5'>
           {/* <Avatar
           url={avatar_url}
@@ -30,8 +29,6 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
           alt='preview'
           className='w-16 h-16 rounded-full'
         />
-        
-
         <input
           type='button'
           // value='{avatar_url}'
@@ -45,8 +42,7 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
             // }}
           }
         /> */}
-          <img src='/profile-icon.png' alt='image' className='w-16 h-16 rounded-full' />
-          <p className='text-sm pl-4 mt-2'>変更</p>
+          <p className='text-sm pl-4'>変更</p>
         </div>
         <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
           都道府県
@@ -58,7 +54,7 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
             setAdmin({ prefecture: e.target.value.trim });
           }}
           placeholder='山形県'
-          className='w-full p-2 rounded-l-md'
+          className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
         />
         <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
           自治体
@@ -70,7 +66,7 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
             setGroup(e.target.value.trim());
           }}
           placeholder='遊佐町役場'
-          className='w-full p-2 rounded-l-md'
+          className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
         />
         <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
           メールアドレス
@@ -83,7 +79,7 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
             setEmail(e.target.value.trim());
           }}
           placeholder='reco-spo@gmail.com'
-          className='w-full p-2 rounded-l-md'
+          className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
         />
         <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
           パスワード
@@ -95,7 +91,7 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
             setPassword(e.target.value.trim());
           }}
           placeholder='test1234'
-          className='w-full p-2 rounded-l-md'
+          className='w-full p-2 bg-gray-200 rounded-l-md placeholder-gray-500'
         />
         <div className='text-center pb-10'>
           <Link href='/admins' passHref>

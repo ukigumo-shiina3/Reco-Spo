@@ -7,7 +7,7 @@ import { toast, Toaster } from 'react-hot-toast';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
-import { getSystems } from 'src/hooks/usePostSystemSelect';
+import { getSystems } from 'src/hooks/useSystemSelect';
 
 const user = supabase.auth.user();
 
