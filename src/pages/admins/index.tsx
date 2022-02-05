@@ -12,16 +12,11 @@ import { Admin } from 'src/types/admin';
 const ProfileEdit: VFC = () => {
   // const [avatar_url, setAvatarUrl] = useState<string>('');
 
-  const [admin, admin] = useState<Admin>({
+  const [admin, setAdmin] = useState({
     email: '',
     password: '',
     prefecture: '',
     group: '',
-    setPrefecture: (prefecture: string) => {},
-    setGroup: (group: string) => {},
-    setEmail: (email: string) => {},
-    setPassword: (password: string) => {},
-    handleProfileEdit: () => {},
   });
 
   const router = useRouter();
@@ -59,11 +54,6 @@ const ProfileEdit: VFC = () => {
     }
   }, [admin.prefecture, admin.group, admin.email, admin.password, user]);
 
-  // const defaultSrc =
-  //   'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png';
-
-  // const [files, selectFiles] = useFileUpload();
-
   return (
     <>
       <ProfileEditForm
@@ -71,11 +61,8 @@ const ProfileEdit: VFC = () => {
         prefecture={admin.prefecture}
         email={admin.email}
         password={admin.password}
-        setPrefecture={admin.setPrefecture}
-        setGroup={admin.setGroup}
-        setEmail={admin.setEmail}
-        setPassword={admin.setPassword}
-        handleProfileEdit={admin.handleProfileEdit}
+        setAdmin={setAdmin}
+        handleProfileEdit={handleProfileEdit}
       />
     </>
   );

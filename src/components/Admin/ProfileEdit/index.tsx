@@ -6,17 +6,7 @@ import { Sidebar } from 'src/components/Layout/Sidebar';
 import { Admin } from 'src/types/admin';
 
 export const ProfileEditForm: VFC<Admin> = (props) => {
-  const {
-    email,
-    password,
-    prefecture,
-    group,
-    setPrefecture,
-    setGroup,
-    setEmail,
-    setPassword,
-    handleProfileEdit,
-  } = props;
+  const { email, password, prefecture, group, setAdmin, handleProfileEdit } = props;
 
   const defaultSrc =
     'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png';
@@ -65,7 +55,7 @@ export const ProfileEditForm: VFC<Admin> = (props) => {
           type='text'
           value={prefecture}
           onChange={(e) => {
-            setPrefecture(e.target.value.trim());
+            setAdmin({ prefecture: e.target.value.trim });
           }}
           placeholder='山形県'
           className='w-full p-2 rounded-l-md'
