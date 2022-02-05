@@ -4,6 +4,4 @@ export type Admin = {
   password: string;
   prefecture: string;
   group: string;
-  setAdmin: (admin: Admin) => void;
-  handleProfileEdit: () => void;
 };
