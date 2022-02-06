@@ -1,12 +1,9 @@
-export type Spot = {
+export type SpotEdit = {
   id: string;
   address: string;
-  admin_id: string;
   appeal: string;
   area: string;
-  created_at: string;
   email: string;
-  image_url: string;
   link: string;
   manager: string;
   name: string;
@@ -23,6 +20,7 @@ export type Spot = {
   tel: string;
   term: string;
   title: string;
-  updated_at: string;
   usage_fee: string;
+  session: null;
+  spot: null;
 };
