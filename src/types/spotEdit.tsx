@@ -21,6 +21,5 @@ export type SpotEdit = {
   term: string;
   title: string;
   usage_fee: string;
-  session: null;
   spot: null;
 };
