@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
@@ -13,11 +13,16 @@ import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
 import { useRouter } from 'next/router';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
+import { Prefectures } from 'src/types/prefectures';
+import { Systems } from 'src/types/systems';
 
 const user = supabase.auth.user();
 
 const SpotsEdit: NextPage<Spot> = () => {
   const router = useRouter();
+  // const [session, setSession] = useState<Session | null>(null);
+
+  // const [id, setId] = useState<string>();
 
   const [spotEdit, setSpotEdit] = useState<SpotEdit>({
     name: '',
@@ -41,31 +46,28 @@ const SpotsEdit: NextPage<Spot> = () => {
     manager: '',
     tel: '',
     email: '',
-    session: null,
-    spot: null,
     id: '',
   });
 
-  // const [prefectures_name, setPrefecturesName] = useState([]);
-  // const [systems_name, setSystemsName] = useState([]);
-  // const [session, setSession] = useState<Session | null>(null);
-  // const [spot, setSpot] = useState<Spot | null>(null);
-  // const [id, setId] = useState<string>();
+  const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
+  const [systems_name, setSystemsName] = useState<Systems[]>([]);
+  const [session, setSession] = useState<Session | null>(null);
+  const [id, setId] = useState<string>();
+  const [spot, setSpot] = useState<Spot[]>([]);
 
   const fetchPrefecturesListName = useCallback(async () => {
-    const data: string[] | null = await getPrefectures();
-    setSpotEdit(data || []);
-  }, [setSpotEdit]);
+    const data = await getPrefectures();
+    setPrefecturesName(data);
+  }, [setPrefecturesName]);
 
   useEffect(() => {
     fetchPrefecturesListName();
   }, [user, fetchPrefecturesListName]);
 
   const fetchSystemsListName = useCallback(async () => {
-    const data: string[] | null = await getSystems();
-
-    setSpotEdit(data || []);
-  }, [setSpotEdit]);
+    const data = await getSystems();
+    setSystemsName(data);
+  }, []);
 
   useEffect(() => {
     fetchSystemsListName();
@@ -73,29 +75,28 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const fetchSpot = useCallback(async (id: string) => {
     const data = await getSpotsDetail(id);
-    // console.log(data);
-    setSpotEdit(data || []);
+    setSpot(data);
   }, []);
 
   useEffect(() => {
     if (router.asPath !== router.route) {
-      setSpotEdit(String(router.query.id));
+      setId(String(router.query.id));
     }
     // console.log(router.query.id);
   }, [router]);
 
   useEffect(() => {
-    if (spotEdit.id) {
+    if (id) {
       fetchSpot(router.query.id as string);
     }
     // console.log(router.query.id);
-  }, [spotEdit.id, fetchSpot, router.query.id]);
+  }, [id, fetchSpot, router.query.id]);
 
   useEffect(() => {
-    setSpotEdit(supabase.auth.session());
+    setSession(supabase.auth.session());
 
     supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
-      setSpotEdit(session);
+      setSession(session);
     });
   }, []);
 
@@ -141,7 +142,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.manager,
     spotEdit.tel,
     spotEdit.email,
-    spotEdit.id,
+    // spotEdit.id,
   ]);
   // console.log({ spot });
 
@@ -149,7 +150,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     return (
       <>
         <div className='flex bg-gray-100 h-full'>
-          <Sidebar />
+          <Sidebar group={''} />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             <h1 className='text-3xl mt-24'>スポット編集</h1>
             {/* スポット画像 */}
@@ -187,7 +188,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               <div className='mt-10 text-xs'>
                 <div className='mb-5'>
                   <label htmlFor='name'>スポット名</label>
-                  {spotEdit ? (
+                  {spot ? (
                     <input
                       defaultValue={spotEdit.name}
                       onChange={(e) => {
@@ -196,11 +197,11 @@ const SpotsEdit: NextPage<Spot> = () => {
                       className='w-full p-2 rounded-l-md'
                     />
                   ) : null}
-                  {console.log(spotEdit)}
+                  {/* {console.log(spotEdit)} */}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='title'>スポットタイトル</label>
-                  {spotEdit ? (
+                  {spot ? (
                     <input
                       type='text'
                       defaultValue={spotEdit.title}
@@ -213,7 +214,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
-                  {spotEdit.prefectures_name.length == 0 ? null : (
+                  {prefectures_name.length == 0 ? null : (
                     <select
                       defaultValue={spotEdit.prefecture_id}
                       onChange={(e) => {
@@ -255,7 +256,7 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='mt-10 text-xs'>
               <div className='mb-5'>
                 <label htmlFor='appeal'>アピールポイント</label>
-                {spotEdit ? (
+                {spot ? (
                   <textarea
                     defaultValue={spotEdit.appeal}
                     onChange={(e) => {
@@ -272,7 +273,7 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='mt-10 text-xs'>
               <div className='mb-5'>
                 <label htmlFor='area'>物件所在地</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.area}
@@ -285,7 +286,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>物件関連リンク</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.link}
@@ -298,7 +299,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>対象者</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.target_person}
@@ -311,7 +312,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>利用料金</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.usage_fee}
@@ -324,7 +325,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='スポット画像'>利用期間</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.term}
@@ -342,7 +343,7 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='mt-10 text-xs'>
               <div className='mb-5'>
                 <label htmlFor='postal_code'>郵便番号</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.postal_code}
@@ -355,7 +356,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='address'>住所</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.address}
@@ -368,7 +369,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='manager'>担当者</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.manager}
@@ -381,7 +382,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='tel'>電話番号</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.tel}
@@ -394,7 +395,7 @@ const SpotsEdit: NextPage<Spot> = () => {
               </div>
               <div className='mb-5'>
                 <label htmlFor='email'>メールアドレス</label>
-                {spotEdit ? (
+                {spot ? (
                   <input
                     type='text'
                     defaultValue={spotEdit.email}
