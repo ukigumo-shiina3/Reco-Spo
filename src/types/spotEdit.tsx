@@ -1,13 +1,5 @@
 export type SpotEdit = {
   id: string;
-  address: string;
-  appeal: string;
-  area: string;
-  email: string;
-  link: string;
-  manager: string;
-  name: string;
-  postal_code: string;
   prefecture_id: string;
   prefectures: {
     prefectures_name: string[];
@@ -16,10 +8,18 @@ export type SpotEdit = {
   systems: {
     systems_name: string[];
   };
-  target_person: string;
-  tel: string;
-  term: string;
+  name: string;
   title: string;
+  image_url: string;
+  appeal: string;
+  area: string;
+  link: string;
+  target_person: string;
   usage_fee: string;
-  // spot: null;
+  term: string;
+  postal_code: string;
+  address: string;
+  manager: string;
+  tel: string;
+  email: string;
 };
