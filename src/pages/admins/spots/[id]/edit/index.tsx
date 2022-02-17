@@ -20,13 +20,9 @@ const user = supabase.auth.user();
 
 const SpotsEdit: NextPage<Spot> = () => {
   const router = useRouter();
-  // const [session, setSession] = useState<Session | null>(null);
-
-  // const [id, setId] = useState<string>();
 
   const [spotEdit, setSpotEdit] = useState<SpotEdit>({
-    name: '',
-    title: '',
+    id: '',
     prefecture_id: '',
     prefectures: {
       prefectures_name: [],
@@ -35,6 +31,9 @@ const SpotsEdit: NextPage<Spot> = () => {
     systems: {
       systems_name: [],
     },
+    name: '',
+    title: '',
+
     appeal: '',
     area: '',
     link: '',
@@ -46,14 +45,13 @@ const SpotsEdit: NextPage<Spot> = () => {
     manager: '',
     tel: '',
     email: '',
-    id: '',
   });
 
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [session, setSession] = useState<Session | null>(null);
   const [id, setId] = useState<string>();
-  const [spot, setSpot] = useState<Spot[]>([]);
+  const [spot, setSpot] = useState<Spot>();
 
   const fetchPrefecturesListName = useCallback(async () => {
     const data = await getPrefectures();
@@ -142,9 +140,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.manager,
     spotEdit.tel,
     spotEdit.email,
-    // spotEdit.id,
   ]);
-  // console.log({ spot });
 
   if (user) {
     return (
@@ -222,8 +218,8 @@ const SpotsEdit: NextPage<Spot> = () => {
                       }}
                       className='w-full p-2 rounded-l-md'
                     >
-                      {prefectures_name.map((value) => (
-                        <option key={value} value={value['id']}>
+                      {prefectures_name.map((value, index) => (
+                        <option key={index} value={value['id']}>
                           {value['prefectures_name']}
                         </option>
                       ))}
@@ -240,8 +236,8 @@ const SpotsEdit: NextPage<Spot> = () => {
                       }}
                       className='w-full p-2 rounded-l-md'
                     >
-                      {systems_name.map((value) => (
-                        <option key={value} value={value['id']}>
+                      {systems_name.map((value, index) => (
+                        <option key={index} value={value['id']}>
                           {value['systems_name']}
                         </option>
                       ))}
