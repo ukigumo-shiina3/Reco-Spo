@@ -10,7 +10,7 @@ export type Spot = {
   };
   name: string;
   title: string;
-  image_url: string;
+  // image_url: string;
   appeal: string;
   area: string;
   link: string;

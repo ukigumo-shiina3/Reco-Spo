@@ -28,7 +28,6 @@ const SpotsPost: NextPage = () => {
     },
     name: '',
     title: '',
-    image_url: '',
     appeal: '',
     area: '',
     link: '',
