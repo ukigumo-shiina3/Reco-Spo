@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 
+
 const About: NextPage = () => {
   return (
     <UserLayout>
