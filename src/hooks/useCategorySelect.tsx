@@ -1,5 +1,4 @@
 import { supabase } from 'src/libs/supabase';
-import { Category } from 'src/types/Category';
 
 export const getCategory = async () => {
   const { data, error } = await supabase
