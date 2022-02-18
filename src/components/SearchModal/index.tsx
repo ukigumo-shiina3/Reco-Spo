@@ -1,14 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useCallback, useEffect, useState, VFC } from 'react';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
 import { SearchButton } from '../Button/SearchButton';
+import { supabase } from 'src/libs/supabase';
+import { Prefectures } from 'src/types/prefectures';
+import { Systems } from 'src/types/systems';
 
-const SearchModal: VFC = () => {
+const user = supabase.auth.user();
+
+export const SearchModal: VFC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [prefectures_name, setPrefecturesName] = useState([]);
-  const [systems_name, setSystemsName] = useState([]);
+  const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
+  const [systems_name, setSystemsName] = useState<Systems[]>([]);
 
   const openModal = useCallback(() => {
     setIsOpen(true);
@@ -21,22 +27,22 @@ const SearchModal: VFC = () => {
   }, []);
 
   const fetchPrefecturesListName = useCallback(async () => {
-    const data: string[] | null = await getPrefectures();
-    setPrefecturesName(data || []);
+    const data = await getPrefectures();
+    setPrefecturesName(data);
   }, [setPrefecturesName]);
 
   useEffect(() => {
     fetchPrefecturesListName();
-  }, [fetchPrefecturesListName]);
+  }, [user, fetchPrefecturesListName]);
 
   const fetchSystemsListName = useCallback(async () => {
-    const data: string[] | null = await getSystems();
-    setSystemsName(data || []);
-  }, [setSystemsName]);
+    const data = await getSystems();
+    setSystemsName(data);
+  }, []);
 
   useEffect(() => {
     fetchSystemsListName();
-  }, [fetchSystemsListName]);
+  }, [user, fetchSystemsListName]);
 
   return (
     <>
@@ -88,10 +94,10 @@ const SearchModal: VFC = () => {
                   </button>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-3'>
-                  {prefectures_name.map((value) => (
+                  {prefectures_name.map((value, index) => (
                     <option
                       className='border-2 rounded-lg border-gray-300 py-2 px-4'
-                      key={value}
+                      key={index}
                       value={value['id']}
                     >
                       {value['prefectures_name']}
@@ -104,10 +110,10 @@ const SearchModal: VFC = () => {
                   </button>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-3'>
-                  {systems_name.map((value) => (
+                  {systems_name.map((value, index) => (
                     <option
                       className='border-2 rounded-lg border-gray-300 py-2 px-4'
-                      key={value}
+                      key={index}
                       value={value['id']}
                     >
                       {value['systems_name']}
