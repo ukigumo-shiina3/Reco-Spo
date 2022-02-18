@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
 import { SpotCard } from 'src/components/Spot/SpotCard';
 import { SpotPagination } from 'src/components/Spot/SpotPagination';
-import { UserLayout } from 'src/components/layout/UserLayout';
 import { useCallback, useEffect, useState } from 'react';
-import { SpotData } from 'src/types/spotData';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import SearchModal from 'src/components/SearchModal';
+import { UserLayout } from 'src/components/Layout/UserLayout';
+import { Spot } from 'src/types/spot';
 
 const Spots: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
