@@ -8,19 +8,38 @@ import { UserLayout } from 'src/components/Layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
+import { Oval } from 'react-loader-spinner';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState(false);
 
   const fetchSpot = async () => {
-    const data = await getSpots();
-    setSpots(data || []);
+    try {
+      const data = await getSpots();
+      setSpots(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchSpot().then();
   }, []);
   console.log(spots);
+
+  if (loading) {
+    return (
+      <div className='container mx-auto'>
+        <Oval color='#61DBFB' height={100} width={100} ariaLabel='loading' />
+      </div>
+    );
+  }
+  if (error) {
+    return <div>エラーが発生しました。</div>;
+  }
 
   return (
     <UserLayout>
