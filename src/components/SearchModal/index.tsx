@@ -8,6 +8,7 @@ import { SearchButton } from '../Button/SearchButton';
 import { supabase } from 'src/libs/supabase';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
+import { Oval } from 'react-loader-spinner';
 
 const user = supabase.auth.user();
 
@@ -15,6 +16,8 @@ export const SearchModal: VFC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState(false);
 
   const openModal = useCallback(() => {
     setIsOpen(true);
@@ -27,8 +30,13 @@ export const SearchModal: VFC = () => {
   }, []);
 
   const fetchPrefecturesListName = useCallback(async () => {
-    const data = await getPrefectures();
-    setPrefecturesName(data);
+    try {
+      const data = await getPrefectures();
+      setPrefecturesName(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   }, [setPrefecturesName]);
 
   useEffect(() => {
@@ -36,8 +44,12 @@ export const SearchModal: VFC = () => {
   }, [user, fetchPrefecturesListName]);
 
   const fetchSystemsListName = useCallback(async () => {
-    const data = await getSystems();
-    setSystemsName(data);
+    try {
+      const data = await getSystems();
+      setSystemsName(data);
+    } catch (error) {
+      setError(true);
+    }
   }, []);
 
   useEffect(() => {

@@ -24,7 +24,9 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@headlessui/react": "^1.4.1",
-    "@supabase/supabase-js": "^1.25.2",
+    "@supabase/supabase-js": "1.28.1",
+    "@supabase/ui": "^0.35.0",
+    "@welcome-ui/avatar": "^3.4.3",
     "@xstyled/styled-components": "^3.1.2",
     "@xstyled/system": "^3.1.2",
     "browser-image-compression": "^1.0.17",
@@ -37,6 +39,7 @@
     "react-hot-toast": "^2.1.1",
     "react-icons": "^4.3.1",
     "react-image-crop": "^9.0.5",
+    "react-loader-spinner": "^5.1.4",
     "styled-components": "^5.3.3",
     "use-file-upload": "^1.0.11"
   },
