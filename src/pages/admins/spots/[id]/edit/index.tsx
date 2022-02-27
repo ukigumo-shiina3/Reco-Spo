@@ -15,6 +15,7 @@ import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
+import { Oval } from 'react-loader-spinner';
 
 const user = supabase.auth.user();
 
@@ -52,10 +53,17 @@ const SpotsEdit: NextPage<Spot> = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [id, setId] = useState<string>();
   const [spot, setSpot] = useState<Spot>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState(false);
 
   const fetchPrefecturesListName = useCallback(async () => {
-    const data = await getPrefectures();
-    setPrefecturesName(data);
+    try {
+      const data = await getPrefectures();
+      setPrefecturesName(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   }, [setPrefecturesName]);
 
   useEffect(() => {
@@ -63,8 +71,13 @@ const SpotsEdit: NextPage<Spot> = () => {
   }, [user, fetchPrefecturesListName]);
 
   const fetchSystemsListName = useCallback(async () => {
-    const data = await getSystems();
-    setSystemsName(data);
+    try {
+      const data = await getSystems();
+      setSystemsName(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -72,8 +85,13 @@ const SpotsEdit: NextPage<Spot> = () => {
   }, [user, fetchSystemsListName]);
 
   const fetchSpot = useCallback(async (id: string) => {
-    const data = await getSpotsDetail(id);
-    setSpot(data);
+    try {
+      const data = await getSpotsDetail(id);
+      setSpot(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -141,6 +159,17 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.tel,
     spotEdit.email,
   ]);
+
+  if (loading) {
+    return (
+      <div className='flex justify-center mt-64'>
+        <Oval color='#61DBFB' height={100} width={100} ariaLabel='loading' />
+      </div>
+    );
+  }
+  if (error) {
+    return <div>エラーが発生しました。</div>;
+  }
 
   if (user) {
     return (
