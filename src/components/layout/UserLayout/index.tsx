@@ -7,23 +7,12 @@ type Props = {
 };
 
 export const UserLayout: VFC<Props> = (props) => {
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const handleLoading = useCallback(() => {
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    handleLoading();
-  }, [handleLoading]);
 
   return (
     <div>
-      {/* {loading ? null : ( */}
       <Header />
       {props.children}
       <Footer />
-      {/* )}   */}
     </div>
   );
 };
