@@ -32,7 +32,7 @@ const Index: NextPage = () => {
 
   if (loading) {
     return (
-      <div className='container mx-auto'>
+      <div className='flex justify-center mt-64'>
         <Oval color='#61DBFB' height={100} width={100} ariaLabel='loading' />
       </div>
     );
