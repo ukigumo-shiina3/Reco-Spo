@@ -25,14 +25,14 @@ const useAuth = (requiresAuth: boolean) => {
     });
     console.groupEnd();
     return () => {
-      // authListener.unsubscribe();
+      authListener?.unsubscribe();
     };
-  }, []);
+  }, [requiresAuth, router]);
 
   useEffect(() => {
     if (requiresAuth && session) router.push('/admins');
     console.log(session);
-  }, [session]);
+  }, [requiresAuth, session, router]);
 
   return session;
 };
