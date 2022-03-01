@@ -8,7 +8,6 @@ import { SearchButton } from '../Button/SearchButton';
 import { supabase } from 'src/libs/supabase';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
-import { Oval } from 'react-loader-spinner';
 
 const user = supabase.auth.user();
 
