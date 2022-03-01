@@ -28,20 +28,20 @@ export const AdminSignin: VFC<Props> = (props, session) => {
   const [password, setPassword] = useState<string>('');
 
   const handleSignin = useCallback(async () => {
-    const { user, data, error } = await supabase.auth.signIn({
+    const { user, session, error } = await supabase.auth.signIn({
       email: email,
       password: password,
     });
 
     console.log(user);
-    console.log(data);
+    console.log(session);
     console.log(error);
 
     if (email == '' || password == '') {
       toast.error('ログイン情報を入力してください');
       router.push('/admins/signin');
     } else {
-      if (data) {
+      if (session) {
         toast.success('ログインが完了しました', {
           duration: 3000,
         });
