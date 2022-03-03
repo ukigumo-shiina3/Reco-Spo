@@ -1,3 +1,23 @@
+<br/>
+
+## 🎨 デザイン
+
+### Figma デザインカンプ
+
+https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
+
+<br/>
+
+## 📄 設計書
+
+### ER 図
+
+https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
+
+### テーブル定義書
+
+https://docs.google.com/spreadsheets/d/1eQOAis1HpEIBGZF8tvFJJLJ5TxZNYRh1RelUl1a2RA0/edit?usp=sharing
+
 <br />
 
 ## 🏗 使用技術
@@ -126,23 +146,3 @@
 ・都道府県もしくは制度での絞り込み検索ができる。
 
 ・地図上から可視化して登録されているスポットを地図検索できる。
-
-<br/>
-
-## 🎨 デザイン
-
-### Figma デザインカンプ
-
-https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
-
-<br/>
-
-## 📄 設計書
-
-### ER 図
-
-https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
-
-### テーブル定義書
-
-https://docs.google.com/spreadsheets/d/1eQOAis1HpEIBGZF8tvFJJLJ5TxZNYRh1RelUl1a2RA0/edit?usp=sharing
