@@ -127,7 +127,7 @@ https://docs.google.com/spreadsheets/d/1eQOAis1HpEIBGZF8tvFJJLJ5TxZNYRh1RelUl1a2
 
 ◆ 自治体
 
-- 各自治体毎にアカウント登録ができ、プロフィールが編集できる。
+- 各自治体毎にアカウント登録ができ、プロフィール編集ができる。
 
 - 支援制度に関するスポットの投稿と編集ができる。
 
