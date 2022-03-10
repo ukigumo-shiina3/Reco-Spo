@@ -10,18 +10,37 @@ import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
 import Link from 'next/link';
 
+
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState(false);
 
   const fetchSpot = async () => {
-    const data = await getSpots();
-    setSpots(data || []);
+    try {
+      const data = await getSpots();
+      setSpots(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchSpot().then();
   }, []);
   console.log(spots);
+
+  if (loading) {
+    return (
+      <div className='flex justify-center mt-64'>
+        <Oval color='#61DBFB' height={100} width={100} ariaLabel='loading' />
+      </div>
+    );
+  }
+  if (error) {
+    return <div>エラーが発生しました。</div>;
+  }
 
   return (
     <UserLayout>

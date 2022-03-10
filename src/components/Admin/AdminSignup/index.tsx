@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Link from 'next/link';
 import Image from 'next/image';
 import type { VFC } from 'react';
@@ -13,12 +14,12 @@ export const AdminSignup: VFC<Signup> = (props, session) => {
   const [password, setPassword] = useState<string>('');
 
   const handleSignup = useCallback(async () => {
-    const { user, data, error } = await supabase.auth.signUp({
+    const { user, session, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
     console.log(user);
-    console.log(data);
+    console.log(session);
     console.log(error);
 
     if (email == '' || password == '') {

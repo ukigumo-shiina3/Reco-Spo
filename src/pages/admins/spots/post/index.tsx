@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState, VFC } from 'react';
 import { Sidebar } from 'src/components/Layout/Sidebar';
@@ -7,34 +8,54 @@ import { toast, Toaster } from 'react-hot-toast';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
-import { getSystems } from 'src/hooks/usePostSystemSelect';
+import { getSystems } from 'src/hooks/useSystemSelect';
+import { Spot } from 'src/types/spot';
+import { Prefectures } from 'src/types/prefectures';
+import { Systems } from 'src/types/systems';
+import { Oval } from 'react-loader-spinner';
 
 const user = supabase.auth.user();
 
 const SpotsPost: NextPage = () => {
-  const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
-  const [prefecture_id, setPrefectureId] = useState('');
-  const [prefectures_name, setPrefecturesName] = useState([]);
-  const [system_id, setSystemId] = useState('');
-  const [systems_name, setSystemsName] = useState([]);
-  const [appeal, setAppeal] = useState('');
-  const [area, setArea] = useState('');
-  const [link, setLink] = useState('');
-  const [targetPerson, setTargetPerson] = useState('');
-  const [usageFee, setUsageFee] = useState('');
-  const [term, setTerm] = useState('');
-  const [postal_code, setPostalCode] = useState('');
-  const [address, setAddress] = useState('');
-  const [manager, setManager] = useState('');
-  const [tel, setTel] = useState('');
-  const [email, setEmail] = useState('');
+  const [spotPost, setSpotPost] = useState<Spot>({
+    id: '',
+    prefecture_id: '',
+    prefectures: {
+      prefectures_name: [],
+    },
+    system_id: '',
+    systems: {
+      systems_name: [],
+    },
+    name: '',
+    title: '',
+    appeal: '',
+    area: '',
+    link: '',
+    target_person: '',
+    usage_fee: '',
+    term: '',
+    postal_code: '',
+    address: '',
+    manager: '',
+    tel: '',
+    email: '',
+  });
+
+  const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
+  const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState(false);
 
   const fetchPrefecturesListName = useCallback(async () => {
-    const data: string[] | null = await getPrefectures();
-    // setPrefecturesName(data || []);
-    // console.log(data);
+    try {
+      const data = await getPrefectures();
+      setPrefecturesName(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
   }, [setPrefecturesName]);
 
   useEffect(() => {
@@ -42,10 +63,14 @@ const SpotsPost: NextPage = () => {
   }, [user, fetchPrefecturesListName]);
 
   const fetchSystemsListName = useCallback(async () => {
-    const data: string[] | null = await getSystems();
-    // setSystemsName(data || []);
-    // console.log(data);
-  }, [setSystemsName]);
+    try {
+      const data = await getSystems();
+      setSystemsName(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     fetchSystemsListName();
@@ -80,44 +105,55 @@ const SpotsPost: NextPage = () => {
     //   toast.error('入力されていない項目があります', {});
     // } else {
     const { data, error } = await supabase.from('spots').insert({
-      name: name,
-      title: title,
+      name: spotPost.name,
+      title: spotPost.title,
       admin_id: user?.id,
-      appeal: appeal,
-      area: area,
-      link: link,
-      target_person: targetPerson,
-      usage_fee: usageFee,
-      term: term,
-      postal_code: postal_code,
-      address: address,
-      manager: manager,
-      tel: tel,
-      email: email,
-      prefecture_id: prefecture_id,
-      system_id: system_id,
+      appeal: spotPost.appeal,
+      area: spotPost.area,
+      link: spotPost.link,
+      target_person: spotPost.target_person,
+      usage_fee: spotPost.usage_fee,
+      term: spotPost.term,
+      postal_code: spotPost.postal_code,
+      address: spotPost.address,
+      manager: spotPost.manager,
+      tel: spotPost.tel,
+      email: spotPost.email,
+      prefecture_id: spotPost.prefecture_id,
+      system_id: spotPost.system_id,
     });
     console.log({ data, error });
 
     toast.success('スポットを登録しました', {});
     // }
   }, [
-    name,
-    title,
-    appeal,
-    area,
-    link,
-    targetPerson,
-    usageFee,
-    term,
-    postal_code,
-    address,
-    manager,
-    tel,
-    email,
-    prefecture_id,
-    system_id,
+    spotPost.prefecture_id,
+    spotPost.system_id,
+    spotPost.name,
+    spotPost.title,
+    spotPost.appeal,
+    spotPost.area,
+    spotPost.link,
+    spotPost.target_person,
+    spotPost.usage_fee,
+    spotPost.term,
+    spotPost.postal_code,
+    spotPost.address,
+    spotPost.manager,
+    spotPost.tel,
+    spotPost.email,
   ]);
+
+  if (loading) {
+    return (
+      <div className='flex justify-center mt-64'>
+        <Oval color='#61DBFB' height={100} width={100} ariaLabel='loading' />
+      </div>
+    );
+  }
+  if (error) {
+    return <div>エラーが発生しました。</div>;
+  }
 
   if (user) {
     return (
@@ -164,9 +200,9 @@ const SpotsPost: NextPage = () => {
                   <label htmlFor='name'>スポット名</label>
                   <input
                     type='text'
-                    value={name}
+                    value={spotPost.name}
                     onChange={(e) => {
-                      setName(e.target.value.trim());
+                      setSpotPost({ ...spotPost, name: e.target.value.trim() });
                     }}
                     placeholder='穴水町'
                     className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -176,9 +212,9 @@ const SpotsPost: NextPage = () => {
                   <label htmlFor='title'>スポットタイトル</label>
                   <input
                     type='text'
-                    value={title}
+                    value={spotPost.title}
                     onChange={(e) => {
-                      setTitle(e.target.value.trim());
+                      setSpotPost({ ...spotPost, title: e.target.value.trim() });
                     }}
                     placeholder='自然豊かな穴水町での生活を体験してみませんか'
                     className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -189,15 +225,15 @@ const SpotsPost: NextPage = () => {
                   {/* {console.log(prefectures_name)} */}
                   {prefectures_name.length == 0 ? null : (
                     <select
-                      value={prefecture_id}
+                      value={spotPost.prefecture_id}
                       onChange={(e) => {
-                        setPrefectureId(e.target.value);
+                        setSpotPost({ ...spotPost, prefecture_id: e.target.value.trim() });
                         console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-l-md placeholder-gray-500'
                     >
-                      {prefectures_name.map((value) => (
-                        <option key={value} value={value['id']}>
+                      {prefectures_name.map((value, index) => (
+                        <option key={index} value={value['id']}>
                           {/* {console.log(value['id'])} */}
                           {value['prefectures_name']}
                           {/* {console.log(value['prefectures_name'])} */}
@@ -211,15 +247,15 @@ const SpotsPost: NextPage = () => {
                   <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
                     <select
-                      value={system_id}
+                      value={spotPost.system_id}
                       onChange={(e) => {
-                        setSystemId(e.target.value);
+                        setSpotPost({ ...spotPost, system_id: e.target.value.trim() });
                         console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-l-md placeholder-gray-500'
                     >
-                      {systems_name.map((value) => (
-                        <option key={value} value={value['id']}>
+                      {systems_name.map((value, index) => (
+                        <option key={index} value={value['id']}>
                           {/* {console.log(value['id'])} */}
                           {value['systems_name']}
                           {/* {console.log(value['systems_name'])} */}
@@ -237,9 +273,9 @@ const SpotsPost: NextPage = () => {
               <div className='mb-5'>
                 <label htmlFor='appeal'>アピールポイント</label>
                 <textarea
-                  value={appeal}
+                  value={spotPost.appeal}
                   onChange={(e) => {
-                    setAppeal(e.target.value.trim());
+                    setSpotPost({ ...spotPost, appeal: e.target.value.trim() });
                   }}
                   placeholder='世界農業遺産「能登の里山里海」に位置する石川県穴水町は美しい山と海に恵まれ、
             穏やかな時間が流れています。
@@ -258,9 +294,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='area'>物件所在地</label>
                 <input
                   type='text'
-                  value={area}
+                  value={spotPost.area}
                   onChange={(e) => {
-                    setArea(e.target.value);
+                    setSpotPost({ ...spotPost, area: e.target.value.trim() });
                   }}
                   placeholder='石川県穴水町'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -270,9 +306,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='スポット画像'>物件関連リンク</label>
                 <input
                   type='text'
-                  value={link}
+                  value={spotPost.link}
                   onChange={(e) => {
-                    setLink(e.target.value);
+                    setSpotPost({ ...spotPost, link: e.target.value.trim() });
                   }}
                   placeholder='https://test.com'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -282,9 +318,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='スポット画像'>対象者</label>
                 <input
                   type='text'
-                  value={targetPerson}
+                  value={spotPost.target_person}
                   onChange={(e) => {
-                    setTargetPerson(e.target.value);
+                    setSpotPost({ ...spotPost, target_person: e.target.value.trim() });
                   }}
                   placeholder='町外から当町への移住を希望する人物'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -294,9 +330,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='スポット画像'>利用料金</label>
                 <input
                   type='text'
-                  value={usageFee}
+                  value={spotPost.usage_fee}
                   onChange={(e) => {
-                    setUsageFee(e.target.value);
+                    setSpotPost({ ...spotPost, usage_fee: e.target.value.trim() });
                   }}
                   placeholder='無料'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -306,9 +342,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='スポット画像'>利用期間</label>
                 <input
                   type='text'
-                  value={term}
+                  value={spotPost.term}
                   onChange={(e) => {
-                    setTerm(e.target.value);
+                    setSpotPost({ ...spotPost, term: e.target.value.trim() });
                   }}
                   placeholder='最長７泊８日'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -323,9 +359,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='postal_code'>郵便番号</label>
                 <input
                   type='text'
-                  value={postal_code}
+                  value={spotPost.postal_code}
                   onChange={(e) => {
-                    setPostalCode(e.target.value.trim());
+                    setSpotPost({ ...spotPost, postal_code: e.target.value.trim() });
                   }}
                   placeholder='927-8601'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -335,9 +371,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='address'>住所</label>
                 <input
                   type='text'
-                  value={address}
+                  value={spotPost.address}
                   onChange={(e) => {
-                    setAddress(e.target.value.trim());
+                    setSpotPost({ ...spotPost, address: e.target.value.trim() });
                   }}
                   placeholder='石川県鳳珠郡穴水町字川島ラの174番地'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -347,9 +383,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='manager'>担当者</label>
                 <input
                   type='text'
-                  value={manager}
+                  value={spotPost.manager}
                   onChange={(e) => {
-                    setManager(e.target.value.trim());
+                    setSpotPost({ ...spotPost, manager: e.target.value.trim() });
                   }}
                   placeholder='穴水町観光交流課'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -359,9 +395,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='tel'>電話番号</label>
                 <input
                   type='text'
-                  value={tel}
+                  value={spotPost.tel}
                   onChange={(e) => {
-                    setTel(e.target.value.trim());
+                    setSpotPost({ ...spotPost, tel: e.target.value.trim() });
                   }}
                   placeholder='0768-52-3671'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'
@@ -371,9 +407,9 @@ const SpotsPost: NextPage = () => {
                 <label htmlFor='email'>メールアドレス</label>
                 <input
                   type='text'
-                  value={email}
+                  value={spotPost.email}
                   onChange={(e) => {
-                    setEmail(e.target.value.trim());
+                    setSpotPost({ ...spotPost, email: e.target.value.trim() });
                   }}
                   placeholder='test@gmai.com'
                   className='w-full p-2 rounded-l-md placeholder-gray-500'

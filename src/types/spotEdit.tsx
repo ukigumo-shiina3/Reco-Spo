@@ -1,4 +1,4 @@
-export type Spot = {
+export type SpotEdit = {
   id: string;
   prefecture_id: string;
   prefectures: {
@@ -10,7 +10,7 @@ export type Spot = {
   };
   name: string;
   title: string;
-  // image_url: string;
+
   appeal: string;
   area: string;
   link: string;
