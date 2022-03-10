@@ -29,7 +29,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
         rounded='lg'
         shadow='lg'
       >
-        <div className='relative text-center text-xs  md:w-30 h-50'>
+        <div className='relative text-center text-xs md:w-30 h-50'>
           <Image src={property.imageUrl} alt={property.imageAlt} roundedTop='lg' />
           <div className='absolute flex flex-col text-white text-center top-0 left-0 '>
             <button className='bg-red-400 text-white text-xs font-bold py-2 px-5 rounded '>

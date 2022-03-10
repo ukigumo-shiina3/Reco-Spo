@@ -1,8 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import type { VFC } from 'react';
+import { Spot } from 'src/types/spot';
 
-export const SpotShow: VFC = () => {
+type SpotCardProps = {
+  spots: Spot;
+};
+
+export const SpotShow: VFC<SpotCardProps> = (props) => {
   return (
     <div>
       <div className='w-screen sm:p-5 sm:px-10 py-5'>
@@ -13,7 +18,8 @@ export const SpotShow: VFC = () => {
           height={50}
           alt='アピールポイント'
         />
-        <p className='mb-2 text-sm md:text-lg '>
+        <p className='mb-2 text-sm md:text-lg '>{props.spots.appeal}</p>
+        {/* <p className='mb-2 text-sm md:text-lg '>
           世界農業遺産「能登の里山里海」に位置する石川県穴水町は美しい山と海に恵まれ、
         </p>
         <p className='mb-2 text-sm md:text-lg'>穏やかな時間が流れています。</p>
@@ -25,7 +31,7 @@ export const SpotShow: VFC = () => {
         </p>
         <p className='mb-2 text-sm md:text-lg'>
           田舎への移住をお考えの方はこの機会にぜひご利用下さい。
-        </p>
+        </p> */}
       </div>
 
       <img
@@ -43,11 +49,16 @@ export const SpotShow: VFC = () => {
             height={50}
             alt='スポット詳細'
           />
-          <p className='mb-2 text-sm md:text-lg'>住所：穴水町字岩車11-19-38[位置図]</p>
+          <p className='mb-2 text-sm md:text-lg'>{props.spots.address}</p>
+          <p className='mb-2 text-sm md:text-lg'>{props.spots.link}</p>
+          <p className='mb-2 text-sm md:text-lg'>{props.spots.target_person}</p>
+          <p className='mb-2 text-sm md:text-lg'>{props.spots.usage_fee}</p>
+          <p className='mb-2 text-sm md:text-lg'>{props.spots.term}</p>
+          {/* <p className='mb-2 text-sm md:text-lg'>住所：穴水町字岩車11-19-38[位置図]</p>
           <p className='mb-2 text-sm md:text-lg'>物件：詳細はこちら</p>
           <p className='mb-2 mt-8 text-sm md:text-lg'>◇対象者：町外から当町への移住を希望する者</p>
           <p className='mb-2 text-sm md:text-lg'>◇利用料：無料</p>
-          <p className='mb-2 text-sm md:text-lg'>◇期間：最長７泊８日</p>
+          <p className='mb-2 text-sm md:text-lg'>◇期間：最長７泊８日</p> */}
         </div>
         <div className='p-5 sm:px-10 py-5'>
           <Image
