@@ -1,21 +1,48 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/router';
+import { Spot } from 'src/types/spot';
+import { getSpotsId } from 'src/hooks/useSpotIdSelect';
 
 type Props = {
   group: string;
 };
 
 export const Sidebar: VFC<Props> = (props) => {
+  const router = useRouter();
+  const [spot, setSpot] = useState();
+  const [id, setId] = useState<string>();
+
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
     toast.success('ログアウトが完了しました', {
       duration: 3000,
     });
   }, []);
+
+  const fetchSpot = useCallback(async (id: string) => {
+    const data = await getSpotsId(id);
+    setSpot(data);
+    console.log(data);
+  }, []);
+
+  useEffect(() => {
+    if (router.asPath !== router.route) {
+      setId(String(router.query.id));
+    }
+    // console.log(router.query.id);
+  }, [router]);
+
+  useEffect(() => {
+    if (id) {
+      fetchSpot(router.query.id as string);
+    }
+    // console.log(router.query.id);
+  }, [id, fetchSpot, router.query.id]);
 
   return (
     <div>
@@ -52,7 +79,7 @@ export const Sidebar: VFC<Props> = (props) => {
               スポット投稿
             </a>
           </Link>
-          {/* <Link href={`/${spots.id}`} passHref> */}
+          {/* <Link href={`/${id}`} passHref> */}
           <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
             スポット編集
           </a>

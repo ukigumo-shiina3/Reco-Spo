@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
@@ -25,14 +26,14 @@ const useAuth = (requiresAuth: boolean) => {
     });
     console.groupEnd();
     return () => {
-      // authListener.unsubscribe();
+      authListener?.unsubscribe();
     };
   }, []);
 
   useEffect(() => {
     if (requiresAuth && session) router.push('/admins');
     console.log(session);
-  }, [session]);
+  }, []);
 
   return session;
 };

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import type { VFC } from 'react';
 
 export const SpotContact: VFC = () => {
