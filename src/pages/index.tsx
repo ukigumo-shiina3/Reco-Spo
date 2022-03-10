@@ -8,6 +8,7 @@ import { UserLayout } from 'src/components/Layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
+import Link from 'next/link';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -41,7 +42,13 @@ const Index: NextPage = () => {
 
       <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
         {spots.map((spot) => {
-          return <SpotCard key={spot.id} spot={spot} />;
+          return (
+            <Link href={`/spots/${spot.id}`} key={spot.id} passHref>
+              <a>
+                <SpotCard spot={spot} />
+              </a>
+            </Link>
+          );
         })}
       </div>
     </UserLayout>
