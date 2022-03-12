@@ -1,16 +1,42 @@
-import React, { VFC } from 'react';
+import React, { useEffect, useState, VFC } from 'react';
 import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 import { Spot } from 'src/types/spot';
+import { KEYS, getItem, removeItem, setItem } from 'src/libs/localStorage';
 
-type SpotCardProps = {
+export type SpotCardProps = {
   spot: Spot;
 };
 
 export const SpotCard: VFC<SpotCardProps> = (props) => {
+  const [likeStatus, setLikeStatus] = useState<boolean>(false);
+  const [likeStorage, setLikeStorage] = useState<string>('');
+
   const property = {
     imageUrl: 'spot-pic.jpeg',
     imageAlt: 'props.image_url',
-    heart: '12',
+  };
+
+  useEffect(() => {
+    updateLike();
+  }, []);
+
+  const updateLike = () => {
+    setLikeStorage(getItem(KEYS.LIKE_STORAGE));
+  };
+
+  const handleLikeStorage = (e: any) => {
+    setLikeStorage(e.target.value);
+  };
+
+  const removeClick = () => {
+    removeItem(KEYS.LIKE_STORAGE);
+    updateLike();
+  };
+
+  const setClick = () => {
+    setLikeStorage(getItem(KEYS.LIKE_STORAGE));
+    setItem(KEYS.LIKE_STORAGE, likeStorage);
+    updateLike();
   };
 
   return (
@@ -74,9 +100,19 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
               <Box as='span' color='black.600' fontSize='md'></Box>
               <div className='flex text-right mt-3'>
                 <div className='mt-1'>
-                  <Image src='/heart-line.png' width={5} height={5} alt='ハートアイコン' />
+                  <button onClick={() => setLikeStatus(!likeStatus)}>
+                    {likeStatus ? (
+                      <button onClick={setClick}>
+                        <input type='hidden' value={likeStorage} onChange={handleLikeStorage} />
+                        <Image src='/unlike.png' width={5} height={5} alt='ハートアイコン' />
+                      </button>
+                    ) : (
+                      <button onClick={removeClick}>
+                        <Image src='/like.png' width={5} height={5} alt='ハートアイコン' />
+                      </button>
+                    )}
+                  </button>
                 </div>
-                <div className='text-lg ml-1'>{property.heart}</div>
               </div>
             </div>
           </Box>
