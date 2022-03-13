@@ -1,8 +1,8 @@
 import { supabase } from 'src/libs/supabase';
-import { SpotId } from 'src/types/spotId';
+import { Spot } from 'src/types/spot';
 
 export const getSpotsId = async (id: string) => {
-  const { data, error } = await supabase.from<SpotId>('spots').select('id').eq('id', id).single();
+  const { data, error } = await supabase.from<Spot>('spots').select('*').eq('id', id).single();
   if (!data) {
     return;
   }

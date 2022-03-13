@@ -1,28 +1,37 @@
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { SpotCarousel } from 'src/components/Spot/SpotCarousel/indexl';
+import { SpotCarousel } from 'src/components/Spot/SpotCarousel';
 import { SpotShow } from 'src/components/Spot/SpotShow';
 import { UserLayout } from 'src/components/Layout/UserLayout';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { getSpotsId } from 'src/hooks/useSpotIdSelect';
+import { useRouter } from 'next/router';
 import { Spot } from 'src/types/spot';
-import { getSpots } from 'src/hooks/useSpotCardSelect';
 
-type SpotCardProps = {
-  spot: Spot;
-};
+const SpotsId: NextPage = () => {
+  const router = useRouter();
+  const [spot, setSpot] = useState<Spot>('');
+  const [id, setId] = useState<string>('');
 
-const SpotsId: NextPage<SpotCardProps> = () => {
-  const [spots, setSpots] = useState<Spot[]>([]);
-
-  const fetchSpot = async () => {
-    const data = await getSpots();
-    setSpots(data || []);
-  };
+  const fetchSpot = useCallback(async (id: string) => {
+    const data = await getSpotsId(id);
+    setSpot(data);
+    console.log(data);
+  }, []);
 
   useEffect(() => {
-    fetchSpot().then();
-  }, []);
-  console.log(spots);
+    if (router.asPath !== router.route) {
+      setId(String(router.query.id));
+    }
+    // console.log(router.query.id);
+  }, [router]);
+
+  useEffect(() => {
+    if (id) {
+      fetchSpot(router.query.id as string);
+    }
+    // console.log(router.query.id);
+  }, [id, fetchSpot, router.query.id]);
 
   return (
     <UserLayout>
@@ -39,7 +48,7 @@ const SpotsId: NextPage<SpotCardProps> = () => {
       </div>
       <div className='sm:px-16 sm:py-8'>
         <SpotCarousel />
-        <SpotShow spots={spots} />
+        <SpotShow spot={spot} />
       </div>
     </UserLayout>
   );

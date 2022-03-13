@@ -4,7 +4,7 @@ import type { VFC } from 'react';
 import { Spot } from 'src/types/spot';
 
 type SpotCardProps = {
-  spots: Spot;
+  spot: Spot;
 };
 
 export const SpotShow: VFC<SpotCardProps> = (props) => {
@@ -18,7 +18,9 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
           height={50}
           alt='アピールポイント'
         />
-        <p className='mb-2 text-sm md:text-lg '>{props.spots.appeal}</p>
+        <p className='mb-2 text-sm md:text-lg '>{props.spot.appeal}</p>
+        {/* {console.log(props.spot)} */}
+
         {/* <p className='mb-2 text-sm md:text-lg '>
           世界農業遺産「能登の里山里海」に位置する石川県穴水町は美しい山と海に恵まれ、
         </p>
@@ -49,11 +51,11 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
             height={50}
             alt='スポット詳細'
           />
-          <p className='mb-2 text-sm md:text-lg'>{props.spots.address}</p>
-          <p className='mb-2 text-sm md:text-lg'>{props.spots.link}</p>
-          <p className='mb-2 text-sm md:text-lg'>{props.spots.target_person}</p>
-          <p className='mb-2 text-sm md:text-lg'>{props.spots.usage_fee}</p>
-          <p className='mb-2 text-sm md:text-lg'>{props.spots.term}</p>
+          <p className='mb-2 text-sm md:text-lg'>住所：{props.spot.address}</p>
+          <p className='mb-2 text-sm md:text-lg'>物件：詳細はこちら{props.spot.link}</p>
+          <p className='mb-2 text-sm md:text-lg'>対象者：{props.spot.target_person}</p>
+          <p className='mb-2 text-sm md:text-lg'>利用料：{props.spot.usage_fee}</p>
+          <p className='mb-2 text-sm md:text-lg'>期間：{props.spot.term}</p>
           {/* <p className='mb-2 text-sm md:text-lg'>住所：穴水町字岩車11-19-38[位置図]</p>
           <p className='mb-2 text-sm md:text-lg'>物件：詳細はこちら</p>
           <p className='mb-2 mt-8 text-sm md:text-lg'>◇対象者：町外から当町への移住を希望する者</p>
@@ -69,10 +71,17 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
             alt='お問い合わせ先'
           />
           <p className='mb-2 text-sm md:text-lg'>お問合せはこちらまで</p>
+          <p className='mb-2 text-sm md:text-lg '>
+            住所： 〒{props.spot.postal_code} {props.spot.address}
+          </p>
+          <p className='mb-2 text-sm md:text-lg '>担当名: {props.spot.manager}</p>
+          <p className='mb-2 text-sm md:text-lg '>電話番号: {props.spot.tel}</p>
+          <p className='mb-2 text-sm md:text-lg '>メールアドレス: {props.spot.email}</p>
+          {/* 
           <p className='mb-2 text-sm md:text-lg'>〒927-8601石川県鳳珠郡穴水町字川島ラの174番地</p>
           <p className='mb-2 text-sm md:text-lg'>穴水町観光交流課</p>
           <p className='mb-2 text-sm md:text-lg'>TEL:0768-52-3671 FAX:0768-52-2079</p>
-          <p className='mb-2 text-sm md:text-lg'>E-mail:kouryu3@sec.town.anamizu.ishikawa.jp</p>
+          <p className='mb-2 text-sm md:text-lg'>E-mail:kouryu3@sec.town.anamizu.ishikawa.jp</p> */}
         </div>
       </div>
     </div>
