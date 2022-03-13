@@ -9,8 +9,7 @@ import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
 import Link from 'next/link';
-import SpotsId from './spots/[id]';
-
+import { Oval } from 'react-loader-spinner';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -66,7 +65,6 @@ const Index: NextPage = () => {
             <Link href={`/spots/${spot.id}`} key={spot.id} passHref>
               <a>
                 <SpotCard spot={spot} />
-                <SpotsId spot={spot} />
               </a>
             </Link>
           );
