@@ -10,7 +10,7 @@ import { Spot } from 'src/types/spot';
 
 const SpotsId: NextPage = () => {
   const router = useRouter();
-  const [spot, setSpot] = useState<Spot>('');
+  const [spot, setSpot] = useState<Spot>();
   const [id, setId] = useState<string>('');
 
   const fetchSpot = useCallback(async (id: string) => {
@@ -35,20 +35,26 @@ const SpotsId: NextPage = () => {
 
   return (
     <UserLayout>
-      <div className='w-screen block '>
-        <Image
-          src='/about-pic.png'
-          quality={100}
-          width={2000}
-          height={700}
-          objectFit='contain'
-          layout='responsive'
-          alt='サイト概要のメイン画像'
-        />
-      </div>
-      <div className='sm:px-16 sm:py-8'>
-        <SpotCarousel />
-        <SpotShow spot={spot} />
+      <div className='md:px-6 lg:px-20'>
+        <div className='w-screen block '>
+          <Image
+            src='/about-pic.png'
+            quality={100}
+            width={2000}
+            height={700}
+            objectFit='contain'
+            layout='responsive'
+            alt='サイト概要のメイン画像'
+          />
+        </div>
+        <div className='sm:px-16 sm:py-8'>
+          {spot ? (
+            <div>
+              <SpotCarousel spot={spot} />
+              <SpotShow spot={spot} />
+            </div>
+          ) : null}
+        </div>
       </div>
     </UserLayout>
   );
