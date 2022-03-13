@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, VFC } from 'react';
 import { Text, Box, Flex, useColorModeValue, Image, HStack } from '@chakra-ui/react';
 
