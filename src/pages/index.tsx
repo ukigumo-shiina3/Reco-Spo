@@ -61,13 +61,7 @@ const Index: NextPage = () => {
 
       <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
         {spots.map((spot) => {
-          return (
-            <Link href={`/spots/${spot.id}`} key={spot.id} passHref>
-              <a>
-                <SpotCard spot={spot} />
-              </a>
-            </Link>
-          );
+          return <SpotCard spot={spot} key={spot.id} />;
         })}
       </div>
     </UserLayout>
