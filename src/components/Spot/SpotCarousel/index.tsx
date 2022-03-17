@@ -1,8 +1,12 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, VFC } from 'react';
 import { Text, Box, Flex, useColorModeValue, Image, HStack } from '@chakra-ui/react';
+import { Spot } from 'src/types/spot';
 
-export const SpotCarousel: VFC = () => {
+export type SpotCardProps = {
+  spot: Spot;
+};
+
+export const SpotCarousel: VFC<SpotCardProps> = () => {
   const arrowStyles = {
     cursor: 'pointer',
     pos: 'absolute',
@@ -59,13 +63,7 @@ export const SpotCarousel: VFC = () => {
   };
 
   return (
-    <Flex
-      w='full'
-      //   bg={useColorModeValue('gray.200', 'gray.600')}
-      p={10}
-      alignItems='center'
-      justifyContent='center'
-    >
+    <Flex w='full' p={20} alignItems='center' justifyContent='center'>
       <Flex w='full' overflow='hidden' pos='relative'>
         <Flex h='400px' w='full' {...carouselStyle}>
           {slides.map((slide, sid) => (
@@ -73,7 +71,7 @@ export const SpotCarousel: VFC = () => {
               <Text color='white' fontSize='xs' p='8px 12px' pos='absolute' top='0'>
                 {sid + 1} / {slidesCount}
               </Text>
-              <Image src={slide.img} boxSize='full' backgroundSize='cover' />
+              <Image src={slide.img} boxSize='full' backgroundSize='cover' alt='スライド画像' />
             </Box>
           ))}
         </Flex>

@@ -10,7 +10,7 @@ type SpotCardProps = {
 export const SpotShow: VFC<SpotCardProps> = (props) => {
   return (
     <div>
-      <div className='w-screen sm:p-5 sm:px-10 sm:py-5'>
+      <div className='w-screen sm:px-20 sm:py-5'>
         <Image
           src='/spot-show-heading1.png'
           quality={100}
@@ -24,17 +24,18 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
       <img
         src='/map-pic.png'
         alt='地図の画像'
-        className='m-auto w-full h-80 p-8 my-12 sm:h-96 sm:object-fill xl:h-full'
+        className='m-auto w-full h-80 p-8 my-12 sm:px-20 sm:h-96 sm:object-fill xl:h-full'
       />
 
       <div className='flex'>
-        <div className='p-5 sm:px-10 py-5'>
+        <div className='p-5 sm:px-20'>
           <Image
             src='/spot-show-heading2.png'
             quality={100}
             width={180}
             height={50}
             alt='スポット詳細'
+            className='sm:px-20'
           />
           <div className='text-sm md:text-xl'>
             <p className='mb-2 '>住所：{props.spot.address}</p>
