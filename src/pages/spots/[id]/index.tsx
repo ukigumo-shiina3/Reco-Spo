@@ -35,7 +35,7 @@ const SpotsId: NextPage = () => {
 
   return (
     <UserLayout>
-      <div className='md:px-6 lg:px-20'>
+      <div className='box-content'>
         <div className='w-screen block '>
           <Image
             src='/about-pic.png'
@@ -47,7 +47,7 @@ const SpotsId: NextPage = () => {
             alt='サイト概要のメイン画像'
           />
         </div>
-        <div className='sm:px-16 sm:py-8'>
+        <div className='sm:py-8'>
           {spot ? (
             <div>
               <SpotCarousel spot={spot} />
