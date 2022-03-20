@@ -8,7 +8,6 @@ import { UserLayout } from 'src/components/Layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
-import Link from 'next/link';
 import { Oval } from 'react-loader-spinner';
 
 const Index: NextPage = () => {
