@@ -1,44 +1,61 @@
-import React, { useEffect, useState, VFC } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useCallback, useEffect, useState, VFC } from 'react';
 import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
 import { Spot } from 'src/types/spot';
-import { KEYS, getItem, removeItem, setItem } from 'src/libs/localStorage';
 import Link from 'next/link';
+import { supabase } from 'src/libs/supabase';
+import { Like } from 'src/types/like';
+import { getLikeId } from 'src/hooks/useLikeSelect';
+import { useRouter } from 'next/router';
 
 export type SpotCardProps = {
   spot: Spot;
 };
 
 export const SpotCard: VFC<SpotCardProps> = (props) => {
+  const router = useRouter();
+
+  const [getLike, setGetLike] = useState<Like>({ id: '', user_id: '', spot_id: '' });
   const [likeStatus, setLikeStatus] = useState<boolean>(false);
-  const [likeStorage, setLikeStorage] = useState<string>('');
+  const [id, setId] = useState<string>();
 
   const property = {
     imageUrl: 'spot-pic.jpeg',
     imageAlt: 'props.image_url',
   };
 
-  useEffect(() => {
-    updateLike();
+  const fetchLikeId = useCallback(async (id: string) => {
+    const data = await getLikeId(id);
+    setGetLike(data);
   }, []);
 
-  const updateLike = () => {
-    setLikeStorage(getItem(KEYS.LIKE_STORAGE));
-  };
+  useEffect(() => {
+    if (router.asPath !== router.route) {
+      setId(String(router.query.id));
+    }
+    // console.log(router.query.id);
+  }, [router]);
 
-  const handleLikeStorage = (e: any) => {
-    setLikeStorage(e.target.value);
-  };
+  useEffect(() => {
+    if (id) {
+      fetchLikeId(router.query.id as string);
+    }
+    // console.log(router.query.id);
+  }, [id, fetchLikeId, router.query.id]);
 
-  const removeClick = () => {
-    removeItem(KEYS.LIKE_STORAGE);
-    updateLike();
-  };
+  const handleGetLike = useCallback(async () => {
+    const { data, error } = await supabase.from('likes').insert({
+      id: getLike.id,
+      user_id: getLike.user_id,
+      spot_id: getLike.spot_id,
+    });
+    console.log({ data, error });
+  }, [getLike]);
 
-  const setClick = () => {
-    setItem(KEYS.LIKE_STORAGE, likeStorage);
-    setLikeStorage(getItem(KEYS.LIKE_STORAGE));
-    updateLike();
-  };
+  const handleRemoveLike = useCallback(async () => {
+    const { data, error } = await supabase.from('likes').delete().match({ id: getLike.id });
+    console.log({ data, error });
+  }, [getLike]);
 
   return (
     <Flex
@@ -120,13 +137,34 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                 <div className='mt-1'>
                   <button onClick={() => setLikeStatus(!likeStatus)}>
                     {likeStatus ? (
-                      <button onClick={setClick}>
-                        <input type='hidden' value={likeStorage} onChange={handleLikeStorage} />
-                        <Image src='/unlike.png' width={5} height={5} alt='ハートアイコン' />
+                      <button onClick={handleGetLike}>
+                        <div>
+                          <input
+                            type='hidden'
+                            value={[getLike.id, getLike.spot_id, getLike.user_id]}
+                            onChange={(e) => {
+                              setGetLike({ ...getLike, id: e.target.value.trim() });
+                              setGetLike({ ...getLike, spot_id: e.target.value.trim() });
+                              setGetLike({ ...getLike, user_id: e.target.value.trim() });
+                            }}
+                          />
+                          <Image src='/unlike.png' width={5} height={5} alt='ハートアイコン' />
+                        </div>
                       </button>
                     ) : (
-                      <button onClick={removeClick}>
-                        <Image src='/like.png' width={5} height={5} alt='ハートアイコン' />
+                      <button onClick={handleRemoveLike}>
+                        <div>
+                          <input
+                            type='hidden'
+                            value={[getLike.id, getLike.spot_id, getLike.user_id]}
+                            onChange={(e) => {
+                              setGetLike({ ...getLike, id: e.target.value.trim() });
+                              setGetLike({ ...getLike, spot_id: e.target.value.trim() });
+                              setGetLike({ ...getLike, user_id: e.target.value.trim() });
+                            }}
+                          />
+                          <Image src='/like.png' width={5} height={5} alt='ハートアイコン' />
+                        </div>
                       </button>
                     )}
                   </button>
