@@ -111,7 +111,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
           </Box>
 
           <Box mt='10' mb='5' as='h4' fontSize='lg' lineHeight='tight'>
-            <div className='text-md mb-10 truncate'>
+            <div className='text-md mb-10 break-words'>
               <Link href={`/spots/${props.spot.id}`} key={props.spot.id}>
                 <a>{props.spot.title} </a>
               </Link>
