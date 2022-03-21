@@ -8,7 +8,7 @@ import { UserLayout } from 'src/components/Layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
-import { Oval } from 'react-loader-spinner';
+import { Spinner } from '@chakra-ui/react';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -33,7 +33,7 @@ const Index: NextPage = () => {
   if (loading) {
     return (
       <div className='flex justify-center mt-64'>
-        <Oval color='#61DBFB' height={100} width={100} ariaLabel='loading' />
+        <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
       </div>
     );
   }
