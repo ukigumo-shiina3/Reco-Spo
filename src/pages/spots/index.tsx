@@ -1,14 +1,15 @@
 import { NextPage } from 'next';
 import { SpotCard } from 'src/components/Spot/SpotCard';
-import { SpotPagination } from 'src/components/Spot/SpotPagination';
 import { useCallback, useEffect, useState } from 'react';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import SearchModal from 'src/components/SearchModal';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 import { Spot } from 'src/types/spot';
+import { Pagination } from '@mantine/core';
 
 const Spots: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
+  const [activePage, setPage] = useState(1);
 
   const fetchSpot = useCallback(async () => {
     const data = await getSpots();
@@ -28,7 +29,14 @@ const Spots: NextPage = () => {
           return <SpotCard key={spot.id} spot={spot} />;
         })}
       </div>
-      <SpotPagination />
+      <Pagination
+        page={activePage}
+        onChange={setPage}
+        total={5}
+        color='dark'
+        position='center'
+        className='py-20'
+      />
     </UserLayout>
   );
 };
