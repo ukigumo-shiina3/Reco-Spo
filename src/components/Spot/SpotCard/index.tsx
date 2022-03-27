@@ -33,14 +33,12 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
     if (router.asPath !== router.route) {
       setId(String(router.query.id));
     }
-    // console.log(router.query.id);
   }, [router]);
 
   useEffect(() => {
     if (id) {
       fetchLikeId(router.query.id as string);
     }
-    // console.log(router.query.id);
   }, [id, fetchLikeId, router.query.id]);
 
   const handleGetLike = useCallback(async () => {
