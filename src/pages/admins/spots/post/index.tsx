@@ -13,10 +13,15 @@ import { Spot } from 'src/types/spot';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
 import { Spinner } from '@chakra-ui/react';
+import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
+import { Upload, Camera, X, Icon as TablerIcon } from 'tabler-icons-react';
+import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
 
 const user = supabase.auth.user();
 
 const SpotsPost: NextPage = () => {
+  const theme = useMantineTheme();
+
   const [spotPost, setSpotPost] = useState<Spot>({
     id: '',
     prefecture_id: '',
@@ -47,6 +52,57 @@ const SpotsPost: NextPage = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
+
+  function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
+    return status.accepted
+      ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
+      : status.rejected
+      ? theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]
+      : theme.colorScheme === 'dark'
+      ? theme.colors.dark[0]
+      : theme.colors.gray[7];
+  }
+
+  function ImageUploadIcon({
+    status,
+    ...props
+  }: React.ComponentProps<TablerIcon> & { status: DropzoneStatus }) {
+    if (status.accepted) {
+      return <Upload {...props} />;
+    }
+
+    if (status.rejected) {
+      return <X {...props} />;
+    }
+
+    return <Camera {...props} />;
+  }
+
+  const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
+    <Group
+      position='center'
+      spacing='sm'
+      direction='column'
+      style={{ minHeight: 120, pointerEvents: 'none' }}
+    >
+      <div className='flex border-2 border-red-600 rounded-lg p-2 mt-6'>
+        <ImageUploadIcon
+          status={status}
+          style={{ color: getIconColor(status, theme) }}
+          size={20}
+          color='red'
+        />
+        <Text size='sm' color='red' weight={700} inline mt={3} ml={3}>
+          画像を選択する
+        </Text>
+      </div>
+      <div>
+        <Text size='sm' color='blue' weight={700} inline>
+          またはドラッグ&ドロップ
+        </Text>
+      </div>
+    </Group>
+  );
 
   const fetchPrefecturesListName = useCallback(async () => {
     try {
@@ -185,11 +241,19 @@ const SpotsPost: NextPage = () => {
               </div>
             </div>
             <div className='mt-5'>
-              <img
+              {/* <img
                 src='/image-upload.png'
                 alt='画像アップロードアイコン'
                 className='w-hull h-18 sm:h-24'
-              />
+              /> */}
+              <Dropzone
+                onDrop={(files) => console.log('accepted files', files)}
+                onReject={(files) => console.log('rejected files', files)}
+                maxSize={3 * 1024 ** 2}
+                accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}
+              >
+                {(status) => dropzoneChildren(status, theme)}
+              </Dropzone>
             </div>
 
             {/* スポット情報 */}
