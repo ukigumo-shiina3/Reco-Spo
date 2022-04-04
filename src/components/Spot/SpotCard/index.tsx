@@ -6,49 +6,30 @@ import Link from 'next/link';
 import { supabase } from 'src/libs/supabase';
 import { Like } from 'src/types/like';
 import { getLikeId } from 'src/hooks/useLikeSelect';
-import { useRouter } from 'next/router';
 
 export type SpotCardProps = {
   spot: Spot;
 };
 
 export const SpotCard: VFC<SpotCardProps> = (props) => {
-  const router = useRouter();
-
-  const [getLike, setGetLike] = useState<Like>({ id: '', user_id: '', spot_id: '' });
+  const [getLike, setGetLike] = useState<Like>();
+  // const [getLike, setGetLike] = useState<Like>({ id: '', user_id: '', spot_id: '' });
   const [likeStatus, setLikeStatus] = useState<boolean>(false);
-  const [id, setId] = useState<string>();
+  // const [id, setId] = useState<string>();
 
   const property = {
     imageUrl: 'spot-pic.jpeg',
     imageAlt: 'props.image_url',
   };
 
-  const fetchLikeId = useCallback(async (id: string) => {
-    const data = await getLikeId(id);
-    setGetLike(data);
-  }, []);
-
-  useEffect(() => {
-    if (router.asPath !== router.route) {
-      setId(String(router.query.id));
-    }
-  }, [router]);
-
-  useEffect(() => {
-    if (id) {
-      fetchLikeId(router.query.id as string);
-    }
-  }, [id, fetchLikeId, router.query.id]);
-
   const handleGetLike = useCallback(async () => {
-    const { data, error } = await supabase.from('likes').insert({
-      id: getLike.id,
-      user_id: getLike.user_id,
-      spot_id: getLike.spot_id,
+    const { data, error } = await supabase.from<Like>('likes').update({
+      id: getLike?.id,
+      // user_id: getLike.user_id,
+      // spot_id: getLike.spot_id,
     });
     console.log({ data, error });
-  }, [getLike]);
+  }, [getLike?.id]);
 
   const handleRemoveLike = useCallback(async () => {
     const { data, error } = await supabase.from('likes').delete().match({ id: getLike.id });
@@ -139,11 +120,12 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                         <div>
                           <input
                             type='hidden'
-                            value={[getLike.id, getLike.spot_id, getLike.user_id]}
+                            value={getLike?.id}
+                            // value='getLike.id, getLike.spot_id, getLike.user_id'
                             onChange={(e) => {
                               setGetLike({ ...getLike, id: e.target.value.trim() });
-                              setGetLike({ ...getLike, spot_id: e.target.value.trim() });
-                              setGetLike({ ...getLike, user_id: e.target.value.trim() });
+                              // setGetLike({ ...getLike, spot_id: e.target.value.trim() });
+                              // setGetLike({ ...getLike, user_id: e.target.value.trim() });
                             }}
                           />
                           <Image src='/unlike.png' width={5} height={5} alt='ハートアイコン' />
@@ -154,11 +136,12 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                         <div>
                           <input
                             type='hidden'
-                            value={[getLike.id, getLike.spot_id, getLike.user_id]}
+                            value='getLike.id'
+                            // value='getLike.id, getLike.spot_id, getLike.user_id'
                             onChange={(e) => {
                               setGetLike({ ...getLike, id: e.target.value.trim() });
-                              setGetLike({ ...getLike, spot_id: e.target.value.trim() });
-                              setGetLike({ ...getLike, user_id: e.target.value.trim() });
+                              // setGetLike({ ...getLike, spot_id: e.target.value.trim() });
+                              // setGetLike({ ...getLike, user_id: e.target.value.trim() });
                             }}
                           />
                           <Image src='/like.png' width={5} height={5} alt='ハートアイコン' />
