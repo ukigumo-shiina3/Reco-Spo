@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, VFC } from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { VFC } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { css } from '@emotion/css';
+import { Spot } from 'src/types/spot';
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const mySwiper = css`
   .swiper {
@@ -35,7 +35,8 @@ const mySwiper = css`
     align-items: center;
   }
 
-  .swiper-button-next, .swiper-button-prev {
+  .swiper-button-next,
+  .swiper-button-prev {
     color: #fff;
   }
 
@@ -50,7 +51,7 @@ const mySwiper = css`
     max-height: 460px;
     object-fit: cover;
   }
-`
+`;
 
 export type SpotCardProps = {
   spot?: Spot;
@@ -88,11 +89,10 @@ export const SpotCarousel: VFC<SpotCardProps> = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
-            <img src={slide.img} alt="slide" />
+            <img src={slide.img} alt='slide' />
           </SwiperSlide>
         ))}
       </Swiper>
     </>
-  )
-
-}
+  );
+};
