@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { SpotCarousel } from 'src/components/Spot/SpotCarousel/index2';
+import { SpotCarousel } from 'src/components/Spot/SpotCarousel/index';
 import { SpotShow } from 'src/components/Spot/SpotShow';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 import { useCallback, useEffect, useState } from 'react';
@@ -57,7 +57,7 @@ const SpotsId: NextPage = () => {
           ) : null}
         </Container>
       </div>
-    </UserLayout >
+    </UserLayout>
   );
 };
 
