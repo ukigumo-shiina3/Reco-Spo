@@ -46,7 +46,8 @@ export const Sidebar: VFC<Props> = (props) => {
 
   return (
     <div>
-      <div className='flex-1 w-28 h-full text-center bg-blue-300 md:w-56 '>
+      {/* <div className='flex-1 w-28 h-full text-center bg-blue-300 md:w-56 '> */}
+      <div>
         <div className='bg-blue-400 py-10'>
           <a className='font-fancy font-bold text-white text-xl md:text-4xl'>Reco Spo</a>
         </div>

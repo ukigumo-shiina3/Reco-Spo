@@ -56,14 +56,15 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   }, [getLike]);
 
   return (
-    <Flex
-      bg={useColorModeValue('#FFF', 'white')}
-      p={50}
-      w={500}
-      alignItems='right'
-      justifyContent='right'
-      flexWrap='wrap'
-    >
+    // <Flex
+    //   bg={useColorModeValue('#FFF', 'white')}
+    //   p={50}
+    //   w={500}
+    //   alignItems='right'
+    //   justifyContent='right'
+    //   flexWrap='wrap'
+    // >
+    <div>
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW='sm'
@@ -172,6 +173,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
           </Box>
         </Box>
       </Box>
-    </Flex>
+    </div>
+    // {/* </Flex> */}
   );
 };
