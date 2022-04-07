@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
-import type { VFC } from 'react';
+import type { ChangeEvent, VFC } from 'react';
 import { supabase } from 'src/libs/supabase';
 import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
@@ -9,24 +9,63 @@ import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
 import { Sidebar } from 'src/components/Layout/Sidebar';
 import { Admin } from 'src/types/admin';
-import { useFileUpload } from 'use-file-upload';
-// import Avatar from 'src/components/Photo/PhotoUpload';
+import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constants';
+import UploadButton from 'src/components/Button/UploadButton/UploadButton';
+import Avatar from 'src/components/Avatar';
 
 const ProfileEdit: VFC = () => {
-  // const [avatar_url, setAvatarUrl] = useState<string>('');
-
   const [admin, setAdmin] = useState<Admin>({
+    avatar_url: '',
     email: '',
     password: '',
     prefecture: '',
     group: '',
   });
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const router = useRouter();
   const session = useAuth(true);
   const user = supabase.auth.user();
 
-  console.log({ user, session });
+  async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
+    try {
+      setUploading(true);
+
+      if (!event.target.files || event.target.files.length == 0) {
+        throw '変更するプロフィール画像を選択してください';
+      }
+
+      const user = supabase.auth.user();
+      const file = event.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      let { error: uploadError } = await supabase.storage
+        .from(DEFAULT_AVATARS_BUCKET)
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      let { error: updateError } = await supabase.from('admins').update({
+        avatar_url: filePath,
+      });
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      setAvatar(null);
+      setAvatar(filePath);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const handleProfileEdit = useCallback(async () => {
     console.log(user?.id);
@@ -39,7 +78,6 @@ const ProfileEdit: VFC = () => {
       const { data, error } = await supabase
         .from('admins')
         .update({
-          // avatar_url: avatar_url,
           prefecture: admin.prefecture,
           group: admin.group,
           email: admin.email,
@@ -64,35 +102,14 @@ const ProfileEdit: VFC = () => {
         <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg '>
           <h1 className='text-3xl mt-24'>プロフィール編集</h1>
           <div className='pt-5 mt-5'>
-            {/* <Avatar
-          url={avatar_url}
-          size={150}
-          onUpload={(url) => {
-            setAvatarUrl(url);
-            updateProfile({ username, website, avatar_url: url });
-          }}
-        /> */}
-            {/* <img
-          src={files?.source || defaultSrc}
-          alt='preview'
-          className='w-16 h-16 rounded-full'
-        />
-        
-        <input
-          type='button'
-          // value='{avatar_url}'
-          onClick={
-            () =>
-              selectFiles({ accept: 'image/*' }, ({ source, name, size, file }) => {
-                console.log('Files Selected', { name, size, source, file });
-              })
-            // onChange={(e) => {
-            //   setAvatarUrl(e.target.value.trim());
-            // }}
-          }
-        /> */}
-            <img src='/profile-icon.png' alt='image' className='w-16 h-16 rounded-full' />
-            <p className='text-sm pl-4 mt-2'>変更</p>
+            <p className='text-sm mt-2'>
+              {avatar ? (
+                <Avatar url={avatar} size={60} />
+              ) : (
+                <img src='/profile-icon.png' alt='image' className='w-16 h-16 pr-4 rounded-full' />
+              )}
+              <UploadButton onUpload={uploadAvatar} loading={uploading} />
+            </p>
           </div>
           <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
             都道府県
