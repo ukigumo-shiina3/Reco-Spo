@@ -23,8 +23,7 @@ const Spots: NextPage = () => {
   return (
     <UserLayout>
       <SearchModal />
-      {/* <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'> */}
-      <div className='flex justify-center'>
+      <div className='flex justify-center gap-2 mt-5 ml-3 mr-3'>
         <SimpleGrid
           cols={3}
           spacing='md'
@@ -40,7 +39,6 @@ const Spots: NextPage = () => {
           })}
         </SimpleGrid>
       </div>
-      {/* </div> */}
       <Pagination
         page={activePage}
         onChange={setPage}
