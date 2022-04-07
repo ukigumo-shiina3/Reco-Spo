@@ -23,15 +23,18 @@ const Spots: NextPage = () => {
   return (
     <UserLayout>
       <SearchModal />
+      {/* ここから　コンポーネントでひとまとめにしていいかも */}
+      {/* SpotCardコンポーネントの余白について
+      mtで上との余白　ml・mrで左右の余白 */}
       <div className='flex justify-center gap-2 mt-5 ml-3 mr-3'>
         <SimpleGrid
-          cols={3}
-          spacing='md'
+          cols={3} // カラム数
+          spacing='md' // スペース
           breakpoints={[
             // { maxWidth: 980, cols: 3, spacing: 'md' },
             { maxWidth: 755, cols: 2, spacing: 'sm' },
             { maxWidth: 600, cols: 1, spacing: 'sm' },
-          ]}
+          ]} // ブレークポイント
         >
           {spots.map((spot) => {
             console.log(spot);
@@ -39,6 +42,7 @@ const Spots: NextPage = () => {
           })}
         </SimpleGrid>
       </div>
+      {/* ここまで　コンポーネントでひとまとめにしていいかも */}
       <Pagination
         page={activePage}
         onChange={setPage}
