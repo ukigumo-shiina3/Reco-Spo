@@ -59,7 +59,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
     // ここのmlとmrでカード同士の左右の余白を設定
     // inline-styleでmin-widthを設定
     // min-w-[400px]でもカードの最小幅を設定できる
-    <div className='m-2 lg:m-4　min-w-[400px]'>
+    <div className='m-2 lg:m-4 min-w-[400px]'>
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW='sm'
