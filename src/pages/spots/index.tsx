@@ -5,7 +5,8 @@ import { getSpots } from 'src/hooks/useSpotCardSelect';
 import SearchModal from 'src/components/SearchModal';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 import { Spot } from 'src/types/spot';
-import { Pagination } from '@mantine/core';
+import { Pagination, SimpleGrid } from '@mantine/core';
+import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
 
 const Spots: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -23,11 +24,8 @@ const Spots: NextPage = () => {
   return (
     <UserLayout>
       <SearchModal />
-      <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
-        {spots.map((spot) => {
-          console.log(spot);
-          return <SpotCard key={spot.id} spot={spot} />;
-        })}
+      <div className='flex justify-center  mt-8 ml-3 mr-3'>
+        <WrapSpotCard />
       </div>
       <Pagination
         page={activePage}
