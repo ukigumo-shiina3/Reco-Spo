@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
-import type { ChangeEvent, VFC } from 'react';
+import { ChangeEvent, useEffect, VFC } from 'react';
 import { supabase } from 'src/libs/supabase';
 import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
@@ -21,12 +22,21 @@ const ProfileEdit: VFC = () => {
     prefecture: '',
     group: '',
   });
+  const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
-  const [avatar, setAvatar] = useState<string | null>(null);
+  const [avatar, setAvatar] = useState<string | null>('');
+  const [email, setEmail] = useState<string | null>('');
+  const [password, setPassword] = useState<string | null>('');
+  const [prefecture, setPrefecture] = useState<string | null>('');
+  const [group, setGroup] = useState<string | null>('');
 
   const router = useRouter();
   const session = useAuth(true);
   const user = supabase.auth.user();
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -50,9 +60,11 @@ const ProfileEdit: VFC = () => {
         throw uploadError;
       }
 
-      let { error: updateError } = await supabase.from('admins').update({
+      const { error: updateError } = await supabase.from('admins').update({
         avatar_url: filePath,
       });
+      // .eq('avatar_url', filePath)
+      // .single();
 
       if (updateError) {
         throw updateError;
@@ -67,6 +79,37 @@ const ProfileEdit: VFC = () => {
     }
   }
 
+  function setProfile(profile: Admin) {
+    setAvatar(profile.avatar_url);
+    setEmail(profile.email);
+    setPassword(profile.password);
+    setPrefecture(profile.prefecture);
+    setGroup(profile.group);
+  }
+
+  async function getProfile() {
+    try {
+      setLoading(true);
+      const user = supabase.auth.user();
+
+      let { data, error } = await supabase
+        .from('profiles')
+        .select(`avatar_url, email, password, prefecture, group`)
+        .eq('id', user!.id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      setProfile(data);
+    } catch (error) {
+      console.log('error', error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const handleProfileEdit = useCallback(async () => {
     console.log(user?.id);
 
@@ -78,6 +121,7 @@ const ProfileEdit: VFC = () => {
       const { data, error } = await supabase
         .from('admins')
         .update({
+          avatar_url: admin.avatar_url,
           prefecture: admin.prefecture,
           group: admin.group,
           email: admin.email,
