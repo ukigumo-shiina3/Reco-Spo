@@ -22,13 +22,11 @@ export const WrapSpotCard = () => {
     //   <div className='flex justify-center  mt-8 ml-3 mr-3'>
     //     <WrapSpotCard />
     //   </div>
+    //  tailwindcss基準　sm:640px md:768px lg:1024px xl:1280px
     <SimpleGrid
       cols={3} // カラム数
       spacing='xl' // スペース xs sm md lg xl
       breakpoints={[
-        // { maxWidth: 980, cols: 3, spacing: 'md' },
-        // { maxWidth: 755, cols: 2, spacing: 'xl' },
-        // { maxWidth: 600, cols: 1, spacing: 'xl' },
         { maxWidth: 1280, cols: 2, spacing: 'xl' },
         { maxWidth: 768, cols: 1, spacing: 'xl' },
       ]} // ブレークポイント
