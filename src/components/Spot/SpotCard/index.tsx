@@ -56,7 +56,8 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   }, [getLike]);
 
   return (
-    <div>
+    // ここのmlとmrでカード同士の左右の余白を設定
+    <div className='ml-8 mr-8' style={{ minWidth: '400px' }}>
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW='sm'

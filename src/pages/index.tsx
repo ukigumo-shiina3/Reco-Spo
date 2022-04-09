@@ -59,7 +59,7 @@ const Index: NextPage = () => {
       />
       <AboutIntroduction />
       <SysyemIntroduction />
-      <div className='flex justify-center  mt-8 ml-3 mr-3'>
+      <div className='flex justify-center  my-20 ml-3 mr-3'>
         <WrapSpotCard />
       </div>
     </UserLayout>

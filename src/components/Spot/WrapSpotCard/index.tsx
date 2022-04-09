@@ -27,8 +27,10 @@ export const WrapSpotCard = () => {
       spacing='xl' // スペース xs sm md lg xl
       breakpoints={[
         // { maxWidth: 980, cols: 3, spacing: 'md' },
-        { maxWidth: 755, cols: 2, spacing: 'xl' },
-        { maxWidth: 600, cols: 1, spacing: 'xl' },
+        // { maxWidth: 755, cols: 2, spacing: 'xl' },
+        // { maxWidth: 600, cols: 1, spacing: 'xl' },
+        { maxWidth: 1280, cols: 2, spacing: 'xl' },
+        { maxWidth: 768, cols: 1, spacing: 'xl' },
       ]} // ブレークポイント
     >
       {spots.map((spot) => {
