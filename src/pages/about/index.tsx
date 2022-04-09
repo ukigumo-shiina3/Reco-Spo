@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 
-
 const About: NextPage = () => {
   return (
     <UserLayout>
@@ -17,7 +16,7 @@ const About: NextPage = () => {
           alt='サイト概要のメイン画像'
         />
       </div>
-      <div className='mt-5 p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto mt-5 p-5 md:px-10 py-5 max-w-[1080px]'>
         {/* Reco Spoとは */}
         <Image src='/about-heading1.png' width={150} height={50} alt='Reco Spoとは' />
         <p className='mb-4 text-sm'>
@@ -39,7 +38,7 @@ const About: NextPage = () => {
       </div>
 
       {/* 制作背景 */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5 max-w-[1080px]'>
         <Image src='/about-heading2.png' width={150} height={50} alt='制作背景' />
         <p className='mb-4 text-sm'>
           ・政治・経済・文化・人口など、社会における資本・資源・活動が東京に集中してます。
@@ -54,7 +53,7 @@ const About: NextPage = () => {
       </div>
 
       {/* 使い方 */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5 max-w-[1080px]'>
         <Image src='/about-heading3.png' width={150} height={50} alt='使い方' />
         <p className='mb-4 text-sm'>◆ユーザー</p>
         <p className='mb-4 text-sm'>
