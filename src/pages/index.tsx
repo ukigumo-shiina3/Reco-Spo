@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
 import { Spinner } from '@chakra-ui/react';
 import { SimpleGrid } from '@mantine/core';
+import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -58,22 +59,8 @@ const Index: NextPage = () => {
       />
       <AboutIntroduction />
       <SysyemIntroduction />
-
-      <div className='flex justify-center gap-2 mt-5 ml-3 mr-3'>
-        <SimpleGrid
-          cols={3}
-          spacing='md'
-          breakpoints={[
-            // { maxWidth: 980, cols: 3, spacing: 'md' },
-            { maxWidth: 755, cols: 2, spacing: 'sm' },
-            { maxWidth: 600, cols: 1, spacing: 'sm' },
-          ]}
-        >
-          {spots.map((spot) => {
-            console.log(spot);
-            return <SpotCard key={spot.id} spot={spot} />;
-          })}
-        </SimpleGrid>
+      <div className='flex justify-center  mt-8 ml-3 mr-3'>
+        <WrapSpotCard />
       </div>
     </UserLayout>
   );
