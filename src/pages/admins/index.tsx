@@ -31,8 +31,7 @@ const ProfileEdit: VFC = () => {
   const [password, setPassword] = useState<string | null>('');
   const [prefecture, setPrefecture] = useState<string | null>('');
   const [group, setGroup] = useState<string | null>('');
-  const [id, setId] = useState<string>();
-  const [adminId, setAdminId] = useState<Admin>();
+  const [id, setId] = useState<string>('');
   const [error, setError] = useState(false);
 
   const router = useRouter();
@@ -40,8 +39,8 @@ const ProfileEdit: VFC = () => {
   const user = supabase.auth.user();
 
   useEffect(() => {
-    getProfile();
-  }, []);
+    getProfile(id || '');
+  }, [user]);
 
   async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
     try {
@@ -65,15 +64,18 @@ const ProfileEdit: VFC = () => {
         throw uploadError;
       }
 
-      const { error: updateError } = await supabase.from('admins').update({
-        avatar_url: filePath,
-      });
+      const { error: updateError } = await supabase
+        .from('admins')
+        .update({
+          avatar_url: filePath,
+        })
+        .eq('id', user?.id || '');
 
       if (updateError) {
         throw updateError;
       }
 
-      setAvatar(null);
+      // setAvatar(null);
       setAvatar(filePath);
     } catch (error) {
       alert(error.message);
@@ -95,7 +97,14 @@ const ProfileEdit: VFC = () => {
       setLoading(true);
       const user = supabase.auth.user();
 
-      const { data, error } = await supabase.from<Admin>('admins').select(id).eq('id', id).single();
+      const { data, error } = await supabase
+        .from<Admin>('admins')
+        .select('id, avatar_url')
+        .eq('id', user?.id || '')
+        .single();
+
+      console.log('アイディ', user?.id);
+      console.log('アバター', data);
 
       if (error) {
         throw error;
@@ -108,30 +117,6 @@ const ProfileEdit: VFC = () => {
       setLoading(false);
     }
   }
-
-  // const fetchAdminId = useCallback(async (id: string) => {
-  //   try {
-  //     const data = await getAdminsImageId(id);
-  //     setAdminId(data);
-  //   } catch (error) {
-  //     setError(true);
-  //   }
-  //   setLoading(false);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (router.asPath !== router.route) {
-  //     setId(String(router.query.id));
-  //   }
-  //   // console.log(router.query.id);
-  // }, [router]);
-
-  // useEffect(() => {
-  //   if (id) {
-  //     fetchAdminId(router.query.id as string);
-  //   }
-  //   // console.log(router.query.id);
-  // }, [id, fetchAdminId, router.query.id]);
 
   const handleProfileEdit = useCallback(async () => {
     console.log(user?.id);
