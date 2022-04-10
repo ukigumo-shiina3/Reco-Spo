@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { NextPage } from 'next';
-import { SpotCarousel } from 'src/components/Spot/SpotCarousel';
+import { SpotCarousel } from 'src/components/Spot/SpotCarousel/index';
 import { SpotShow } from 'src/components/Spot/SpotShow';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 import { useCallback, useEffect, useState } from 'react';
 import { getSpotsId } from 'src/hooks/useSpotIdSelect';
 import { useRouter } from 'next/router';
 import { Spot } from 'src/types/spot';
+import { Container } from '@mantine/core';
 
 const SpotsId: NextPage = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const SpotsId: NextPage = () => {
   return (
     <UserLayout>
       <div className='box-content'>
-        <div className='w-screen block '>
+        <div className='w-screen block mb-8'>
           <Image
             src='/about-pic.png'
             quality={100}
@@ -47,14 +48,14 @@ const SpotsId: NextPage = () => {
             alt='サイト概要のメイン画像'
           />
         </div>
-        <div className='sm:py-8'>
+        <Container>
           {spot ? (
             <div>
               <SpotCarousel spot={spot} />
               <SpotShow spot={spot} />
             </div>
           ) : null}
-        </div>
+        </Container>
       </div>
     </UserLayout>
   );

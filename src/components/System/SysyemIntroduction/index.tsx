@@ -5,9 +5,9 @@ import Link from 'next/link';
 export const SysyemIntroduction: VFC = () => {
   return (
     <div>
-      <div className='w-screen block'>
-        <div className='sm:flex'>
-          <div className='sm:w-1/2'>
+      <div className='w-screen block '>
+        <div className='sm:flex justify-center'>
+          <div className='max-w-[540px]'>
             {/* 仕事に関する助成金とは */}
             <div className='relative text-center text-xs sm:text-base xl:text-xl'>
               <img
@@ -36,7 +36,7 @@ export const SysyemIntroduction: VFC = () => {
           </div>
 
           {/* 住宅建築補助とは */}
-          <div className='sm:w-1/2'>
+          <div className='max-w-[540px]'>
             <div className='relative text-center text-xs sm:text-base xl:text-xl'>
               <img
                 src='/about-pic2.png'
@@ -65,8 +65,8 @@ export const SysyemIntroduction: VFC = () => {
         </div>
 
         {/* 定住促進奨励金とは */}
-        <div className='sm:flex'>
-          <div className='sm:w-1/2'>
+        <div className='sm:flex justify-center'>
+          <div className='max-w-[540px]'>
             <div className='relative text-center text-xs sm:text-base xl:text-xl'>
               <img
                 src='/about-pic3.png'
@@ -94,7 +94,7 @@ export const SysyemIntroduction: VFC = () => {
           </div>
 
           {/* お試し移住体験とは */}
-          <div className='sm:w-1/2'>
+          <div className='max-w-[540px]'>
             <div className='relative text-center text-xs sm:text-base xl:text-xl'>
               <img
                 src='/about-pic4.png'

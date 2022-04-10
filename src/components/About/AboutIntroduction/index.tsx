@@ -14,7 +14,7 @@ export const AboutIntroduction: VFC = () => {
         />
       </div>
       {/* Reco Spoとは */}
-      <div className='container mx-auto'>
+      <div className='container mx-auto max-w-[1080px]'>
         <h1 className='flex justify-center text-2xl my-10 sm:my-14 sm:text-4xl'>Reco Spoとは</h1>
         <div className='text-sm sm:text-xl sm:pl-24'>
           <p className='mb-4 px-10'>

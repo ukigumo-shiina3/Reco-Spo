@@ -33,14 +33,12 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
     if (router.asPath !== router.route) {
       setId(String(router.query.id));
     }
-    // console.log(router.query.id);
   }, [router]);
 
   useEffect(() => {
     if (id) {
       fetchLikeId(router.query.id as string);
     }
-    // console.log(router.query.id);
   }, [id, fetchLikeId, router.query.id]);
 
   const handleGetLike = useCallback(async () => {
@@ -58,14 +56,10 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   }, [getLike]);
 
   return (
-    <Flex
-      bg={useColorModeValue('#FFF', 'white')}
-      p={50}
-      w={500}
-      alignItems='right'
-      justifyContent='right'
-      flexWrap='wrap'
-    >
+    // ここのmlとmrでカード同士の左右の余白を設定
+    // inline-styleでmin-widthを設定
+    // min-w-[400px]でもカードの最小幅を設定できる
+    <div className='m-2 lg:m-4 min-w-[400px]'>
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW='sm'
@@ -88,7 +82,6 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
             </a>
           </Link>
         </div>
-
         <Box p='6' mt='3'>
           <Box d='flex'>
             <Box
@@ -174,6 +167,6 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
           </Box>
         </Box>
       </Box>
-    </Flex>
+    </div>
   );
 };

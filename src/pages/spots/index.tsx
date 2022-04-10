@@ -1,14 +1,16 @@
 import { NextPage } from 'next';
 import { SpotCard } from 'src/components/Spot/SpotCard';
-import { SpotPagination } from 'src/components/Spot/SpotPagination';
 import { useCallback, useEffect, useState } from 'react';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import SearchModal from 'src/components/SearchModal';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 import { Spot } from 'src/types/spot';
+import { Pagination, SimpleGrid } from '@mantine/core';
+import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
 
 const Spots: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
+  const [activePage, setPage] = useState(1);
 
   const fetchSpot = useCallback(async () => {
     const data = await getSpots();
@@ -22,13 +24,17 @@ const Spots: NextPage = () => {
   return (
     <UserLayout>
       <SearchModal />
-      <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
-        {spots.map((spot) => {
-          console.log(spot);
-          return <SpotCard key={spot.id} spot={spot} />;
-        })}
+      <div className='flex justify-center  mt-8 ml-3 mr-3'>
+        <WrapSpotCard />
       </div>
-      <SpotPagination />
+      <Pagination
+        page={activePage}
+        onChange={setPage}
+        total={5}
+        color='dark'
+        position='center'
+        className='py-20'
+      />
     </UserLayout>
   );
 };

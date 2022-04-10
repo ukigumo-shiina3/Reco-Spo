@@ -17,7 +17,7 @@ const System: NextPage = () => {
       </div>
 
       {/* 居住支援制度とは  */}
-      <div className='mt-5 p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto mt-5 p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading1.png'
           quality={100}
@@ -37,7 +37,7 @@ const System: NextPage = () => {
       </div>
 
       {/* 住宅支援制度とは */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading2.png'
           quality={100}
@@ -50,7 +50,7 @@ const System: NextPage = () => {
       </div>
 
       {/* 定住促進奨励金とは */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading3.png'
           quality={100}
@@ -68,7 +68,7 @@ const System: NextPage = () => {
       </div>
 
       {/* お試し暮らしとは */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading4.png'
           quality={100}
@@ -86,7 +86,7 @@ const System: NextPage = () => {
       </div>
 
       {/* 子育て支援とは */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading5.png'
           quality={100}
@@ -102,7 +102,7 @@ const System: NextPage = () => {
       </div>
 
       {/* 空き家バンクとは */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading5.png'
           quality={100}
@@ -117,7 +117,7 @@ const System: NextPage = () => {
       </div>
 
       {/* 仕事への補助金とは */}
-      <div className='p-5 md:px-10 py-5'>
+      <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
           src='/system-heading5.png'
           quality={100}
