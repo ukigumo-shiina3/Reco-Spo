@@ -13,9 +13,11 @@ import { Admin } from 'src/types/admin';
 import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constants';
 import UploadButton from 'src/components/Button/UploadButton/UploadButton';
 import Avatar from 'src/components/Avatar';
+import { Spinner } from '@chakra-ui/react';
 
 const ProfileEdit: VFC = () => {
   const [admin, setAdmin] = useState<Admin>({
+    id: '',
     avatar_url: '',
     email: '',
     password: '',
@@ -29,6 +31,9 @@ const ProfileEdit: VFC = () => {
   const [password, setPassword] = useState<string | null>('');
   const [prefecture, setPrefecture] = useState<string | null>('');
   const [group, setGroup] = useState<string | null>('');
+  const [id, setId] = useState<string>();
+  const [adminId, setAdminId] = useState<Admin>();
+  const [error, setError] = useState(false);
 
   const router = useRouter();
   const session = useAuth(true);
@@ -63,8 +68,6 @@ const ProfileEdit: VFC = () => {
       const { error: updateError } = await supabase.from('admins').update({
         avatar_url: filePath,
       });
-      // .eq('avatar_url', filePath)
-      // .single();
 
       if (updateError) {
         throw updateError;
@@ -87,16 +90,12 @@ const ProfileEdit: VFC = () => {
     setGroup(profile.group);
   }
 
-  async function getProfile() {
+  async function getProfile(id: string) {
     try {
       setLoading(true);
       const user = supabase.auth.user();
 
-      let { data, error } = await supabase
-        .from('profiles')
-        .select(`avatar_url, email, password, prefecture, group`)
-        .eq('id', user!.id)
-        .single();
+      const { data, error } = await supabase.from<Admin>('admins').select(id).eq('id', id).single();
 
       if (error) {
         throw error;
@@ -109,6 +108,30 @@ const ProfileEdit: VFC = () => {
       setLoading(false);
     }
   }
+
+  // const fetchAdminId = useCallback(async (id: string) => {
+  //   try {
+  //     const data = await getAdminsImageId(id);
+  //     setAdminId(data);
+  //   } catch (error) {
+  //     setError(true);
+  //   }
+  //   setLoading(false);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (router.asPath !== router.route) {
+  //     setId(String(router.query.id));
+  //   }
+  //   // console.log(router.query.id);
+  // }, [router]);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     fetchAdminId(router.query.id as string);
+  //   }
+  //   // console.log(router.query.id);
+  // }, [id, fetchAdminId, router.query.id]);
 
   const handleProfileEdit = useCallback(async () => {
     console.log(user?.id);
@@ -139,6 +162,17 @@ const ProfileEdit: VFC = () => {
     }
   }, [admin.prefecture, admin.group, admin.email, admin.password, user]);
 
+  if (loading) {
+    return (
+      <div className='flex justify-center mt-64'>
+        <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
+      </div>
+    );
+  }
+  if (error) {
+    return <div>エラーが発生しました。</div>;
+  }
+
   return (
     <>
       <div className='flex bg-gray-100 h-full'>
@@ -150,7 +184,7 @@ const ProfileEdit: VFC = () => {
               {avatar ? (
                 <Avatar url={avatar} size={60} />
               ) : (
-                <img src='/profile-icon.png' alt='image' className='w-16 h-16 pr-4 rounded-full' />
+                <img src='/profile-icon.png' alt='image' className='w-17 h-16 pr-4 rounded-full' />
               )}
               <UploadButton onUpload={uploadAvatar} loading={uploading} />
             </p>
