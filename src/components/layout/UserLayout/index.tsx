@@ -9,10 +9,10 @@ type Props = {
 
 export const UserLayout: VFC<Props> = (props) => {
   return (
-    <MantineProvider>
+    <>
       <Header />
       {props.children}
       <Footer />
-    </MantineProvider>
+    </>
   );
 };
