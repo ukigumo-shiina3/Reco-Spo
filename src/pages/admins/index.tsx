@@ -42,7 +42,7 @@ const ProfileEdit: VFC = () => {
     getProfile(id || '');
   }, [user]);
 
-  async function uploadAvatar(event: ChangeEvent<HTMLInputElement>) {
+  const uploadAvatar = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
     try {
       setUploading(true);
 
@@ -75,14 +75,13 @@ const ProfileEdit: VFC = () => {
         throw updateError;
       }
 
-      // setAvatar(null);
       setAvatar(filePath);
     } catch (error) {
       alert(error.message);
     } finally {
       setUploading(false);
     }
-  }
+  }, []);
 
   function setProfile(profile: Admin) {
     setAvatar(profile.avatar_url);
@@ -92,7 +91,7 @@ const ProfileEdit: VFC = () => {
     setGroup(profile.group);
   }
 
-  async function getProfile(id: string) {
+  const getProfile = useCallback(async (id: string) => {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -116,7 +115,7 @@ const ProfileEdit: VFC = () => {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   const handleProfileEdit = useCallback(async () => {
     console.log(user?.id);
