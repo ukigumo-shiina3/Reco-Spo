@@ -14,7 +14,6 @@ export default function UploadButton(props: UploadButtonProps) {
       <input
         style={{
           visibility: 'hidden',
-          position: 'absolute',
         }}
         type='file'
         id='single'
