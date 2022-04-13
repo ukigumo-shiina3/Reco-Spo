@@ -2,13 +2,12 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 
-
 const About: NextPage = () => {
   return (
     <UserLayout>
       <div className='w-screen block '>
         <Image
-          src='/about-pic.png'
+          src='/main-visual2.png'
           quality={100}
           width={2000}
           height={700}

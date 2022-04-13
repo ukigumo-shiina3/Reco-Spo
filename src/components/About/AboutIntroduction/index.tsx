@@ -7,11 +7,7 @@ export const AboutIntroduction: VFC = () => {
   return (
     <div>
       <div className='w-screen block'>
-        <img
-          src='/top-pic.png'
-          alt='サイト概要のメイン画像'
-          className='w-full h-40 sm:h-60 md:h-96'
-        />
+        <img src='/main-visual1.png' alt='サイト概要のメイン画像' className='w-full' />
       </div>
       {/* Reco Spoとは */}
       <div className='container mx-auto'>
