@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState, VFC } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
@@ -16,12 +16,13 @@ import { Spinner } from '@chakra-ui/react';
 import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
 import { Upload, Camera, X, Icon as TablerIcon } from 'tabler-icons-react';
 import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
-
-const user = supabase.auth.user();
+import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+import UploadButton from 'src/components/Button/UploadButton/UploadButton';
+import SpotImage from 'src/components/Spot/SpotImage';
+import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
+import { useRouter } from 'next/router';
 
 const SpotsPost: NextPage = () => {
-  const theme = useMantineTheme();
-
   const [spotPost, setSpotPost] = useState<Spot>({
     id: '',
     prefecture_id: '',
@@ -34,6 +35,7 @@ const SpotsPost: NextPage = () => {
     },
     name: '',
     title: '',
+    image_url: '',
     appeal: '',
     area: '',
     link: '',
@@ -49,9 +51,124 @@ const SpotsPost: NextPage = () => {
 
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
+  const [spot, setSpot] = useState<Spot>();
+  const [spotImage, setSpotImage] = useState<string | null>('');
   const [session, setSession] = useState<Session | null>(null);
+  const [id, setId] = useState<string>('');
+  const [uploading, setUploading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
+
+  const user = supabase.auth.user();
+  const theme = useMantineTheme();
+  const router = useRouter();
+
+  const fetchSpot = useCallback(async (id: string) => {
+    try {
+      const data = await getSpotsDetail(id);
+      setSpot(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (router.asPath !== router.route) {
+      setId(String(router.query.id));
+    }
+    console.log('スポットID①', router.query.id);
+  }, [router]);
+
+  useEffect(() => {
+    if (id) {
+      fetchSpot(router.query.id as string);
+    }
+    console.log('スポットID②', router.query.id);
+  }, [id, fetchSpot, router.query.id]);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
+      setSession(session);
+    });
+  }, []);
+
+  useEffect(() => {
+    getSpotImgae(id || '');
+  }, [user]);
+
+  const uploadAvatar = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploading(true);
+
+      if (!event.target.files || event.target.files.length == 0) {
+        throw '変更するプロフィール画像を選択してください';
+      }
+
+      const user = supabase.auth.user();
+      const file = event.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from(DEFAULT_SPOTS_BUCKET)
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { error: updateError } = await supabase
+        .from('spots')
+        .update({
+          image_url: filePath,
+        })
+        .eq('id', id || '');
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      setSpotImage(filePath);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setUploading(false);
+    }
+  }, []);
+
+  function setProfile(spotImage: Spot) {
+    setSpotImage(spotImage.image_url);
+  }
+
+  const getSpotImgae = useCallback(async (id: string) => {
+    try {
+      setLoading(true);
+      const user = supabase.auth.user();
+
+      const { data, error } = await supabase
+        .from<Spot>('spots')
+        .select('id, image_url')
+        .eq('id', id || '')
+        .single();
+
+      console.log('ユーザーアイディ', user?.id);
+      console.log('スポットデータ', data);
+
+      if (error) {
+        throw error;
+      }
+
+      setProfile(data);
+    } catch (error) {
+      console.log('error', error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
     return status.accepted
@@ -163,7 +280,6 @@ const SpotsPost: NextPage = () => {
     const { data, error } = await supabase.from('spots').insert({
       name: spotPost.name,
       title: spotPost.title,
-      admin_id: user?.id,
       appeal: spotPost.appeal,
       area: spotPost.area,
       link: spotPost.link,
@@ -219,33 +335,52 @@ const SpotsPost: NextPage = () => {
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             {/* スポット投稿 */}
             <h1 className='text-3xl mt-24'>スポット投稿</h1>
-            {/* <Account key={session.user.id} session={session} /> */}
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
-            <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
-              <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
+            {spotImage ? (
+              <SpotImage url={spotImage} size={60} />
+            ) : (
+              <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
+                <div className='bg-white w-16 h-16'>
+                  <img
+                    src='/camera-icon.png'
+                    alt='カメラアイコン'
+                    className='m-auto mt-4 w-8 h-8'
+                  />
+                </div>
+                {/* <div className='bg-white w-16 h-16'>
+                  <img
+                    src='/camera-icon.png'
+                    alt='カメラアイコン'
+                    className='m-auto mt-4 w-8 h-8'
+                  />
+                </div>
+                <div className='bg-white w-16 h-16'>
+                  <img
+                    src='/camera-icon.png'
+                    alt='カメラアイコン'
+                    className='m-auto mt-4 w-8 h-8'
+                  />
+                </div>
+                <div className='bg-white w-16 h-16'>
+                  <img
+                    src='/camera-icon.png'
+                    alt='カメラアイコン'
+                    className='m-auto mt-4 w-8 h-8'
+                  />
+                </div>
+                <div className='bg-white w-16 h-16'>
+                  <img
+                    src='/camera-icon.png'
+                    alt='カメラアイコン'
+                    className='m-auto mt-4 w-8 h-8'
+                  />
+                </div> */}
               </div>
-              <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
-              </div>
-            </div>
+            )}
+            <UploadButton onUpload={uploadAvatar} loading={uploading} />
             <div className='mt-5'>
-              {/* <img
-                src='/image-upload.png'
-                alt='画像アップロードアイコン'
-                className='w-hull h-18 sm:h-24'
-              /> */}
               <Dropzone
                 onDrop={(files) => console.log('accepted files', files)}
                 onReject={(files) => console.log('rejected files', files)}
