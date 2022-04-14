@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useCallback, useEffect, useState, VFC } from 'react';
-import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
+import { Box, Image, useColorModeValue } from '@chakra-ui/react';
 import { Spot } from 'src/types/spot';
 import Link from 'next/link';
 import { supabase } from 'src/libs/supabase';
@@ -56,10 +56,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   }, [getLike]);
 
   return (
-    // ここのmlとmrでカード同士の左右の余白を設定
-    // inline-styleでmin-widthを設定
-    // min-w-[400px]でもカードの最小幅を設定できる
-    <div className='m-2 lg:m-4 min-w-[400px]'>
+    <div className='w-full sm:min-w-[360px] '>
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW='sm'
