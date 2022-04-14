@@ -6,9 +6,25 @@ import type { VFC } from 'react';
 export const AboutIntroduction: VFC = () => {
   return (
     <div>
-      <div className='w-screen block'>
+      <figure className='relative w-full text-xs  sm:text-base '>
         <img src='/main-visual1.png' alt='サイト概要のメイン画像' className='w-full' />
-      </div>
+        <figcaption className='absolute text-white bottom-2 right-1 sm:bottom-4 sm:right-2 md:bottom-8  lg:bottom-12 lg:right-8 z-index-2  '>
+          <div className='hidden sm:block'>
+            <p className='font-black text-md sm:text-2xl md:text-3xl lg:text-4xl '>
+              あなたの暮らしはここから始まる
+            </p>
+            <p className='font-bold pt-2 lg:pt-4 lg:text-xl xl:text-2xl '>
+              自治体ごとに公表された住宅支援やお試し移住体験から
+            </p>
+            <p className='font-bold pt-2 lg:pt-4 lg:text-xl xl:text-2xl '>
+              条件にあった町を覗いてみませんか？
+            </p>
+            <p className='font-bold pt-2 lg:pt-4 lg:text-xl xl:text-2xl '>
+              あなたにあった居場所がきっと見つかるはずです
+            </p>
+          </div>
+        </figcaption>
+      </figure>
       {/* Reco Spoとは */}
       <div className='container mx-auto max-w-[1080px]'>
         <h1 className='flex justify-center text-2xl my-10 sm:my-14 sm:text-4xl'>Reco Spoとは</h1>
