@@ -7,7 +7,7 @@ const System: NextPage = () => {
     <UserLayout>
       <div className='w-screen block'>
         <Image
-          src='/system-pic.jpg'
+          src='/main-visual3.png'
           quality={100}
           width={2000}
           height={650}

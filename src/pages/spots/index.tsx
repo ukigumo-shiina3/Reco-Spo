@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { NextPage } from 'next';
 import { SpotCard } from 'src/components/Spot/SpotCard';
 import { useCallback, useEffect, useState } from 'react';
@@ -23,6 +24,9 @@ const Spots: NextPage = () => {
 
   return (
     <UserLayout>
+      <div className='w-screen block'>
+        <img src='/main-visual4.png' alt='サイト概要のメイン画像' className='w-full' />
+      </div>
       <SearchModal />
       <div className='flex justify-center  mt-8 ml-3 mr-3'>
         <WrapSpotCard />
