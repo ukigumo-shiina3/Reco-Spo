@@ -28,7 +28,7 @@ export const AboutIntroduction: VFC = () => {
       {/* Reco Spoとは */}
       <div className='container mx-auto max-w-[1080px]'>
         <h1 className='flex justify-center text-2xl my-10 sm:my-14 sm:text-4xl'>Reco Spoとは</h1>
-        <div className='text-sm sm:text-xl sm:pl-24'>
+        <div className='text-sm sm:text-xl'>
           <p className='mb-4 px-10'>
             将来的に田舎暮らしに憧れを持っているが、日本各地それぞれの土地の魅力は様々。
           </p>
