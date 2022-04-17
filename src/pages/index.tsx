@@ -9,6 +9,8 @@ import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
 import { Spinner } from '@chakra-ui/react';
+import { SimpleGrid } from '@mantine/core';
+import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
@@ -57,11 +59,8 @@ const Index: NextPage = () => {
       />
       <AboutIntroduction />
       <SysyemIntroduction />
-
-      <div className='flex flex-wrap gap-2 mt-5 sm:pl-24 md:gap-20 2xl:gap-8'>
-        {spots.map((spot) => {
-          return <SpotCard spot={spot} key={spot.id} />;
-        })}
+      <div className='flex justify-center  my-20 ml-3 mr-3'>
+        <WrapSpotCard />
       </div>
     </UserLayout>
   );

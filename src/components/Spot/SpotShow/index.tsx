@@ -10,7 +10,7 @@ type SpotCardProps = {
 export const SpotShow: VFC<SpotCardProps> = (props) => {
   return (
     <div>
-      <div className='w-screen sm:px-20 sm:py-5'>
+      <div className='sm:px-20 sm:py-5'>
         <Image
           src='/spot-show-heading1.png'
           quality={100}

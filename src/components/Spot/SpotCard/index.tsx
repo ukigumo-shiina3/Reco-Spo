@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useCallback, useEffect, useState, VFC } from 'react';
-import { Box, Flex, Image, useColorModeValue } from '@chakra-ui/react';
+import { Box, Image, useColorModeValue } from '@chakra-ui/react';
 import { Spot } from 'src/types/spot';
 import Link from 'next/link';
 import { supabase } from 'src/libs/supabase';
@@ -56,14 +56,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   }, [getLike]);
 
   return (
-    <Flex
-      bg={useColorModeValue('#FFF', 'white')}
-      p={50}
-      w={500}
-      alignItems='right'
-      justifyContent='right'
-      flexWrap='wrap'
-    >
+    <div className='w-full sm:min-w-[360px] '>
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW='sm'
@@ -86,7 +79,6 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
             </a>
           </Link>
         </div>
-
         <Box p='6' mt='3'>
           <Box d='flex'>
             <Box
@@ -172,6 +164,6 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
           </Box>
         </Box>
       </Box>
-    </Flex>
+    </div>
   );
 };

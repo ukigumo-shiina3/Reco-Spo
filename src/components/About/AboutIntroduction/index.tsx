@@ -6,17 +6,29 @@ import type { VFC } from 'react';
 export const AboutIntroduction: VFC = () => {
   return (
     <div>
-      <div className='w-screen block'>
-        <img
-          src='/top-pic.png'
-          alt='サイト概要のメイン画像'
-          className='w-full h-40 sm:h-60 md:h-96'
-        />
-      </div>
+      <figure className='relative w-full text-xs  sm:text-base '>
+        <img src='/main-visual1.png' alt='サイト概要のメイン画像' className='w-full' />
+        <figcaption className='absolute text-white bottom-2 right-1 z-index-1 sm:bottom-4 sm:right-2 md:bottom-8 lg:bottom-12 lg:right-8 2xl:bottom-20'>
+          <div className='hidden sm:block'>
+            <p className='font-black text-md sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl '>
+              あなたの暮らしはここから始まる
+            </p>
+            <p className='font-bold pt-2 lg:pt-4 lg:text-xl xl:text-2xl '>
+              自治体ごとに公表された住宅支援やお試し移住体験から
+            </p>
+            <p className='font-bold pt-2 lg:pt-4 lg:text-xl xl:text-2xl '>
+              条件にあった町を覗いてみませんか？
+            </p>
+            <p className='font-bold pt-2 lg:pt-4 lg:text-xl xl:text-2xl '>
+              あなたにあった居場所がきっと見つかるはずです
+            </p>
+          </div>
+        </figcaption>
+      </figure>
       {/* Reco Spoとは */}
-      <div className='container mx-auto'>
+      <div className='container mx-auto max-w-[1080px]'>
         <h1 className='flex justify-center text-2xl my-10 sm:my-14 sm:text-4xl'>Reco Spoとは</h1>
-        <div className='text-sm sm:text-xl sm:pl-24'>
+        <div className='text-sm sm:text-xl'>
           <p className='mb-4 px-10'>
             将来的に田舎暮らしに憧れを持っているが、日本各地それぞれの土地の魅力は様々。
           </p>

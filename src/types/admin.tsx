@@ -1,5 +1,6 @@
 export type Admin = {
-  // avatar_url: string;
+  id: string;
+  avatar_url: string;
   email: string;
   password: string;
   prefecture: string;
