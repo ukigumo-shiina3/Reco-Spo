@@ -75,7 +75,10 @@ const ProfileEdit: VFC = () => {
     }
   }, []);
 
-  function setProfile(profile: Admin) {
+  function setProfile(profile: Admin | null) {
+    if (!profile) {
+      return;
+    }
     setAvatar(profile.avatar_url);
   }
 
@@ -146,7 +149,7 @@ const ProfileEdit: VFC = () => {
     <>
       <div className='flex bg-gray-100 h-full'>
         <Sidebar group={''} />
-        <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg '>
+        <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg'>
           <h1 className='text-3xl mt-24'>プロフィール編集</h1>
           <div className='pt-5 mt-5'>
             <p className='text-sm mt-2'>

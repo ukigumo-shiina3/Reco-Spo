@@ -63,41 +63,41 @@ const SpotsPost: NextPage = () => {
   const theme = useMantineTheme();
   const router = useRouter();
 
-  const fetchSpot = useCallback(async (id: string) => {
-    try {
-      const data = await getSpotsDetail(id);
-      setSpot(data);
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  }, []);
+  // const fetchSpot = useCallback(async (id: string) => {
+  //   try {
+  //     const data = await getSpotsDetail(id);
+  //     setSpot(data);
+  //   } catch (error) {
+  //     setError(true);
+  //   }
+  //   setLoading(false);
+  // }, []);
 
-  useEffect(() => {
-    if (router.asPath !== router.route) {
-      setId(String(router.query.id));
-    }
-    console.log('スポットID①', router.query.id);
-  }, [router]);
+  // useEffect(() => {
+  //   if (router.asPath !== router.route) {
+  //     setId(String(router.query.id));
+  //   }
+  //   console.log('スポットID①', router.query.id);
+  // }, [router]);
 
-  useEffect(() => {
-    if (id) {
-      fetchSpot(router.query.id as string);
-    }
-    console.log('スポットID②', router.query.id);
-  }, [id, fetchSpot, router.query.id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     fetchSpot(router.query.id as string);
+  //   }
+  //   console.log('スポットID②', router.query.id);
+  // }, [id, fetchSpot, router.query.id]);
 
-  useEffect(() => {
-    setSession(supabase.auth.session());
+  // useEffect(() => {
+  //   setSession(supabase.auth.session());
 
-    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
-      setSession(session);
-    });
-  }, []);
+  //   supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
+  //     setSession(session);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    getSpotImgae(id || '');
-  }, [user]);
+  // useEffect(() => {
+  //   getSpotImgae(id || '');
+  // }, [user]);
 
   const uploadAvatar = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
     try {
@@ -121,12 +121,17 @@ const SpotsPost: NextPage = () => {
         throw uploadError;
       }
 
-      const { error: updateError } = await supabase
-        .from('spots')
-        .update({
-          image_url: filePath,
-        })
-        .eq('id', id || '');
+      const { error: updateError } = await supabase.from('spots').insert({
+        image_url: filePath,
+      });
+
+      console.log('ユーザーアイディ', user?.id);
+      // const { error: updateError } = await supabase
+      //   .from('spots')
+      //   .update({
+      //     image_url: filePath,
+      //   })
+      //   .eq('id', id || '');
 
       if (updateError) {
         throw updateError;
@@ -140,14 +145,16 @@ const SpotsPost: NextPage = () => {
     }
   }, []);
 
-  function setProfile(spotImage: Spot) {
+  function setProfile(spotImage: Spot | null) {
+    if (!spotImage) {
+      return;
+    }
     setSpotImage(spotImage.image_url);
   }
 
   const getSpotImgae = useCallback(async (id: string) => {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
 
       const { data, error } = await supabase
         .from<Spot>('spots')
@@ -155,8 +162,8 @@ const SpotsPost: NextPage = () => {
         .eq('id', id || '')
         .single();
 
-      console.log('ユーザーアイディ', user?.id);
-      console.log('スポットデータ', data);
+      // console.log('ユーザーアイディ', user?.id);
+      // console.log('スポットデータ', data);
 
       if (error) {
         throw error;
