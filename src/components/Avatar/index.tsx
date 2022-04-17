@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
-import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constants';
+import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constant';
 
 export default function Avatar({ url, size }: { url: string | null; size: number }) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);

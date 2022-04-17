@@ -5,8 +5,8 @@ import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { Spot } from 'src/types/spot';
 import { getSpotsId } from 'src/hooks/useSpotIdSelect';
+import { Spot } from 'src/types/spot';
 
 type Props = {
   group: string;
@@ -14,7 +14,7 @@ type Props = {
 
 export const Sidebar: VFC<Props> = (props) => {
   const router = useRouter();
-  const [spot, setSpot] = useState();
+  const [spot, setSpot] = useState<Spot>();
   const [id, setId] = useState<string>();
 
   const HandleLogout = useCallback(() => {

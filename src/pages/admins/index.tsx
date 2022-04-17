@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, VFC } from 'react';
 import { supabase } from 'src/libs/supabase';
-import useAuth from 'src/hooks/useAuth';
 import { useCallback, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
 import { Sidebar } from 'src/components/Layout/Sidebar';
 import { Admin } from 'src/types/admin';
-import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constants';
+import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constant';
 import UploadButton from 'src/components/Button/UploadButton/UploadButton';
 import Avatar from 'src/components/Avatar';
 import { Spinner } from '@chakra-ui/react';
@@ -27,15 +25,9 @@ const ProfileEdit: VFC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<string | null>('');
-  const [email, setEmail] = useState<string | null>('');
-  const [password, setPassword] = useState<string | null>('');
-  const [prefecture, setPrefecture] = useState<string | null>('');
-  const [group, setGroup] = useState<string | null>('');
   const [id, setId] = useState<string>('');
   const [error, setError] = useState(false);
 
-  const router = useRouter();
-  const session = useAuth(true);
   const user = supabase.auth.user();
 
   useEffect(() => {
@@ -56,7 +48,7 @@ const ProfileEdit: VFC = () => {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      let { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from(DEFAULT_AVATARS_BUCKET)
         .upload(filePath, file);
 
@@ -83,12 +75,11 @@ const ProfileEdit: VFC = () => {
     }
   }, []);
 
-  function setProfile(profile: Admin) {
+  function setProfile(profile: Admin | null) {
+    if (!profile) {
+      return;
+    }
     setAvatar(profile.avatar_url);
-    setEmail(profile.email);
-    setPassword(profile.password);
-    setPrefecture(profile.prefecture);
-    setGroup(profile.group);
   }
 
   const getProfile = useCallback(async (id: string) => {
@@ -101,9 +92,6 @@ const ProfileEdit: VFC = () => {
         .select('id, avatar_url')
         .eq('id', user?.id || '')
         .single();
-
-      console.log('アイディ', user?.id);
-      console.log('アバター', data);
 
       if (error) {
         throw error;
@@ -161,7 +149,7 @@ const ProfileEdit: VFC = () => {
     <>
       <div className='flex bg-gray-100 h-full'>
         <Sidebar group={''} />
-        <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg '>
+        <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg'>
           <h1 className='text-3xl mt-24'>プロフィール編集</h1>
           <div className='pt-5 mt-5'>
             <p className='text-sm mt-2'>
@@ -203,7 +191,6 @@ const ProfileEdit: VFC = () => {
           <input
             type='text'
             value={admin.email}
-            // defaultValue={admins.email}
             onChange={(e) => {
               setAdmin({ ...admin, email: e.target.value.trim() });
             }}
