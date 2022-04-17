@@ -6,6 +6,7 @@ export const getSpotsDetail = async (id: string) => {
   if (!data) {
     return {
       id: '100',
+      admin_id: '200',
       prefecture_id: 'f1d7e7eb-66da-4356-8ae3-e05329f0119f',
       prefectures: {
         prefectures_name: ['石川県'],
