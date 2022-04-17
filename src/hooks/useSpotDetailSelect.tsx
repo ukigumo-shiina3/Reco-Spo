@@ -6,6 +6,7 @@ export const getSpotsDetail = async (id: string) => {
   if (!data) {
     return {
       id: '100',
+      admin_id: '200',
       prefecture_id: 'f1d7e7eb-66da-4356-8ae3-e05329f0119f',
       prefectures: {
         prefectures_name: ['石川県'],
@@ -16,7 +17,7 @@ export const getSpotsDetail = async (id: string) => {
       },
       name: '穴水町',
       title: '自然豊かな穴水町での生活を体験してみませんか？',
-
+      image_url: '0.055972025621181976.jpg',
       appeal:
         '世界農業遺産「能登の里山里海」に位置する石川県穴水町は美しい山と海に恵まれ、穏やかな時間が流れています。そんな穴水町の暮らしぶりを気軽に体験して頂けるように「短期移住体験住宅」をご用意いたしました。空港や駅へのアクセスも良く、暮らしやすい場所で移住体験ができます。田舎への移住をお考えの方はこの機会にぜひご利用下さい。',
       area: '石川県穴水町',

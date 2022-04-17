@@ -57,7 +57,7 @@ export const SearchModal: VFC = () => {
 
   return (
     <>
-      <div className='p-2 border cursor-pointer font-bold' onClick={openModal}>
+      <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
         <SearchButton />
       </div>
 
