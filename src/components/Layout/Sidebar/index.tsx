@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, VFC } from 'react';
@@ -19,6 +20,7 @@ export const Sidebar: VFC<Props> = (props) => {
 
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
+    router.push('/admins/signin');
     toast.success('ログアウトが完了しました', {
       duration: 3000,
     });
