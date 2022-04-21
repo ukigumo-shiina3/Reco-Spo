@@ -21,6 +21,8 @@ import UploadButton from 'src/components/Button/UploadButton/UploadButton';
 import SpotImage from 'src/components/Spot/SpotImage';
 import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
 import { useRouter } from 'next/router';
+import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
+import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 
 const SpotsPost: NextPage = () => {
   const [spotPost, setSpotPost] = useState<Spot>({
@@ -50,6 +52,7 @@ const SpotsPost: NextPage = () => {
   });
 
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
+  const [prefectures_created_at, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [spot, setSpot] = useState<Spot>();
   const [spotImage, setSpotImage] = useState<string | null>('');
@@ -227,6 +230,20 @@ const SpotsPost: NextPage = () => {
       </div>
     </Group>
   );
+
+  const fetchPrefecturesCreatedAt = useCallback(async () => {
+    try {
+      const data = await getPrefecturesCreatedAt();
+      setPrefecturesCreatedAt(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, [setPrefecturesCreatedAt]);
+
+  useEffect(() => {
+    fetchPrefecturesCreatedAt();
+  }, [user, fetchPrefecturesCreatedAt]);
 
   const fetchPrefecturesListName = useCallback(async () => {
     try {
@@ -442,7 +459,7 @@ const SpotsPost: NextPage = () => {
                         <option key={index} value={value['id']}>
                           {/* {console.log(value['id'])} */}
                           {value['prefectures_name']}
-                          {/* {console.log(value['prefectures_name'])} */}
+                          {console.log(value['prefectures_name'])}
                         </option>
                       ))}
                     </select>
