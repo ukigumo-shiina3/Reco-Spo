@@ -15,8 +15,32 @@ type Props = {
 
 export const Sidebar: VFC<Props> = (props) => {
   const router = useRouter();
-  const [spot, setSpot] = useState<Spot>();
-  const [id, setId] = useState<string>();
+
+  const [adminId, setAdminId] = useState<string>();
+  const [spotData, setSpotData] = useState<any[] | null>(null);
+  const loginAccount = supabase.auth;
+  const getSpotsEdit = useCallback(async (admin_id) => {
+    // DBからスポット情報を取得　WHERE旬はareaカラムは兵庫県で絞り、admin_idカラムはadminIdで絞ってます
+    const { data: spot, error } = await supabase
+      .from('spots')
+      .select('*')
+      .eq(`area`, `兵庫県`)
+      .eq(`admin_id`, admin_id);
+    // spotデータがあればuseSateのspotDataに代入
+    if (spot) {
+      setSpotData(spot);
+    }
+  }, []);
+  // セッション情報のjsonが直ぐに取得できないことがあるので、if文でデータが取得できるまで待ってから取得
+  useEffect(() => {
+    if (loginAccount.session()?.user?.id !== undefined) {
+      console.log(loginAccount.session()?.user?.id);
+      setAdminId(loginAccount.session()?.user?.id);
+      getSpotsEdit(supabase.auth.session()?.user?.id);
+    }
+  }, [loginAccount.session()?.user?.id]);
+
+  console.log(spotData);
 
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
@@ -25,26 +49,6 @@ export const Sidebar: VFC<Props> = (props) => {
       duration: 3000,
     });
   }, []);
-
-  const fetchSpot = useCallback(async (id: string) => {
-    const data = await getSpotsId(id);
-    setSpot(data);
-    console.log(data);
-  }, []);
-
-  useEffect(() => {
-    if (router.asPath !== router.route) {
-      setId(String(router.query.id));
-    }
-    // console.log(router.query.id);
-  }, [router]);
-
-  useEffect(() => {
-    if (id) {
-      fetchSpot(router.query.id as string);
-    }
-    // console.log(router.query.id);
-  }, [id, fetchSpot, router.query.id]);
 
   return (
     <div>
@@ -82,11 +86,11 @@ export const Sidebar: VFC<Props> = (props) => {
                 スポット投稿
               </a>
             </Link>
-            {/* <Link href={`/${id}`} passHref> */}
-            <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
-              スポット編集
-            </a>
-            {/* </Link> */}
+            <Link href={`/admins/spots/${adminId}/edit`} passHref>
+              <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+                スポット編集
+              </a>
+            </Link>
             <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
               <button onClick={HandleLogout}>ログアウト</button>
             </a>
