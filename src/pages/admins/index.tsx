@@ -157,7 +157,7 @@ const ProfileEdit: VFC = () => {
                 <Avatar url={avatar} size={60} />
               ) : (
                 <img
-                  src='/icon/profile-icon.png'
+                  src='/icons/profile-icon.png'
                   alt='image'
                   className='w-17 h-16 pr-4 rounded-full'
                 />
