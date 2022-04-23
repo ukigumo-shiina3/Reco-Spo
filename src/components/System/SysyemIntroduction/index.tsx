@@ -10,7 +10,7 @@ export const SysyemIntroduction: VFC = () => {
         <div className='text-center  justify-center md:flex'>
           {/* 仕事に関する助成金とは */}
           <div className='w-full max-w-[600px] min-w-[380px] h-[384px]  m-auto md:m-0 '>
-            <BackgroundImage src='/introduce/system-pic1.png' className='h-[384px] object-contain'>
+            <BackgroundImage src='/introduces/system-pic1.png' className='h-[384px] object-contain'>
               <div className='pt-12 '>
                 {/* p='xl'は上下との行間 */}
                 <Center p='xl' className=' md:p=xs md:text-xs'>
@@ -28,7 +28,7 @@ export const SysyemIntroduction: VFC = () => {
                     passHref
                   >
                     <img
-                      src='/button/property-button.png'
+                      src='/buttons/property-button.png'
                       alt='参考物件のリンクボタン'
                       className='w-32 sm:w-40'
                     />
@@ -39,7 +39,7 @@ export const SysyemIntroduction: VFC = () => {
           </div>
           {/* 住宅建築補助とは */}
           <div className='w-full max-w-[600px] min-w-[380px] h-[384px]  m-auto md:m-0 '>
-            <BackgroundImage src='/introduce/system-pic2.png' className='h-[384px] object-contain'>
+            <BackgroundImage src='/introduces/system-pic2.png' className='h-[384px] object-contain'>
               <div className='pt-12'>
                 <div>
                   {/* p='xl'は上下との行間 */}
@@ -58,7 +58,7 @@ export const SysyemIntroduction: VFC = () => {
                       passHref
                     >
                       <img
-                        src='/button/property-button.png'
+                        src='/buttons/property-button.png'
                         alt='参考物件のリンクボタン'
                         className='w-32 sm:w-40'
                       />
@@ -72,7 +72,7 @@ export const SysyemIntroduction: VFC = () => {
         <div className='text-center  justify-center md:flex'>
           {/* 定住促進奨励金とは */}
           <div className='w-full max-w-[600px] min-w-[380px] h-[384px]  m-auto md:m-0 '>
-            <BackgroundImage src='/introduce/system-pic3.png' className='h-[384px] object-contain'>
+            <BackgroundImage src='/introduces/system-pic3.png' className='h-[384px] object-contain'>
               <div className='pt-12 '>
                 {/* p='xl'は上下との行間 */}
                 <Center p='xl' className=' md:p=xs md:text-xs'>
@@ -90,7 +90,7 @@ export const SysyemIntroduction: VFC = () => {
                     passHref
                   >
                     <img
-                      src='/button/property-button.png'
+                      src='/buttons/property-button.png'
                       alt='参考物件のリンクボタン'
                       className='w-32 sm:w-40'
                     />
@@ -101,7 +101,7 @@ export const SysyemIntroduction: VFC = () => {
           </div>
           {/* お試し移住体験とは  */}
           <div className='w-full max-w-[600px] min-w-[380px] h-[384px]  m-auto md:m-0 '>
-            <BackgroundImage src='/introduce/system-pic4.png' className='h-[384px] object-contain'>
+            <BackgroundImage src='/introduces/system-pic4.png' className='h-[384px] object-contain'>
               <div className='pt-12 '>
                 {/* p='xl'は上下との行間 */}
                 <Center p='xl' className=' md:p=xs md:text-xs'>
@@ -116,7 +116,7 @@ export const SysyemIntroduction: VFC = () => {
                 <Center p='xl'>
                   <Link href='https://kurashi.city.nanto.toyama.jp/experience/' passHref>
                     <img
-                      src='/button/property-button.png'
+                      src='/buttons/property-button.png'
                       alt='参考物件のリンクボタン'
                       className='w-32 sm:w-40'
                     />
