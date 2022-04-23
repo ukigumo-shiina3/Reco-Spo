@@ -34,7 +34,7 @@ export const Sidebar: VFC<Props> = (props) => {
   useEffect(() => {
     if (loginAccount.session()?.user?.id !== undefined) {
       //ここでgetSpotsEditの引数にadmin_idを渡していないのはsetAdminIdが間に合わないから
-      console.log(loginAccount.session()?.user?.id);
+      // console.log(loginAccount.session()?.user?.id);
       setAdminId(loginAccount.session()?.user?.id);
       getSpotsEdit(supabase.auth.session()?.user?.id);
     }
