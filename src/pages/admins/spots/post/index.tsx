@@ -351,35 +351,35 @@ const SpotsPost: NextPage = () => {
               <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
                 <div className='bg-white w-16 h-16'>
                   <img
-                    src='/camera-icon.png'
+                    src='/icon/camera-icon.png'
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
                 </div>
                 {/* <div className='bg-white w-16 h-16'>
                   <img
-                    src='/camera-icon.png'
+                    src='/icon/camera-icon.png'
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
                 </div>
                 <div className='bg-white w-16 h-16'>
                   <img
-                    src='/camera-icon.png'
+                    src='/icon/camera-icon.png'
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
                 </div>
                 <div className='bg-white w-16 h-16'>
                   <img
-                    src='/camera-icon.png'
+                    src='/icon/camera-icon.png'
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
                 </div>
                 <div className='bg-white w-16 h-16'>
                   <img
-                    src='/camera-icon.png'
+                    src='/icon/camera-icon.png'
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
