@@ -65,7 +65,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
     <AdminAuthLayout>
       <div className='hidden md:block z-0 w-1/2 '>
         <Image
-          src='/auth-pic.jpg'
+          src='/sample/auth-pic.jpg'
           layout='fill'
           objectFit='cover'
           quality={100}

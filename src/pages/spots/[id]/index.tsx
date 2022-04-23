@@ -39,7 +39,7 @@ const SpotsId: NextPage = () => {
       <div className='box-content'>
         <div className='w-screen block mb-8'>
           <Image
-            src='/main-visual5.png'
+            src='/main-visual/main-visual5.png'
             quality={100}
             width={2000}
             height={700}
