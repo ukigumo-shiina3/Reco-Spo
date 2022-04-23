@@ -20,7 +20,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   const [id, setId] = useState<string>();
 
   const property = {
-    imageUrl: '/sample/spot-pic.jpeg',
+    imageUrl: '/samples/spot-pic.jpeg',
     imageAlt: 'props.image_url',
   };
 
@@ -115,7 +115,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                     <Image
                       borderRadius='full'
                       boxSize='50px'
-                      src='/sample/admin-test-pic.jpg'
+                      src='/samples/admin-test-pic.jpg'
                       alt='props.image_url'
                     />
                     <div className='ml-4 mt-4'>{props.spot.area}</div>

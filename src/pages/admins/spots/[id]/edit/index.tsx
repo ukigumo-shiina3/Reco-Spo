@@ -221,7 +221,7 @@ const SpotsEdit: NextPage<Spot> = () => {
             </div>
             <div className='mt-5'>
               <img
-                src='/sample/image-upload.png'
+                src='/samples/image-upload.png'
                 alt='画像アップロードアイコン'
                 className='w-hull h-18 sm:h-24'
               />
