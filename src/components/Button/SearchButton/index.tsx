@@ -14,7 +14,7 @@ export const SearchButton: VFC = () => {
       <div className='flex'>
         <button className='flex text-sm pl-2 pr-4 py-3 bg-white border-gray-400 border-2 rounded-3xl'>
           <img
-            src='/icon/search-icon.png'
+            src='/icons/search-icon.png'
             alt='スポット検索アイコン'
             className='mx-2 h-4 w-4 mt-0.5'
           />
