@@ -92,7 +92,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
               <div className='flex mb-2 mr-2'>
                 <Link href={`/spots/${props.spot.id}`} key={props.spot.id}>
                   <a className='flex'>
-                    <Image src='/icon/map-marker-icon.png' alt='地図マーカーアイコン' />
+                    <Image src='/icons/map-marker-icon.png' alt='地図マーカーアイコン' />
                     <div className='mt-1 ml-1'> {props.spot.name}</div>
                   </a>
                 </Link>
@@ -139,7 +139,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                             }}
                           />
                           <Image
-                            src='/icon/unlike-icon.png'
+                            src='/icons/unlike-icon.png'
                             width={5}
                             height={5}
                             alt='ハートアイコン'
@@ -159,7 +159,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                             }}
                           />
                           <Image
-                            src='/icon/like-icon.png'
+                            src='/icons/like-icon.png'
                             width={5}
                             height={5}
                             alt='ハートアイコン'
