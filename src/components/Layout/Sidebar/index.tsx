@@ -55,7 +55,7 @@ export const Sidebar: VFC<Props> = (props) => {
           </div>
           <div className='py-8 px-1 md:flex justify-center '>
             <Image
-              src='/spot-pic.jpeg'
+              src='/sample/spot-pic.jpeg'
               alt='admin_image'
               height={70}
               width={70}

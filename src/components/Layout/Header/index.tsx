@@ -23,7 +23,7 @@ export const Header: VFC = () => {
           <a className='px-2 pb-6 text-sm '>
             <div className='flex'>
               <Image
-                src='/about-icon.png'
+                src='/icon/about-icon.png'
                 quality={100}
                 width={24}
                 height={24}
@@ -37,7 +37,7 @@ export const Header: VFC = () => {
           <a className='px-2 pb-6 text-sm'>
             <div className='flex'>
               <Image
-                src='/system-icon.png'
+                src='/icon/system-icon.png'
                 quality={100}
                 width={24}
                 height={24}
@@ -51,7 +51,7 @@ export const Header: VFC = () => {
           <a className='px-2 pb-6 text-sm'>
             <div className='flex'>
               <Image
-                src='/spot-icon.png'
+                src='/icon/spot-icon.png'
                 quality={100}
                 width={24}
                 height={24}
@@ -65,7 +65,7 @@ export const Header: VFC = () => {
           <a className='px-2 pb-6 text-sm'>
             <div className='flex'>
               <Image
-                src='/admin-icon.png'
+                src='/icon/admin-icon.png'
                 quality={100}
                 width={24}
                 height={24}
@@ -79,7 +79,7 @@ export const Header: VFC = () => {
         <a className='px-2 pb-10 text-sm'>
           <div className='flex'>
             <Image
-              src='/map-icon.png'
+              src='/icon/map-icon.png'
               quality={100}
               width={24}
               height={24}

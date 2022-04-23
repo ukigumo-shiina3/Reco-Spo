@@ -7,7 +7,7 @@ const System: NextPage = () => {
     <UserLayout>
       <div className='w-screen block'>
         <Image
-          src='/main-visual3.png'
+          src='/main-visual/main-visual3.png'
           quality={100}
           width={2000}
           height={650}
@@ -19,7 +19,7 @@ const System: NextPage = () => {
       {/* 居住支援制度とは  */}
       <div className='container justify-center mx-auto mt-5 p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading1.png'
+          src='/heading/system-heading1.png'
           quality={100}
           width={180}
           height={50}
@@ -41,7 +41,7 @@ const System: NextPage = () => {
       {/* 住宅支援制度とは */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading2.png'
+          src='/heading/system-heading2.png'
           quality={100}
           width={180}
           height={50}
@@ -58,7 +58,7 @@ const System: NextPage = () => {
       {/* 定住促進奨励金とは */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading3.png'
+          src='/heading/system-heading3.png'
           quality={100}
           width={180}
           height={50}
@@ -78,7 +78,7 @@ const System: NextPage = () => {
       {/* お試し暮らしとは */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading4.png'
+          src='/heading/system-heading4.png'
           quality={100}
           width={180}
           height={50}
@@ -98,7 +98,7 @@ const System: NextPage = () => {
       {/* 子育て支援とは */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading5.png'
+          src='/heading/system-heading5.png'
           quality={100}
           width={180}
           height={50}
@@ -116,7 +116,7 @@ const System: NextPage = () => {
       {/* 空き家バンクとは */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading5.png'
+          src='/heading/system-heading6.png'
           quality={100}
           width={180}
           height={50}
@@ -133,7 +133,7 @@ const System: NextPage = () => {
       {/* 仕事への補助金とは */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5  max-w-[1080px]'>
         <Image
-          src='/system-heading5.png'
+          src='/heading/system-heading7.png'
           quality={100}
           width={180}
           height={50}

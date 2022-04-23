@@ -25,7 +25,7 @@ const Spots: NextPage = () => {
   return (
     <UserLayout>
       <div className='w-screen block'>
-        <img src='/main-visual4.png' alt='サイト概要のメイン画像' className='w-full' />
+        <img src='/main-visual/main-visual4.png' alt='サイト概要のメイン画像' className='w-full' />
       </div>
       <SearchModal />
       <div className='flex justify-center  mt-8 ml-3 mr-3'>
