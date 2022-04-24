@@ -11,7 +11,7 @@ export const SystemIntroduction: VFC = () => {
       MESSAGE1: '起業・継業、就職、就農などに対しての補助金制度です。',
       MESSAGE2: '漁師や船員など特定の仕事に対しての補助金もあります。',
       LINK: 'https://www.vill.nishiokoppe.lg.jp/section/kikaku/hhlo2b0000001bdn.html',
-      BUTTON_TEXT: '参考物件はこちら→',
+      BUTTON_TEXT: '参考リンクはこちら→',
       IMAGE_SRC: '/buttons/property-button.png',
     },
     {
@@ -20,7 +20,7 @@ export const SystemIntroduction: VFC = () => {
       MESSAGE1: '住宅を取得される方」を対象とした支援事業を実施。',
       MESSAGE2: '住宅取得費の一部を「支援金」として補助する制度。',
       LINK: 'https://www.iju-join.jp/material/files/group/1/45c28765f28bde68.pdf',
-      BUTTON_TEXT: '参考物件はこちら→',
+      BUTTON_TEXT: '参考リンクはこちら→',
       IMAGE_SRC: '/buttons/property-button.png',
     },
   ];
@@ -31,7 +31,7 @@ export const SystemIntroduction: VFC = () => {
       MESSAGE1: '定住の促進を目的として交付される助成金であり、',
       MESSAGE2: '住宅を購入することを条件に交付される奨励金',
       LINK: 'https://www.city.satsumasendai.lg.jp/www/contents/1270046749584/index.html',
-      BUTTON_TEXT: '参考物件はこちら→',
+      BUTTON_TEXT: '参考リンクはこちら→',
       IMAGE_SRC: '/buttons/property-button.png',
     },
     {
@@ -40,7 +40,7 @@ export const SystemIntroduction: VFC = () => {
       MESSAGE1: '田舎暮らしの移住を検討している人を対象に一定の',
       MESSAGE2: '期間実生活ができるように町が施設を借し出す制度',
       LINK: 'https://kurashi.city.nanto.toyama.jp/experience/',
-      BUTTON_TEXT: '参考物件はこちら→',
+      BUTTON_TEXT: '参考リンクはこちら→',
       IMAGE_SRC: '/buttons/property-button.png',
     },
   ];
