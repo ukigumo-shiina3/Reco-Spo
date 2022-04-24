@@ -1,4 +1,5 @@
 export type Spot = {
+  admin_id?: string;
   id: string;
   prefecture_id: string;
   prefectures: {
