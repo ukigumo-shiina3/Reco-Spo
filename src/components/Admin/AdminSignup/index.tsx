@@ -9,18 +9,26 @@ import { useRouter } from 'next/router';
 import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
 import { Signup } from 'src/types/signup';
 
-export const AdminSignup: VFC<Signup> = (props, session) => {
+// export const AdminSignup: VFC<Signup> = (props, session) => {
+export const AdminSignup: VFC<Signup> = (props) => {
+  const router = useRouter();
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   const handleSignup = useCallback(async () => {
+    console.log('スタート');
+
+    console.log('handleSignup');
+    console.log('メール', email);
+    console.log('パス', password);
     const { user, session, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
-    console.log(user);
-    console.log(session);
-    console.log(error);
+    console.log('ユーザー', user);
+    console.log('セッション', session);
+    console.log('エラー', error);
 
     if (email == '' || password == '') {
       toast.error('新規登録情報を入力してください');
@@ -31,15 +39,14 @@ export const AdminSignup: VFC<Signup> = (props, session) => {
         duration: 3000,
       });
     }
+    console.log('エンド');
   }, [email, password]);
-
-  const router = useRouter();
 
   useEffect(() => {
     console.group('useEffect');
-    console.log('session: ', session);
+    // console.log('session: ', session);
     console.groupEnd();
-  }, [session]);
+  }, []);
 
   return (
     <AdminAuthLayout>
