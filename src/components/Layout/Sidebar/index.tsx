@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState, VFC } from 'react';
+import { useState, VFC } from 'react';
 import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { Spot } from 'src/types/spot';
+import { useUser, useSpot } from 'src/hooks/useSpotEditSelect';
 
 type Props = {
   group: string;
@@ -15,32 +16,36 @@ type Props = {
 export const Sidebar: VFC<Props> = (props) => {
   const router = useRouter();
 
-  const [adminId, setAdminId] = useState<string>();
+  // const [adminId, setAdminId] = useState<string>();
   const [spotData, setSpotData] = useState<Spot[] | null>();
-  const loginAccount = supabase.auth;
-  const getSpotsEdit = useCallback(async (admin_id) => {
-    // DBからスポット情報を取得　WHERE旬はareaカラムは兵庫県で絞り、admin_idカラムはadminIdで絞ってます
-    const { data: spot, error } = await supabase
-      .from<Spot>('spots')
-      .select('*')
-      .eq(`area`, `兵庫県`)
-      .eq(`admin_id`, admin_id);
-    // spotデータがあればuseSateのspotDataに代入
-    if (spot) {
-      setSpotData(spot);
-    }
-  }, []);
+  // const loginAccount = supabase.auth;
+  const { adminId } = useUser();
+  const { spotList } = useSpot(adminId);
+  // const getSpotsEdit = useCallback(async (admin_id) => {
+  //   // DBからスポット情報を取得　WHERE旬はareaカラムは兵庫県で絞り、admin_idカラムはadminIdで絞ってます
+  //   const { data: spot, error } = await supabase
+  //     .from<Spot>('spots')
+  //     .select('*')
+  //     .eq(`area`, `兵庫県`)
+  //     .eq(`admin_id`, admin_id);
+  //   // spotデータがあればuseSateのspotDataに代入
+  //   if (spot) {
+  //     setSpotData(spot);
+  //   }
+  // }, []);
   // セッション情報のjsonが直ぐに取得できないことがあるので、if文でデータが取得できるまで待ってから取得
-  useEffect(() => {
-    if (loginAccount.session()?.user?.id !== undefined) {
-      //ここでgetSpotsEditの引数にadmin_idを渡していないのはsetAdminIdが間に合わないから
-      // console.log(loginAccount.session()?.user?.id);
-      setAdminId(loginAccount.session()?.user?.id);
-      getSpotsEdit(supabase.auth.session()?.user?.id);
-    }
-  }, [loginAccount.session()?.user?.id]);
+  // useEffect(() => {
+  //   if (loginAccount.session()?.user?.id !== undefined) {
+  //     //ここでgetSpotsEditの引数にadmin_idを渡していないのはsetAdminIdが間に合わないから
+  //     // console.log(loginAccount.session()?.user?.id);
+  //     setAdminId(loginAccount.session()?.user?.id);
+  //     getSpotsEdit(supabase.auth.session()?.user?.id);
+  //   }
+  // }, [loginAccount.session()?.user?.id]);
 
-  console.log(spotData);
+  // console.log(spotData);
+  // console.log(adminId);
+  // console.log(spotList);
 
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
