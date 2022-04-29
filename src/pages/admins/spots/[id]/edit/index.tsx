@@ -116,21 +116,21 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.tel,
     spotEdit.email,
   ]);
-
-  const data = spot?.map((spot, i) => {
+  // マンタインのセレクトボックスを使うために必要な値をspotから抽出
+  const getSpotIndex = spot?.map((spot, i) => {
     return {
       value: String(i),
       label: spot.name,
     };
   });
-
-  const [value, setValue] = useState('0');
+  // spotのINDEXを取得する関数
+  const [spotIndex, setSpotIndex] = useState('0');
 
   useEffect(() => {
     if (spot !== null) {
-      setSpotEdit(spot[Number(value)]);
+      setSpotEdit(spot[Number(spotIndex)]);
     }
-  }, [value]);
+  }, [spotIndex, spot]);
 
   useEffect(() => {
     fetchPrefecturesListName();
@@ -160,13 +160,13 @@ const SpotsEdit: NextPage<Spot> = () => {
           <Sidebar group={''} />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             <h1 className='text-3xl mt-24'>スポット編集</h1>
-            <br />{' '}
-            {spot != null && data !== undefined ? (
+            <br />
+            {spot != null && getSpotIndex !== undefined ? (
               <Select
                 label='編集するspotdataを選択してください'
-                value={value}
-                onChange={setValue}
-                data={data}
+                value={spotIndex}
+                onChange={setSpotIndex}
+                data={getSpotIndex}
               />
             ) : null}
             <br />
