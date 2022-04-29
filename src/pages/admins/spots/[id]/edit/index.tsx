@@ -6,21 +6,20 @@ import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { NextPage } from 'next';
-import { Session } from '@supabase/supabase-js';
 import { Spot } from 'src/types/spot';
 import { SpotEdit } from 'src/types/spotEdit';
-import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
-import { useRouter } from 'next/router';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
 import { Spinner } from '@chakra-ui/react';
+import { useSpot, useUser } from 'src/hooks/useSpotEditSelect';
 
 const user = supabase.auth.user();
 
 const SpotsEdit: NextPage<Spot> = () => {
-  const router = useRouter();
+  const { adminId } = useUser();
+  const { spotList: spot } = useSpot(adminId);
 
   const [spotEdit, setSpotEdit] = useState<SpotEdit>({
     id: '',
@@ -50,9 +49,9 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
-  const [session, setSession] = useState<Session | null>(null);
-  const [id, setId] = useState<string>();
-  const [spot, setSpot] = useState<Spot>();
+  // const [session, setSession] = useState<Session | null>(null);
+  // const [id, setId] = useState<string>();
+  // const [spot, setSpot] = useState<Spot>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
 
@@ -79,42 +78,18 @@ const SpotsEdit: NextPage<Spot> = () => {
     }
     setLoading(false);
   }, []);
+  useEffect(() => {
+    if (spot) {
+      setSpotEdit(spot[0]);
+    }
+  }, [spot]);
+
+  console.log(spot);
+  console.log(spotEdit);
 
   useEffect(() => {
     fetchSystemsListName();
   }, [user, fetchSystemsListName]);
-
-  const fetchSpot = useCallback(async (id: string) => {
-    try {
-      const data = await getSpotsDetail(id);
-      setSpot(data);
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    if (router.asPath !== router.route) {
-      setId(String(router.query.id));
-    }
-    // console.log(router.query.id);
-  }, [router]);
-
-  useEffect(() => {
-    if (id) {
-      fetchSpot(router.query.id as string);
-    }
-    // console.log(router.query.id);
-  }, [id, fetchSpot, router.query.id]);
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-
-    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
-      setSession(session);
-    });
-  }, []);
 
   const handleSpotEdit = useCallback(async () => {
     const { data, error } = await supabase
@@ -174,6 +149,8 @@ const SpotsEdit: NextPage<Spot> = () => {
   if (user) {
     return (
       <>
+        {console.log(spot)}
+
         <div className='flex bg-gray-100 h-full'>
           <Sidebar group={''} />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
