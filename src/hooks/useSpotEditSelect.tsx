@@ -23,7 +23,7 @@ export const useSpot = (admin_id: string | null) => {
     const { data: spot, error } = await supabase
       .from<Spot>('spots')
       .select('*')
-      .eq(`area`, `兵庫県`)
+      // .eq(`area`, `兵庫県`)
       .eq(`admin_id`, admin_id ?? ''); // admin_idがnullの場合は空文字を返す => stringであることを確定させる！！
     // spotデータがあればuseSateのspotDataに代入
     if (spot) {

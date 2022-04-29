@@ -14,6 +14,7 @@ import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
 import { Spinner } from '@chakra-ui/react';
 import { useSpot, useUser } from 'src/hooks/useSpotEditSelect';
+import { Select } from '@mantine/core';
 
 const user = supabase.auth.user();
 
@@ -49,9 +50,6 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
-  // const [session, setSession] = useState<Session | null>(null);
-  // const [id, setId] = useState<string>();
-  // const [spot, setSpot] = useState<Spot>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
 
@@ -65,10 +63,6 @@ const SpotsEdit: NextPage<Spot> = () => {
     setLoading(false);
   }, [setPrefecturesName]);
 
-  useEffect(() => {
-    fetchPrefecturesListName();
-  }, [user, fetchPrefecturesListName]);
-
   const fetchSystemsListName = useCallback(async () => {
     try {
       const data = await getSystems();
@@ -78,18 +72,6 @@ const SpotsEdit: NextPage<Spot> = () => {
     }
     setLoading(false);
   }, []);
-  useEffect(() => {
-    if (spot) {
-      setSpotEdit(spot[0]);
-    }
-  }, [spot]);
-
-  console.log(spot);
-  console.log(spotEdit);
-
-  useEffect(() => {
-    fetchSystemsListName();
-  }, [user, fetchSystemsListName]);
 
   const handleSpotEdit = useCallback(async () => {
     const { data, error } = await supabase
@@ -135,6 +117,33 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.email,
   ]);
 
+  const data = spot?.map((spot, i) => {
+    return {
+      value: String(i),
+      label: spot.name,
+    };
+  });
+
+  const [value, setValue] = useState('0');
+
+  useEffect(() => {
+    if (spot !== null) {
+      setSpotEdit(spot[Number(value)]);
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (spot) {
+      setSpotEdit(spot[0]);
+    }
+  }, [spot]);
+  useEffect(() => {
+    fetchPrefecturesListName();
+  }, [user, fetchPrefecturesListName]);
+  useEffect(() => {
+    fetchSystemsListName();
+  }, [user, fetchSystemsListName]);
+
   if (loading) {
     return (
       <div className='flex justify-center mt-64'>
@@ -155,6 +164,16 @@ const SpotsEdit: NextPage<Spot> = () => {
           <Sidebar group={''} />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             <h1 className='text-3xl mt-24'>スポット編集</h1>
+            <br />{' '}
+            {spot != null && data !== undefined ? (
+              <Select
+                label='編集するspotdataを選択してください'
+                value={value}
+                onChange={setValue}
+                data={data}
+              />
+            ) : null}
+            <br />
             {/* スポット画像 */}
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
@@ -203,7 +222,6 @@ const SpotsEdit: NextPage<Spot> = () => {
                 className='w-hull h-18 sm:h-24'
               />
             </div>
-
             {/* スポット情報 */}
             <div>
               <h2 className='mt-10 '>スポット情報</h2>
@@ -272,7 +290,6 @@ const SpotsEdit: NextPage<Spot> = () => {
                 </div>
               </div>
             </div>
-
             {/* スポット説明 */}
             <h2 className='mt-10'>スポット説明</h2>
             <div className='mt-10 text-xs'>
@@ -289,7 +306,6 @@ const SpotsEdit: NextPage<Spot> = () => {
                 ) : null}
               </div>
             </div>
-
             {/* スポット詳細 */}
             <h2 className='mt-10'>スポット詳細</h2>
             <div className='mt-10 text-xs'>
@@ -359,7 +375,6 @@ const SpotsEdit: NextPage<Spot> = () => {
                 ) : null}
               </div>
             </div>
-
             {/* お問い合わせ */}
             <h2 className='mt-10'>お問い合わせ先</h2>
             <div className='mt-10 text-xs'>
@@ -429,7 +444,6 @@ const SpotsEdit: NextPage<Spot> = () => {
                 ) : null}
               </div>
             </div>
-
             <div className='text-center pb-10'>
               <button
                 onClick={handleSpotEdit}
