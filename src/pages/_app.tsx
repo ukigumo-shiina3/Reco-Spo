@@ -5,6 +5,9 @@ import NextHeadSeo from 'next-head-seo';
 import * as React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { MantineProvider } from '@mantine/core';
+import {
+  RecoilRoot
+} from 'recoil';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,11 +22,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Reco Spo</title>
         <meta property='og:title' content='Reco Spo' key='title' />
       </Head>
-      <MantineProvider>
-        <ChakraProvider>
-          <Component {...pageProps} />
-        </ChakraProvider>
-      </MantineProvider>
+      <RecoilRoot>
+        <MantineProvider>
+          <ChakraProvider>
+            <Component {...pageProps} />
+          </ChakraProvider>
+        </MantineProvider>
+      </RecoilRoot>
     </>
   );
 }
