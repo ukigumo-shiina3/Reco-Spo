@@ -133,13 +133,9 @@ const SpotsEdit: NextPage<Spot> = () => {
   }, [value]);
 
   useEffect(() => {
-    if (spot) {
-      setSpotEdit(spot[0]);
-    }
-  }, [spot]);
-  useEffect(() => {
     fetchPrefecturesListName();
   }, [user, fetchPrefecturesListName]);
+
   useEffect(() => {
     fetchSystemsListName();
   }, [user, fetchSystemsListName]);
