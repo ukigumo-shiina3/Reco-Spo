@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Link from 'next/link';
 import Image from 'next/image';
-import type { VFC } from 'react';
+import { VFC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
 import { Signup } from 'src/types/signup';
 
-// export const AdminSignup: VFC<Signup> = (props, session) => {
 export const AdminSignup: VFC<Signup> = (props) => {
   const router = useRouter();
 
@@ -17,18 +16,14 @@ export const AdminSignup: VFC<Signup> = (props) => {
   const [password, setPassword] = useState<string>('');
 
   const handleSignup = useCallback(async () => {
-    console.log('スタート');
-
     console.log('handleSignup');
-    console.log('メール', email);
-    console.log('パス', password);
-    const { user, session, error } = await supabase.auth.signUp({
+
+    const { user, session } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
     console.log('ユーザー', user);
     console.log('セッション', session);
-    console.log('エラー', error);
 
     if (email == '' || password == '') {
       toast.error('新規登録情報を入力してください');
@@ -39,12 +34,10 @@ export const AdminSignup: VFC<Signup> = (props) => {
         duration: 3000,
       });
     }
-    console.log('エンド');
   }, [email, password]);
 
   useEffect(() => {
     console.group('useEffect');
-    // console.log('session: ', session);
     console.groupEnd();
   }, []);
 

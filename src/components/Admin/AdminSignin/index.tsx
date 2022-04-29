@@ -12,7 +12,8 @@ import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
 
 type Props = {
   title: string;
-  button: string;
+  signinButton: string;
+  testSigninbutton: string;
   email: string;
   password: string;
   session: Session | null;
@@ -46,6 +47,24 @@ export const AdminSignin: VFC<Props> = (props, session) => {
           duration: 3000,
         });
       }
+    }
+  }, [email, password]);
+
+  const handleTestSignin = useCallback(async () => {
+    const { user, session, error } = await supabase.auth.signIn({
+      email: 'ukigumoshiina@gmail.com',
+      password: 'test1234',
+    });
+
+    console.log(user);
+    console.log(session);
+    console.log(error);
+
+    if (session) {
+      toast.success('テストログインが完了しました', {
+        duration: 3000,
+      });
+      router.push('/admins');
     }
   }, [email, password]);
 
@@ -101,14 +120,24 @@ export const AdminSignin: VFC<Props> = (props, session) => {
           />
 
           <div className='flex pr-4 pb-10'>
-            <Link href='/admins' passHref>
-              <button
-                onClick={handleSignin}
-                className='px-5 py-1 mt-10 mr-4 text-white bg-blue-300 rounded-lg'
-              >
-                {props.button}
-              </button>
-            </Link>
+            <div className='flex flex-col'>
+              <Link href='/admins' passHref>
+                <button
+                  onClick={handleSignin}
+                  className='px-5 py-1 mt-10 mr-4 text-white bg-blue-300 rounded-lg'
+                >
+                  {props.signinButton}
+                </button>
+              </Link>
+              <Link href='/admins' passHref>
+                <button
+                  onClick={handleTestSignin}
+                  className='px-5 py-1 mt-2 mr-4 text-white bg-blue-300 rounded-lg'
+                >
+                  {props.testSigninbutton}
+                </button>
+              </Link>
+            </div>
             <div className='flex flex-col mt-12 md:ml-5'>
               <a className='text-sm border-b-2 '>
                 <button onClick={HandleResetPassword}> ログイン情報をお忘れですか？</button>
