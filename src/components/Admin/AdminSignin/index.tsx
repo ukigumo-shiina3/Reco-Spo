@@ -79,10 +79,6 @@ export const AdminSignin: VFC<Props> = (props, session) => {
     console.groupEnd();
   }, [session]);
 
-  const HandleResetPassword = useCallback(() => {
-    supabase.auth.api.resetPasswordForEmail(email);
-  }, [email]);
-
   return (
     <AdminAuthLayout>
       <div className='hidden lg:block z-0 w-1/2'>
@@ -143,12 +139,11 @@ export const AdminSignin: VFC<Props> = (props, session) => {
                 </button>
               </Link>
             </div>
-            <div className='flex flex-col items-center mt-8'>
-              <a className='text-sm border-b-2 w-[193.5px]'>
-                <button onClick={HandleResetPassword}> ログイン情報をお忘れですか？</button>
-              </a>
+            <div className='flex flex-col items-center mt-6'>
               <Link href='/admins/signup' passHref>
-                <a className='text-sm border-b-2 pt-2 w-[140px]'>新規会員登録はこちら</a>
+                <a className='text-sm pt-2 w-[140px] '>
+                  <p className='text-indigo-700'>新規会員登録はこちら</p>
+                </a>
               </Link>
             </div>
             <Toaster />
