@@ -126,7 +126,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     };
   });
   // spotのINDEXを取得する関数
-  const [spotIndex, setSpotIndex] = useState('0');
+  const [spotIndex, setSpotIndex] = useState<string | null>('0');
 
   useEffect(() => {
     if (spot !== null) {
