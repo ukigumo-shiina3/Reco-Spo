@@ -23,7 +23,7 @@ export const SpotContact: VFC = () => {
               setArea(e.target.value.trim());
             }}
             placeholder='927-8601'
-            className='w-full p-2 rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -37,7 +37,7 @@ export const SpotContact: VFC = () => {
               setLink(e.target.value.trim());
             }}
             placeholder='石川県鳳珠郡穴水町字川島ラの174番地'
-            className='w-full p-2 rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -51,7 +51,7 @@ export const SpotContact: VFC = () => {
               setTargetPerson(e.target.value.trim());
             }}
             placeholder='穴水町観光交流課'
-            className='w-full p-2 rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -65,7 +65,7 @@ export const SpotContact: VFC = () => {
               setUsageFee(e.target.value.trim());
             }}
             placeholder='0768-52-3671'
-            className='w-full p-2 rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -79,7 +79,7 @@ export const SpotContact: VFC = () => {
               setTerm(e.target.value.trim());
             }}
             placeholder='test@gmai.com'
-            className='w-full p-2 rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
       </div>

@@ -23,7 +23,7 @@ export const SpotDetail: VFC = () => {
               setArea(e.target.value);
             }}
             placeholder='石川県穴水町'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -37,7 +37,7 @@ export const SpotDetail: VFC = () => {
               setLink(e.target.value);
             }}
             placeholder='https://test.com'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -51,7 +51,7 @@ export const SpotDetail: VFC = () => {
               setTargetPerson(e.target.value);
             }}
             placeholder='町外から当町への移住を希望する人物'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -65,7 +65,7 @@ export const SpotDetail: VFC = () => {
               setUsageFee(e.target.value);
             }}
             placeholder='無料'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -79,7 +79,7 @@ export const SpotDetail: VFC = () => {
               setTerm(e.target.value);
             }}
             placeholder='最長７泊８日'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
       </div>
