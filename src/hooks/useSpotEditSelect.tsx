@@ -23,7 +23,9 @@ export const useSpot = (admin_id: string | null) => {
     const { data: spot, error } = await supabase
       .from<Spot>('spots')
       .select('*')
-      .eq(`admin_id`, admin_id ?? ''); // admin_idがnullの場合は空文字を返す => stringであることを確定させる！！
+      .eq(`admin_id`, admin_id ?? '')
+      .order('updated_at', { ascending: false });
+    // admin_idがnullの場合は空文字を返す => stringであることを確定させる！！
     // spotデータがあればuseSateのspotDataに代入
     if (spot) {
       setSpotList(spot);

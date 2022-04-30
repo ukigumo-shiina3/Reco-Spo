@@ -73,6 +73,16 @@ const SpotsEdit: NextPage<Spot> = () => {
     setLoading(false);
   }, []);
 
+  // マンタインのセレクトボックスを使うために必要な値をspotから抽出
+  const getSpotIndex = spot?.map((spot, i) => {
+    return {
+      value: String(i),
+      label: spot.name,
+    };
+  });
+  // spotのINDEXを取得する関数
+  const [spotIndex, setSpotIndex] = useState<string | null>('0');
+
   const handleSpotEdit = useCallback(async () => {
     const { data, error } = await supabase
       .from('spots')
@@ -93,6 +103,7 @@ const SpotsEdit: NextPage<Spot> = () => {
         manager: spotEdit.manager,
         tel: spotEdit.tel,
         email: spotEdit.email,
+        updated_at: new Date().toISOString(),
       })
       .eq('id', spotEdit.id)
       .single();
@@ -101,6 +112,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     toast.success('スポットを編集しました', {});
     // spotdataを再度取得
     getSpotsData();
+    getSpotIndex();
   }, [
     spotEdit.prefecture_id,
     spotEdit.system_id,
@@ -118,15 +130,6 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.tel,
     spotEdit.email,
   ]);
-  // マンタインのセレクトボックスを使うために必要な値をspotから抽出
-  const getSpotIndex = spot?.map((spot, i) => {
-    return {
-      value: String(i),
-      label: spot.name,
-    };
-  });
-  // spotのINDEXを取得する関数
-  const [spotIndex, setSpotIndex] = useState<string | null>('0');
 
   useEffect(() => {
     if (spot !== null) {
@@ -164,7 +167,7 @@ const SpotsEdit: NextPage<Spot> = () => {
             <br />
             {spot != null && getSpotIndex !== undefined ? (
               <Select
-                label='編集するspotdataを選択してください'
+                label='編集するスポットを選択してください'
                 value={spotIndex}
                 onChange={setSpotIndex}
                 data={getSpotIndex}
