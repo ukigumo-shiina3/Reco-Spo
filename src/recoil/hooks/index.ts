@@ -38,7 +38,7 @@ export const useRecoil = () => {
         if (error) {
           throw error;
         }
-        console.log('useRecoil:', data);
+        // console.log('useRecoil:', data);
         setAdmins((prev) => {
           return {
             avatar_url: data.avatar_url,
@@ -50,7 +50,7 @@ export const useRecoil = () => {
           };
         });
       } catch (error) {
-        console.log('error', error.message);
+        // console.log('error', error.message);
         setErrorState(error.message);
       } finally {
         setLoading(false);
