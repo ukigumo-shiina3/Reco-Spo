@@ -239,7 +239,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, name: e.target.value.trim() });
                       }}
-                      className='w-full p-2 rounded-l-md'
+                      className='w-full p-2 rounded-md'
                     />
                   ) : null}
                   {/* {console.log(spotEdit)} */}
@@ -253,7 +253,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, title: e.target.value.trim() });
                       }}
-                      className='w-full p-2 rounded-l-md'
+                      className='w-full p-2 rounded-md'
                     />
                   ) : null}
                 </div>
@@ -265,7 +265,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, prefecture_id: e.target.value.trim() });
                       }}
-                      className='w-full p-2 rounded-l-md'
+                      className='w-full p-2 rounded-md'
                     >
                       {prefectures_name.map((value, index) => (
                         <option key={index} value={value['id']}>
@@ -283,7 +283,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, system_id: e.target.value.trim() });
                       }}
-                      className='w-full p-2 rounded-l-md'
+                      className='w-full p-2 rounded-md'
                     >
                       {systems_name.map((value, index) => (
                         <option key={index} value={value['id']}>
@@ -307,7 +307,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, appeal: e.target.value.trim() });
                     }}
-                    className='w-full h-24  p-2 rounded-l-md'
+                    className='w-full h-24  p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -325,7 +325,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, area: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -338,7 +338,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, link: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -351,7 +351,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, target_person: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -364,7 +364,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, usage_fee: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -377,7 +377,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, term: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -395,7 +395,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, postal_code: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -408,7 +408,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, address: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -421,7 +421,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, manager: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -434,7 +434,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, manager: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
@@ -447,7 +447,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, manager: e.target.value.trim() });
                     }}
-                    className='w-full p-2 rounded-l-md'
+                    className='w-full p-2 rounded-md'
                   />
                 ) : null}
               </div>
