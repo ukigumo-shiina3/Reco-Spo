@@ -24,6 +24,9 @@ export type AdminSignin = {
   password: string;
 };
 
+const EMAIL = process.env.NEXT_PUBLIC_EMAIL;
+const PASSWORD = process.env.NEXT_PUBLIC_PASSWORD;
+
 export const AdminSignin: VFC<Props> = (props, session) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -52,8 +55,8 @@ export const AdminSignin: VFC<Props> = (props, session) => {
 
   const handleTestSignin = useCallback(async () => {
     const { user, session, error } = await supabase.auth.signIn({
-      email: 'ukigumoshiina@gmail.com',
-      password: 'test1234',
+      email: EMAIL,
+      password: PASSWORD,
     });
 
     console.log(user);
