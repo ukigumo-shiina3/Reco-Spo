@@ -184,24 +184,44 @@ const SpotsEdit: NextPage<Spot> = () => {
             </h2>
             <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
               <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
+                <img
+                  src='/icons/camera-icon.png'
+                  alt='カメラアイコン'
+                  className='m-auto mt-4 w-8 h-8'
+                />
               </div>
               <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
+                <img
+                  src='/icons/camera-icon.png'
+                  alt='カメラアイコン'
+                  className='m-auto mt-4 w-8 h-8'
+                />
               </div>
               <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
+                <img
+                  src='/icons/camera-icon.png'
+                  alt='カメラアイコン'
+                  className='m-auto mt-4 w-8 h-8'
+                />
               </div>
               <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
+                <img
+                  src='/icons/camera-icon.png'
+                  alt='カメラアイコン'
+                  className='m-auto mt-4 w-8 h-8'
+                />
               </div>
               <div className='bg-white w-16 h-16'>
-                <img src='/camera-icon.png' alt='カメラアイコン' className='m-auto mt-4 w-8 h-8' />
+                <img
+                  src='/icons/camera-icon.png'
+                  alt='カメラアイコン'
+                  className='m-auto mt-4 w-8 h-8'
+                />
               </div>
             </div>
             <div className='mt-5'>
               <img
-                src='/image-upload.png'
+                src='/samples/image-upload.png'
                 alt='画像アップロードアイコン'
                 className='w-hull h-18 sm:h-24'
               />

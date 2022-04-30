@@ -20,7 +20,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
   const [id, setId] = useState<string>();
 
   const property = {
-    imageUrl: 'spot-pic.jpeg',
+    imageUrl: '/samples/spot-pic.jpeg',
     imageAlt: 'props.image_url',
   };
 
@@ -92,7 +92,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
               <div className='flex mb-2 mr-2'>
                 <Link href={`/spots/${props.spot.id}`} key={props.spot.id}>
                   <a className='flex'>
-                    <Image src='/map-marker-icon.png' alt='地図マーカーアイコン' />
+                    <Image src='/icons/map-marker-icon.png' alt='地図マーカーアイコン' />
                     <div className='mt-1 ml-1'> {props.spot.name}</div>
                   </a>
                 </Link>
@@ -115,7 +115,7 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                     <Image
                       borderRadius='full'
                       boxSize='50px'
-                      src='/admin-test-pic.jpg'
+                      src='/samples/admin-test-pic.jpg'
                       alt='props.image_url'
                     />
                     <div className='ml-4 mt-4'>{props.spot.area}</div>
@@ -138,7 +138,12 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                               setGetLike({ ...getLike, user_id: e.target.value.trim() });
                             }}
                           />
-                          <Image src='/unlike.png' width={5} height={5} alt='ハートアイコン' />
+                          <Image
+                            src='/icons/unlike-icon.png'
+                            width={5}
+                            height={5}
+                            alt='ハートアイコン'
+                          />
                         </div>
                       </button>
                     ) : (
@@ -153,7 +158,12 @@ export const SpotCard: VFC<SpotCardProps> = (props) => {
                               setGetLike({ ...getLike, user_id: e.target.value.trim() });
                             }}
                           />
-                          <Image src='/like.png' width={5} height={5} alt='ハートアイコン' />
+                          <Image
+                            src='/icons/like-icon.png'
+                            width={5}
+                            height={5}
+                            alt='ハートアイコン'
+                          />
                         </div>
                       </button>
                     )}

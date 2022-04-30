@@ -1,15 +1,13 @@
 import type { NextPage } from 'next';
 import { AboutIntroduction } from 'src/components/About/AboutIntroduction';
-import { SysyemIntroduction } from 'src/components/System/SysyemIntroduction';
+import { SystemIntroduction } from 'src/components/System/SystemIntroduction';
 import NextHeadSeo from 'next-head-seo';
 import { MyPageSeo } from 'src/components/Seo/MyPageSeo';
-import { SpotCard } from 'src/components/Spot/SpotCard';
 import { UserLayout } from 'src/components/Layout/UserLayout';
 import { getSpots } from 'src/hooks/useSpotCardSelect';
 import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
 import { Spinner } from '@chakra-ui/react';
-import { SimpleGrid } from '@mantine/core';
 import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
 
 const Index: NextPage = () => {
@@ -58,7 +56,7 @@ const Index: NextPage = () => {
         noindex={true}
       />
       <AboutIntroduction />
-      <SysyemIntroduction />
+      <SystemIntroduction />
       <div className='flex justify-center  my-20 ml-3 mr-3'>
         <WrapSpotCard />
       </div>

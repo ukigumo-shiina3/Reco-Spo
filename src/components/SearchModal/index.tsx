@@ -90,7 +90,7 @@ export const SearchModal: VFC = () => {
                     <button className='' onClick={closeModal}>
                       <div className=''>
                         <img
-                          src='/close-icon.png'
+                          src='/icons/close-icon.png'
                           alt='クローズアイコン'
                           className='m-auto w-8 h-8 ml-8'
                         />

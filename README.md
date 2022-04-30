@@ -26,14 +26,14 @@ https://docs.google.com/spreadsheets/d/1eQOAis1HpEIBGZF8tvFJJLJ5TxZNYRh1RelUl1a2
   <a href="https://www.typescriptlang.org/"><img src="https://cdn.worldvectorlogo.com/logos/typescript.svg" height="50px;" /></a>
   <a href="https://nextjs.org/"><img src="https://cdn.worldvectorlogo.com/logos/nextjs-3.svg" height="50px;" /></a>
   <a href="https://ja.reactjs.org/"><img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" height="50px;" /></a>
-  <a href="https://supabase.com/"><img src="./public/supabase.svg" height="50px;" /></a>
+  <a href="https://supabase.com/"><img src="./public/svgs/supabase.svg" height="50px;" /></a>
    <a href="https://vercel.com/"><img src="https://user-images.githubusercontent.com/65433193/118944114-3b393980-b98f-11eb-84a5-fc9a1db8ea6b.png" height="50px;" /></a
 </p>
 <p align="left">
   <a href="https://www.figma.com/"><img src="https://cdn.worldvectorlogo.com/logos/figma-1.svg" height="50px;" /></a>
   <a href="https://eslint.org/"><img src="https://cdn.worldvectorlogo.com/logos/eslint-1.svg" height="50px;" /></a>
   <a href="https://prettier.io/"><img src="https://cdn.worldvectorlogo.com/logos/prettier-2.svg" height="50px;" /></a>
-  <a href="https://tailwindcss.com"><img src="./public/tailwind-css.svg" height="50px;"></a>
+  <a href="https://tailwindcss.com"><img src="./public/svgs/tailwind-css.svg" height="50px;"></a>
   <a href="https://chakra-ui.com/"><img src="https://bestofjs.org/logos/chakra-ui.svg" height="50px;"></a>
 
 </p><br />

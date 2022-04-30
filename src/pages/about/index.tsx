@@ -7,7 +7,7 @@ const About: NextPage = () => {
     <UserLayout>
       <div className='w-screen block '>
         <Image
-          src='/main-visual2.png'
+          src='/main-visuals/main-visual2.png'
           quality={100}
           width={2000}
           height={700}
@@ -18,7 +18,7 @@ const About: NextPage = () => {
       </div>
       <div className='container justify-center mx-auto mt-5 p-5 md:px-10 py-5 max-w-[1080px]'>
         {/* Reco Spoとは */}
-        <Image src='/about-heading1.png' width={150} height={50} alt='Reco Spoとは' />
+        <Image src='/headings/about-heading1.png' width={150} height={50} alt='Reco Spoとは' />
         <p className='mb-4 text-sm'>
           将来的に田舎暮らしに憧れを持っているが、日本各地それぞれの土地の魅力は様々。
         </p>
@@ -39,7 +39,7 @@ const About: NextPage = () => {
 
       {/* 制作背景 */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5 max-w-[1080px]'>
-        <Image src='/about-heading2.png' width={150} height={50} alt='制作背景' />
+        <Image src='/headings/about-heading2.png' width={150} height={50} alt='制作背景' />
         <p className='mb-4 text-sm'>
           ・政治・経済・文化・人口など、社会における資本・資源・活動が東京に集中してます。
         </p>
@@ -54,7 +54,7 @@ const About: NextPage = () => {
 
       {/* 使い方 */}
       <div className='container justify-center mx-auto  p-5 md:px-10 py-5 max-w-[1080px]'>
-        <Image src='/about-heading3.png' width={150} height={50} alt='使い方' />
+        <Image src='/headings/about-heading3.png' width={150} height={50} alt='使い方' />
         <p className='mb-4 text-sm'>◆ユーザー</p>
         <p className='mb-4 text-sm'>
           ・スポット一覧ページの絞り込み検索ボタンから「都道府県」もしくは「制度」を指定して絞り込み検索ができます。

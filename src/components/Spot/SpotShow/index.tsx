@@ -12,7 +12,7 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
     <div>
       <div className='sm:px-20 sm:py-5'>
         <Image
-          src='/spot-show-heading1.png'
+          src='/headings/spot-show-heading1.png'
           quality={100}
           width={180}
           height={50}
@@ -22,7 +22,7 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
       </div>
 
       <img
-        src='/map-pic.png'
+        src='/samples/map-pic.png'
         alt='地図の画像'
         className='m-auto w-full h-80 p-8 my-12 sm:px-20 sm:h-96 sm:object-fill xl:h-full'
       />
@@ -30,7 +30,7 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
       <div className='flex'>
         <div className='p-5 sm:px-20'>
           <Image
-            src='/spot-show-heading2.png'
+            src='/headings/spot-show-heading2.png'
             quality={100}
             width={180}
             height={50}
@@ -49,7 +49,7 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
         <div className='sm:pl-4'>
           <div className='p-5 sm:px-10 sm:py-5'>
             <Image
-              src='/spot-show-heading3.png'
+              src='/headings/spot-show-heading3.png'
               quality={100}
               width={180}
               height={50}
