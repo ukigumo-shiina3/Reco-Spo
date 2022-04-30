@@ -19,11 +19,11 @@ import { useRecoil } from 'src/recoil/hooks';
 import { useSupabase } from 'src/hooks/useSupabase';
 
 const schema = z.object({
-  avatar_url: z.string().min(2, { message: 'Avatar_url should have at least 2 letters' }),
-  email: z.string().email({ message: 'Invalid email' }),
-  password: z.string().min(2, { message: 'Password should have at least 2 letters' }),
-  prefecture: z.string().min(2, { message: 'Prefecture should have at least 2 letters' }),
-  group: z.string().min(2, { message: 'Group should have at least 2 letters' })
+  avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
+  email: z.string().email({ message: '有効なメールアドレスを入力してください！' }),
+  password: z.string().min(2, { message: 'パスワード は2文字以上の値で入力してください！' }),
+  prefecture: z.string().min(2, { message: '都道府県 は2文字以上の値で入力してください！' }).regex(/^.*?(都|道|府|県)$/, { message: '正しい都道府県名を入力してください！' }),
+  group: z.string().min(2, { message: '自治体 名 は2文字以上の値で入力してください！' })
 });
 
 const ProfileEdit: VFC = () => {
@@ -32,7 +32,7 @@ const ProfileEdit: VFC = () => {
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
-      avatar_url: '',
+      avatar_url: admins.avatar_url,
       email: admins.email,
       password: admins.password,
       prefecture: admins.prefecture,
@@ -55,13 +55,6 @@ const ProfileEdit: VFC = () => {
   // const [error, setError] = useState(false);
 
   // const user = supabase.auth.user();
-
-  const handleClick = useCallback((e) => {
-    form.onSubmit((values) => {
-      console.log("submit values", values)
-    })
-    update(form.values);
-  }, [form, admins]);
 
   useEffect(() => {
     form.setValues({
@@ -193,8 +186,11 @@ const ProfileEdit: VFC = () => {
         <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg'>
           <h1 className='text-3xl mt-24'>プロフィール編集</h1>
           {/* <button onClick={() => setGroup(group + '1')}>test</button> */}
-          {/* <form onSubmit={handleSubmit}> */}
-          <form>
+          <form onSubmit={form.onSubmit((values) => {
+            console.log(values);
+            update(form.values);
+          })}>
+            {/* <form> */}
             <div className='pt-5 mt-5'>
               <div className='text-sm mt-2'>
                 {avatarUrl ? (
@@ -217,10 +213,11 @@ const ProfileEdit: VFC = () => {
               // onChange={(e) => {
               //   setAdmin({ ...admin, prefecture: e.target.value.trim() });
               // }}
-              {...form.getInputProps('prefecture')}
+              required
               id='prefecture'
               placeholder='山形県'
               classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              {...form.getInputProps('prefecture')}
             />
             <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
               自治体
@@ -230,10 +227,11 @@ const ProfileEdit: VFC = () => {
               // onChange={(e) => {
               //   setAdmin({ ...admin, group: e.target.value.trim() });
               // }}
-              {...form.getInputProps('group')}
+              required
               id='group'
               placeholder='遊佐町役場'
               classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              {...form.getInputProps('group')}
             />
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
               メールアドレス
@@ -243,11 +241,12 @@ const ProfileEdit: VFC = () => {
               // onChange={(e) => {
               //   setAdmin({ ...admin, email: e.target.value.trim() });
               // }}
-              {...form.getInputProps('email')}
+              required
               id='email'
               autoComplete='email'
               placeholder='reco-spo@gmail.com'
               classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              {...form.getInputProps('email')}
             />
             <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
               パスワード
@@ -257,12 +256,13 @@ const ProfileEdit: VFC = () => {
               // onChange={(e) => {
               //   setAdmin({ ...admin, password: e.target.value.trim() });
               // }}
-              {...form.getInputProps('password')}
+              required
               id='password'
               type="password"
               autoComplete='current-password'
               placeholder='test1234'
               classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              {...form.getInputProps('password')}
             />
             {/* <div className='text-center pb-10'>
               <Link href='/admins' passHref>
@@ -275,7 +275,7 @@ const ProfileEdit: VFC = () => {
               </Link>
             </div> */}
             <div className='text-center pb-10'>
-              <Button onClick={handleClick} classNames={{ 'root': 'px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg' }}>
+              <Button type='submit' classNames={{ 'root': 'px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg' }}>
                 変更
               </Button>
             </div>
