@@ -112,7 +112,8 @@ const SpotsEdit: NextPage<Spot> = () => {
     toast.success('スポットを編集しました', {});
     // spotdataを再度取得
     getSpotsData();
-    getSpotIndex();
+    //  表示するINDEXを０番に設定(編集されたスポットが表示されるようにする)
+    setSpotIndex('0');
   }, [
     spotEdit.prefecture_id,
     spotEdit.system_id,
