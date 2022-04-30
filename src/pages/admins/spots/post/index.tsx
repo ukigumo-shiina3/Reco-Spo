@@ -49,10 +49,12 @@ const SpotsPost: NextPage = () => {
     manager: '',
     tel: '',
     email: '',
+    updated_at: '',
   });
 
+  const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
+
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
-  const [prefectures_created_at, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [spot, setSpot] = useState<Spot>();
   const [spotImage, setSpotImage] = useState<string | null>('');
@@ -235,6 +237,7 @@ const SpotsPost: NextPage = () => {
     try {
       const data = await getPrefecturesCreatedAt();
       setPrefecturesCreatedAt(data);
+      console.log('都道府県作成日', data);
     } catch (error) {
       setError(true);
     }
@@ -302,8 +305,11 @@ const SpotsPost: NextPage = () => {
     //   toast.error('入力されていない項目があります', {});
     // } else {
     const { data, error } = await supabase.from('spots').insert({
+      prefecture_id: spotPost.prefecture_id,
+      system_id: spotPost.system_id,
       name: spotPost.name,
       title: spotPost.title,
+      image_url: spotPost.image_url,
       appeal: spotPost.appeal,
       area: spotPost.area,
       link: spotPost.link,
@@ -315,10 +321,8 @@ const SpotsPost: NextPage = () => {
       manager: spotPost.manager,
       tel: spotPost.tel,
       email: spotPost.email,
-      prefecture_id: spotPost.prefecture_id,
-      system_id: spotPost.system_id,
     });
-    console.log({ data, error });
+    // console.log({ data, error });
 
     toast.success('スポットを登録しました', {});
     // }
@@ -445,21 +449,21 @@ const SpotsPost: NextPage = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
-                  {/* {console.log(prefectures_name)} */}
-                  {prefectures_name.length == 0 ? null : (
+                  {console.log('検証', prefecturesCreatedAt)}
+                  {prefecturesCreatedAt?.length == 0 ? null : (
                     <select
-                      value={spotPost.prefecture_id}
+                      value={spotPost?.prefecture_id || 0}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, prefecture_id: e.target.value.trim() });
-                        console.log(e.target.value);
+                        // console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
-                      {prefectures_name.map((value, index) => (
+                      {prefecturesCreatedAt?.map((value, index) => (
                         <option key={index} value={value['id']}>
                           {/* {console.log(value['id'])} */}
                           {value['prefectures_name']}
-                          {console.log(value['prefectures_name'])}
+                          {/* {console.log(value['prefectures_name'])} */}
                         </option>
                       ))}
                     </select>
@@ -473,7 +477,7 @@ const SpotsPost: NextPage = () => {
                       value={spotPost.system_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, system_id: e.target.value.trim() });
-                        console.log(e.target.value);
+                        // console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >

@@ -3,9 +3,9 @@ import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 
 export const getPrefecturesCreatedAt = async () => {
   const { data, error } = await supabase
-    .from<PrefecturesCreatedAt>('prefectures_created_at_view')
-    .select('*');
-  console.log(data);
+    .from<PrefecturesCreatedAt>('prefectures_created_at')
+    .select('*')
+    .order('created_at', { ascending: true });
   if (!data) {
     return [];
   }

@@ -1,4 +1,5 @@
 export type PrefecturesCreatedAt = {
-  id: string;
+  id?: string;
+  prefectures_name: string;
   created_at: string;
 };
