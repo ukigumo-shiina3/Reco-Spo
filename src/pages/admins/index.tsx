@@ -175,7 +175,7 @@ const ProfileEdit: VFC = () => {
               setAdmin({ ...admin, prefecture: e.target.value.trim() });
             }}
             placeholder='山形県'
-            className='w-full p-2 rounded-l-md'
+            className='w-full p-2 rounded-md'
           />
           <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
             自治体
@@ -187,7 +187,7 @@ const ProfileEdit: VFC = () => {
               setAdmin({ ...admin, group: e.target.value.trim() });
             }}
             placeholder='遊佐町役場'
-            className='w-full p-2 rounded-l-md'
+            className='w-full p-2 rounded-md'
           />
           <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
             メールアドレス
@@ -199,7 +199,7 @@ const ProfileEdit: VFC = () => {
               setAdmin({ ...admin, email: e.target.value.trim() });
             }}
             placeholder='reco-spo@gmail.com'
-            className='w-full p-2 rounded-l-md'
+            className='w-full p-2 rounded-md'
           />
           <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
             パスワード
@@ -211,7 +211,7 @@ const ProfileEdit: VFC = () => {
               setAdmin({ ...admin, password: e.target.value.trim() });
             }}
             placeholder='test1234'
-            className='w-full p-2 rounded-l-md'
+            className='w-full p-2 rounded-md'
           />
           <div className='text-center pb-10'>
             <Link href='/admins' passHref>

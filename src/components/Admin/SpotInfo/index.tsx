@@ -29,7 +29,7 @@ export const SpotInfo: VFC<Props> = (props) => {
               setName(e.target.value.trim());
             }}
             placeholder='石川県穴水町'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -43,7 +43,7 @@ export const SpotInfo: VFC<Props> = (props) => {
               setTitle(e.target.value.trim());
             }}
             placeholder='自然豊かな穴水町での生活を体験してみませんか'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -57,7 +57,7 @@ export const SpotInfo: VFC<Props> = (props) => {
               setPrefecture(e.target.value.trim());
             }}
             placeholder='都道府県を選択してください'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
         <div className='mb-5'>
@@ -71,7 +71,7 @@ export const SpotInfo: VFC<Props> = (props) => {
               setSystem(e.target.value.trim());
             }}
             placeholder='カテゴリを選択してください'
-            className='w-full p-2  rounded-l-md placeholder-gray-500'
+            className='w-full p-2 rounded-md placeholder-gray-500'
           />
         </div>
       </div>
