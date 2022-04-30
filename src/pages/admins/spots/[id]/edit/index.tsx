@@ -20,7 +20,7 @@ const user = supabase.auth.user();
 
 const SpotsEdit: NextPage<Spot> = () => {
   const { adminId } = useUser();
-  const { spotList: spot } = useSpot(adminId);
+  const { spotList: spot, getSpotsData } = useSpot(adminId);
 
   const [spotEdit, setSpotEdit] = useState<SpotEdit>({
     id: '',
@@ -99,6 +99,8 @@ const SpotsEdit: NextPage<Spot> = () => {
     console.log({ data, error });
 
     toast.success('スポットを編集しました', {});
+    // spotdataを再度取得
+    getSpotsData();
   }, [
     spotEdit.prefecture_id,
     spotEdit.system_id,
@@ -128,6 +130,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   useEffect(() => {
     if (spot !== null) {
+      // 編集フォームに入れるspotdataをセレクトボックスで取得した番号から取得
       setSpotEdit(spot[Number(spotIndex)]);
     }
   }, [spotIndex, spot]);
@@ -154,8 +157,6 @@ const SpotsEdit: NextPage<Spot> = () => {
   if (user) {
     return (
       <>
-        {console.log(spot)}
-
         <div className='flex bg-gray-100 h-full'>
           <Sidebar group={''} />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
@@ -226,7 +227,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                   <label htmlFor='name'>スポット名</label>
                   {spot ? (
                     <input
-                      defaultValue={spotEdit.name}
+                      value={spotEdit.name}
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, name: e.target.value.trim() });
                       }}
@@ -240,7 +241,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                   {spot ? (
                     <input
                       type='text'
-                      defaultValue={spotEdit.title}
+                      value={spotEdit.title}
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, title: e.target.value.trim() });
                       }}
@@ -252,7 +253,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                   <label htmlFor='prefectures_name'>都道府県名</label>
                   {prefectures_name.length == 0 ? null : (
                     <select
-                      defaultValue={spotEdit.prefecture_id}
+                      value={spotEdit.prefecture_id}
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, prefecture_id: e.target.value.trim() });
                       }}
@@ -270,7 +271,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                   <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
                     <select
-                      defaultValue={spotEdit.system_id}
+                      value={spotEdit.system_id}
                       onChange={(e) => {
                         setSpotEdit({ ...spotEdit, system_id: e.target.value.trim() });
                       }}
@@ -293,7 +294,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 <label htmlFor='appeal'>アピールポイント</label>
                 {spot ? (
                   <textarea
-                    defaultValue={spotEdit.appeal}
+                    value={spotEdit.appeal}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, appeal: e.target.value.trim() });
                     }}
@@ -310,7 +311,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.area}
+                    value={spotEdit.area}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, area: e.target.value.trim() });
                     }}
@@ -323,7 +324,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.link}
+                    value={spotEdit.link}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, link: e.target.value.trim() });
                     }}
@@ -336,7 +337,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.target_person}
+                    value={spotEdit.target_person}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, target_person: e.target.value.trim() });
                     }}
@@ -349,7 +350,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.usage_fee}
+                    value={spotEdit.usage_fee}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, usage_fee: e.target.value.trim() });
                     }}
@@ -362,7 +363,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.term}
+                    value={spotEdit.term}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, term: e.target.value.trim() });
                     }}
@@ -379,7 +380,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.postal_code}
+                    value={spotEdit.postal_code}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, postal_code: e.target.value.trim() });
                     }}
@@ -392,7 +393,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.address}
+                    value={spotEdit.address}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, address: e.target.value.trim() });
                     }}
@@ -405,7 +406,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.manager}
+                    value={spotEdit.manager}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, manager: e.target.value.trim() });
                     }}
@@ -418,7 +419,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.tel}
+                    value={spotEdit.tel}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, manager: e.target.value.trim() });
                     }}
@@ -431,7 +432,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 {spot ? (
                   <input
                     type='text'
-                    defaultValue={spotEdit.email}
+                    value={spotEdit.email}
                     onChange={(e) => {
                       setSpotEdit({ ...spotEdit, manager: e.target.value.trim() });
                     }}
