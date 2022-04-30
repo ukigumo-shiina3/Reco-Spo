@@ -9,7 +9,7 @@ const Signin: NextPage = () => {
       session={session}
       title='ログイン'
       signinButton='ログイン'
-      testSigninbutton='テストログイン'
+      testSigninButton='テストログイン'
       email={''}
       password={''}
     />
