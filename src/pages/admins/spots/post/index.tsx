@@ -49,6 +49,7 @@ const SpotsPost: NextPage = () => {
     manager: '',
     tel: '',
     email: '',
+    updated_at: '',
   });
 
   const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
