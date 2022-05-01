@@ -49,11 +49,9 @@ const SpotsPost: NextPage = () => {
     manager: '',
     tel: '',
     email: '',
-    updated_at: '',
   });
 
   const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
-
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [spot, setSpot] = useState<Spot>();
@@ -237,7 +235,6 @@ const SpotsPost: NextPage = () => {
     try {
       const data = await getPrefecturesCreatedAt();
       setPrefecturesCreatedAt(data);
-      console.log('都道府県作成日', data);
     } catch (error) {
       setError(true);
     }
@@ -322,7 +319,7 @@ const SpotsPost: NextPage = () => {
       tel: spotPost.tel,
       email: spotPost.email,
     });
-    // console.log({ data, error });
+    console.log({ data, error });
 
     toast.success('スポットを登録しました', {});
     // }
@@ -449,27 +446,22 @@ const SpotsPost: NextPage = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
-                  {console.log('検証', prefecturesCreatedAt)}
-                  {prefecturesCreatedAt?.length == 0 ? null : (
+                  {prefecturesCreatedAt.length == 0 ? null : (
                     <select
-                      value={spotPost?.prefecture_id || 0}
+                      value={spotPost?.prefecture_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, prefecture_id: e.target.value.trim() });
-                        // console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
-                      {prefecturesCreatedAt?.map((value, index) => (
+                      {prefecturesCreatedAt.map((value, index) => (
                         <option key={index} value={value['id']}>
-                          {/* {console.log(value['id'])} */}
                           {value['prefectures_name']}
-                          {/* {console.log(value['prefectures_name'])} */}
                         </option>
                       ))}
                     </select>
                   )}
                 </div>
-                {/* {console.log(prefectures_name)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
@@ -477,15 +469,12 @@ const SpotsPost: NextPage = () => {
                       value={spotPost.system_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, system_id: e.target.value.trim() });
-                        // console.log(e.target.value);
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
                       {systems_name.map((value, index) => (
                         <option key={index} value={value['id']}>
-                          {/* {console.log(value['id'])} */}
                           {value['systems_name']}
-                          {/* {console.log(value['systems_name'])} */}
                         </option>
                       ))}
                     </select>

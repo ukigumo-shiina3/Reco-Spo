@@ -23,5 +23,4 @@ export type Spot = {
   manager: string;
   tel: string;
   email: string;
-  updated_at: string;
 };
