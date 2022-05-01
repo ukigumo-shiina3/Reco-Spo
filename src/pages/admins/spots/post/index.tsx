@@ -27,6 +27,7 @@ import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 const SpotsPost: NextPage = () => {
   const [spotPost, setSpotPost] = useState<Spot>({
     id: '',
+    admin_id: '',
     prefecture_id: '',
     prefectures: {
       prefectures_name: [],
@@ -303,8 +304,9 @@ const SpotsPost: NextPage = () => {
     //   toast.error('入力されていない項目があります', {});
     // } else {
     const { data, error } = await supabase.from('spots').insert({
-      prefecture_id: spotPost.prefecture_id,
-      system_id: spotPost.system_id,
+      admin_id: user?.id,
+      prefecture_id: Number(spotPost.prefecture_id),
+      system_id: Number(spotPost.system_id),
       name: spotPost.name,
       title: spotPost.title,
       image_url: spotPost.image_url,
