@@ -449,14 +449,14 @@ const SpotsPost: NextPage = () => {
                   <label htmlFor='prefectures_name'>都道府県名</label>
                   {prefecturesCreatedAt.length == 0 ? null : (
                     <select
-                      value={spotPost?.prefecture_id}
+                      value={spotPost.prefecture_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, prefecture_id: e.target.value.trim() });
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
                       {prefecturesCreatedAt.map((value, index) => (
-                        <option key={index} value={value['id']}>
+                        <option key={index} value={value['prefectures_index']}>
                           {value['prefectures_name']}
                         </option>
                       ))}

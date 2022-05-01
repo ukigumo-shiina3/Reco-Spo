@@ -15,6 +15,8 @@ import { Systems } from 'src/types/systems';
 import { Spinner } from '@chakra-ui/react';
 import { useSpot, useUser } from 'src/hooks/useSpotEditSelect';
 import { Select } from '@mantine/core';
+import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
+import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 
 const user = supabase.auth.user();
 
@@ -34,7 +36,6 @@ const SpotsEdit: NextPage<Spot> = () => {
     },
     name: '',
     title: '',
-
     appeal: '',
     area: '',
     link: '',
@@ -48,10 +49,25 @@ const SpotsEdit: NextPage<Spot> = () => {
     email: '',
   });
 
+  const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
+
+  const fetchPrefecturesCreatedAt = useCallback(async () => {
+    try {
+      const data = await getPrefecturesCreatedAt();
+      setPrefecturesCreatedAt(data);
+      console.log('都道府県作成日', data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, [setPrefecturesCreatedAt]);
+  useEffect(() => {
+    fetchPrefecturesCreatedAt();
+  }, [user, fetchPrefecturesCreatedAt]);
 
   const fetchPrefecturesListName = useCallback(async () => {
     try {
@@ -238,7 +254,6 @@ const SpotsEdit: NextPage<Spot> = () => {
                       className='w-full p-2 rounded-md'
                     />
                   ) : null}
-                  {/* {console.log(spotEdit)} */}
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='title'>スポットタイトル</label>
@@ -255,20 +270,26 @@ const SpotsEdit: NextPage<Spot> = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
-                  {prefectures_name.length == 0 ? null : (
-                    <select
-                      value={spotEdit.prefecture_id}
-                      onChange={(e) => {
-                        setSpotEdit({ ...spotEdit, prefecture_id: e.target.value.trim() });
-                      }}
-                      className='w-full p-2 rounded-md'
-                    >
-                      {prefectures_name.map((value, index) => (
-                        <option key={index} value={value['id']}>
-                          {value['prefectures_name']}
-                        </option>
-                      ))}
-                    </select>
+                  {prefecturesCreatedAt.length == 0 ? null : (
+                    <div>
+                      <select
+                        value={spotEdit.prefecture_id}
+                        onChange={(e) => {
+                          setSpotEdit({ ...spotEdit, prefecture_id: e.target.value.trim() });
+                        }}
+                        className='w-full p-2 rounded-md'
+                      >
+                        {prefecturesCreatedAt.map((value, index) => (
+                          <option
+                            key={index}
+                            value={value['prefectures_index']}
+                            selected={value['prefectures_index'] === spotEdit.prefecture_id}
+                          >
+                            {value['prefectures_name']}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   )}
                 </div>
                 <div className='mb-5'>
