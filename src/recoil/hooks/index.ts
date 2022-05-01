@@ -43,7 +43,7 @@ export const useRecoil = () => {
           return {
             avatar_url: data?.avatar_url ?? prev?.avatar_url ?? '',
             email: data?.email ?? prev?.email ?? '',
-            id: data?.id ?? prev?.id ?? '',
+            id: data?.id ?? user?.id ?? '',
             password: data?.password ?? prev?.password ?? '',
             prefecture: data?.prefecture ?? prev?.prefecture ?? '',
             group: data?.group ?? prev?.group ?? '',

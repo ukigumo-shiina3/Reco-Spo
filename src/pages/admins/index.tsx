@@ -19,7 +19,7 @@ import { useRecoil } from 'src/recoil/hooks';
 import { useSupabase } from 'src/hooks/useSupabase';
 
 const schema = z.object({
-  avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
+  // avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
   email: z.string().email({ message: '有効なメールアドレスを入力してください！' }),
   password: z.string().min(2, { message: 'パスワード は2文字以上の値で入力してください！' }),
   prefecture: z.string().min(2, { message: '都道府県 は2文字以上の値で入力してください！' }).regex(/^.*?(都|道|府|県)$/, { message: '正しい都道府県名を入力してください！' }),
@@ -179,9 +179,9 @@ const ProfileEdit: VFC = () => {
       </div>
     );
   }
-  if (errorState) {
-    return <div>エラーが発生しました。</div>;
-  }
+  // if (errorState) {
+  //   return <div>エラーが発生しました。</div>;
+  // }
 
   console.log('avatarUrl', avatarUrl)
   console.log('avatarDownloadUrl', avatarDownloadUrl)
@@ -198,6 +198,7 @@ const ProfileEdit: VFC = () => {
             update({ "id": admins.id, ...form.values });
           })}>
             {/* <form> */}
+            {/* TODO: うまく動作できなかったためコメントアウト */}
             {/* <div className='pt-5 mt-5'>
               <div className='text-sm mt-2'>
                 {avatarUrl ? (

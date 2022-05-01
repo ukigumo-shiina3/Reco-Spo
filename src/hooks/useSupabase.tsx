@@ -85,36 +85,34 @@ export const useSupabase: Type = () => {
     }
   }, [setAvatarUrl]);
 
-  // const getAvatar = useCallback(async (url) => {
-  //   if (!url) {
-  //     setAvatarDownloadUrl('');
-  //     return
-  //   }
-  //   try {
-  //     const { data, error } = await supabase.storage.from(DEFAULT_AVATARS_BUCKET).download(url);
-  //     if (error) {
-  //       throw error;
-  //     }
-  //     console.log("getAvatar", data);
-  //     if (data == null) {
-  //       setAvatarDownloadUrl('');
-  //       return
-  //     }
-  //     setAvatarDownloadUrl(URL.createObjectURL(data));
-  //     return;
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //     setAvatarDownloadUrl('');
-  //     return;
-  //   }
-  // }, []);
+  const getAvatar = useCallback(async (url) => {
+    if (!url) {
+      setAvatarDownloadUrl('');
+      return
+    }
+    try {
+      const { data, error } = await supabase.storage.from(DEFAULT_AVATARS_BUCKET).download(url);
+      if (error) {
+        throw error;
+      }
+      if (data == null) {
+        setAvatarDownloadUrl('');
+        return
+      }
+      setAvatarDownloadUrl(URL.createObjectURL(data));
+      return;
+    } catch (error) {
+      toast.error(error.message);
+      setAvatarDownloadUrl('');
+      return;
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (!avatarUrl) {
-  //     getAvatar(avatarUrl);
-  //   }
-  // }, [avatarUrl, getAvatar])
-  // console.log("useSupabase => avatarDownloadUrl", avatarDownloadUrl);
+  useEffect(() => {
+    if (avatarUrl) {
+      getAvatar(avatarUrl);
+    }
+  }, [avatarUrl, getAvatar])
 
   return useMemo(() => {
     return {
