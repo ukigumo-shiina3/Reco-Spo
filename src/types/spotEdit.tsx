@@ -10,7 +10,6 @@ export type SpotEdit = {
   };
   name: string;
   title: string;
-
   appeal: string;
   area: string;
   link: string;
