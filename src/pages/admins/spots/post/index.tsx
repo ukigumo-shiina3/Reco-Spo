@@ -21,6 +21,8 @@ import UploadButton from 'src/components/Button/UploadButton/UploadButton';
 import SpotImage from 'src/components/Spot/SpotImage';
 import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
 import { useRouter } from 'next/router';
+import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
+import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 
 const SpotsPost: NextPage = () => {
   const [spotPost, setSpotPost] = useState<Spot>({
@@ -47,8 +49,10 @@ const SpotsPost: NextPage = () => {
     manager: '',
     tel: '',
     email: '',
+    updated_at: '',
   });
 
+  const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [spot, setSpot] = useState<Spot>();
@@ -228,6 +232,20 @@ const SpotsPost: NextPage = () => {
     </Group>
   );
 
+  const fetchPrefecturesCreatedAt = useCallback(async () => {
+    try {
+      const data = await getPrefecturesCreatedAt();
+      setPrefecturesCreatedAt(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, [setPrefecturesCreatedAt]);
+
+  useEffect(() => {
+    fetchPrefecturesCreatedAt();
+  }, [user, fetchPrefecturesCreatedAt]);
+
   const fetchPrefecturesListName = useCallback(async () => {
     try {
       const data = await getPrefectures();
@@ -285,8 +303,11 @@ const SpotsPost: NextPage = () => {
     //   toast.error('入力されていない項目があります', {});
     // } else {
     const { data, error } = await supabase.from('spots').insert({
+      prefecture_id: spotPost.prefecture_id,
+      system_id: spotPost.system_id,
       name: spotPost.name,
       title: spotPost.title,
+      image_url: spotPost.image_url,
       appeal: spotPost.appeal,
       area: spotPost.area,
       link: spotPost.link,
@@ -298,8 +319,6 @@ const SpotsPost: NextPage = () => {
       manager: spotPost.manager,
       tel: spotPost.tel,
       email: spotPost.email,
-      prefecture_id: spotPost.prefecture_id,
-      system_id: spotPost.system_id,
     });
     console.log({ data, error });
 
@@ -411,7 +430,7 @@ const SpotsPost: NextPage = () => {
                       setSpotPost({ ...spotPost, name: e.target.value.trim() });
                     }}
                     placeholder='穴水町'
-                    className='w-full p-2 rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-md placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
@@ -423,32 +442,27 @@ const SpotsPost: NextPage = () => {
                       setSpotPost({ ...spotPost, title: e.target.value.trim() });
                     }}
                     placeholder='自然豊かな穴水町での生活を体験してみませんか'
-                    className='w-full p-2 rounded-l-md placeholder-gray-500'
+                    className='w-full p-2 rounded-md placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
-                  {/* {console.log(prefectures_name)} */}
-                  {prefectures_name.length == 0 ? null : (
+                  {prefecturesCreatedAt.length == 0 ? null : (
                     <select
                       value={spotPost.prefecture_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, prefecture_id: e.target.value.trim() });
-                        console.log(e.target.value);
                       }}
-                      className='w-full p-2 rounded-l-md placeholder-gray-500'
+                      className='w-full p-2 rounded-md placeholder-gray-500'
                     >
-                      {prefectures_name.map((value, index) => (
-                        <option key={index} value={value['id']}>
-                          {/* {console.log(value['id'])} */}
+                      {prefecturesCreatedAt.map((value, index) => (
+                        <option key={index} value={value['prefectures_index']}>
                           {value['prefectures_name']}
-                          {/* {console.log(value['prefectures_name'])} */}
                         </option>
                       ))}
                     </select>
                   )}
                 </div>
-                {/* {console.log(prefectures_name)} */}
                 <div className='mb-5'>
                   <label htmlFor='system'>制度名</label>
                   {systems_name.length == 0 ? null : (
@@ -456,15 +470,12 @@ const SpotsPost: NextPage = () => {
                       value={spotPost.system_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, system_id: e.target.value.trim() });
-                        console.log(e.target.value);
                       }}
-                      className='w-full p-2 rounded-l-md placeholder-gray-500'
+                      className='w-full p-2 rounded-md placeholder-gray-500'
                     >
                       {systems_name.map((value, index) => (
                         <option key={index} value={value['id']}>
-                          {/* {console.log(value['id'])} */}
                           {value['systems_name']}
-                          {/* {console.log(value['systems_name'])} */}
                         </option>
                       ))}
                     </select>
@@ -488,7 +499,7 @@ const SpotsPost: NextPage = () => {
             そんな穴水町の暮らしぶりを気軽に体験して頂けるように「短期移住体験住宅」をご用意いたしました。
             空港や駅へのアクセスも良く、暮らしやすい場所で移住体験ができます。
             田舎への移住をお考えの方はこの機会にぜひご利用下さい。'
-                  className='w-full h-24  p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full h-24  p-2 rounded-md placeholder-gray-500'
                 />
               </div>
             </div>
@@ -505,7 +516,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, area: e.target.value.trim() });
                   }}
                   placeholder='石川県穴水町'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -517,7 +528,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, link: e.target.value.trim() });
                   }}
                   placeholder='https://test.com'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -529,7 +540,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, target_person: e.target.value.trim() });
                   }}
                   placeholder='町外から当町への移住を希望する人物'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -541,7 +552,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, usage_fee: e.target.value.trim() });
                   }}
                   placeholder='無料'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -553,7 +564,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, term: e.target.value.trim() });
                   }}
                   placeholder='最長７泊８日'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
             </div>
@@ -570,7 +581,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, postal_code: e.target.value.trim() });
                   }}
                   placeholder='927-8601'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -582,7 +593,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, address: e.target.value.trim() });
                   }}
                   placeholder='石川県鳳珠郡穴水町字川島ラの174番地'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -594,7 +605,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, manager: e.target.value.trim() });
                   }}
                   placeholder='穴水町観光交流課'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -606,7 +617,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, tel: e.target.value.trim() });
                   }}
                   placeholder='0768-52-3671'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
@@ -618,7 +629,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, email: e.target.value.trim() });
                   }}
                   placeholder='test@gmai.com'
-                  className='w-full p-2 rounded-l-md placeholder-gray-500'
+                  className='w-full p-2 rounded-md placeholder-gray-500'
                 />
               </div>
             </div>
