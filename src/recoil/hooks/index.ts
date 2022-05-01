@@ -41,12 +41,12 @@ export const useRecoil = () => {
         // console.log('useRecoil:', data);
         setAdmins((prev) => {
           return {
-            avatar_url: data.avatar_url,
-            email: data.email,
-            id: data.id,
-            password: data.password,
-            prefecture: data.prefecture,
-            group: data.group,
+            avatar_url: data?.avatar_url ?? prev?.avatar_url ?? '',
+            email: data?.email ?? prev?.email ?? '',
+            id: data?.id ?? prev?.id ?? '',
+            password: data?.password ?? prev?.password ?? '',
+            prefecture: data?.prefecture ?? prev?.prefecture ?? '',
+            group: data?.group ?? prev?.group ?? '',
           };
         });
       } catch (error) {

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { DEFAULT_AVATARS_BUCKET } from "src/libs/constant";
 import { supabase } from "src/libs/supabase";
@@ -7,13 +7,15 @@ import { Admin } from "src/types/admin";
 
 type Type = () => {
   uploadAvatar: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
+  avatarDownloadUrl: string;
   update: (values: Admin) => Promise<void>;
   uploading: boolean;
 }
 
 export const useSupabase: Type = () => {
-  const { admins, setAvatarUrl, setAdmins } = useRecoil();
+  const { admins, avatarUrl, setAvatarUrl, setAdmins } = useRecoil();
   const [uploading, setUploading] = useState<boolean>(false);
+  const [avatarDownloadUrl, setAvatarDownloadUrl] = useState<string>('');
   const update = useCallback(async (values: Admin) => {
     if (!admins?.id) { return }
     setUploading(true);
@@ -82,11 +84,44 @@ export const useSupabase: Type = () => {
       setUploading(false);
     }
   }, [setAvatarUrl]);
+
+  // const getAvatar = useCallback(async (url) => {
+  //   if (!url) {
+  //     setAvatarDownloadUrl('');
+  //     return
+  //   }
+  //   try {
+  //     const { data, error } = await supabase.storage.from(DEFAULT_AVATARS_BUCKET).download(url);
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     console.log("getAvatar", data);
+  //     if (data == null) {
+  //       setAvatarDownloadUrl('');
+  //       return
+  //     }
+  //     setAvatarDownloadUrl(URL.createObjectURL(data));
+  //     return;
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //     setAvatarDownloadUrl('');
+  //     return;
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!avatarUrl) {
+  //     getAvatar(avatarUrl);
+  //   }
+  // }, [avatarUrl, getAvatar])
+  // console.log("useSupabase => avatarDownloadUrl", avatarDownloadUrl);
+
   return useMemo(() => {
     return {
       uploadAvatar,
+      avatarDownloadUrl,
       update,
       uploading
     }
-  }, [uploadAvatar, update, uploading])
+  }, [uploadAvatar, avatarDownloadUrl, update, uploading])
 }

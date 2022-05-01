@@ -28,7 +28,7 @@ const schema = z.object({
 
 const ProfileEdit: VFC = () => {
   const { admins, avatarUrl, loading, errorState } = useRecoil();
-  const { uploading, uploadAvatar, update } = useSupabase();
+  const { uploading, uploadAvatar, avatarDownloadUrl, update } = useSupabase();
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
@@ -59,7 +59,11 @@ const ProfileEdit: VFC = () => {
   useEffect(() => {
     form.setValues({
       ...form,
-      ...admins
+      avatar_url: admins.avatar_url,
+      email: admins.email,
+      password: admins.password,
+      prefecture: admins.prefecture,
+      group: admins.group,
     })
   }, [admins])
 
@@ -179,6 +183,9 @@ const ProfileEdit: VFC = () => {
     return <div>エラーが発生しました。</div>;
   }
 
+  console.log('avatarUrl', avatarUrl)
+  console.log('avatarDownloadUrl', avatarDownloadUrl)
+
   return (
     <>
       <div className='flex bg-gray-100 h-full'>
@@ -188,13 +195,13 @@ const ProfileEdit: VFC = () => {
           {/* <button onClick={() => setGroup(group + '1')}>test</button> */}
           <form onSubmit={form.onSubmit((values) => {
             console.log(values);
-            update(form.values);
+            update({ "id": admins.id, ...form.values });
           })}>
             {/* <form> */}
-            <div className='pt-5 mt-5'>
+            {/* <div className='pt-5 mt-5'>
               <div className='text-sm mt-2'>
                 {avatarUrl ? (
-                  <Avatar url={avatarUrl} size={60} />
+                  <Avatar url={avatarDownloadUrl} size={60} />
                 ) : (
                   <img
                     src='/icons/profile-icon.png'
@@ -204,7 +211,7 @@ const ProfileEdit: VFC = () => {
                 )}
                 <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
-            </div>
+            </div> */}
             <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
               都道府県
             </label>
