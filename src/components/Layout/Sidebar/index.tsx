@@ -1,51 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { Spot } from 'src/types/spot';
-import { useUser, useSpot } from 'src/hooks/useSpotEditSelect';
+import { useUser } from 'src/hooks/useSpotEditSelect';
+import { Admin } from 'src/types/admin';
 
-type Props = {
-  group: string;
-};
-
-export const Sidebar: VFC<Props> = (props) => {
+export const Sidebar: VFC = () => {
   const router = useRouter();
-
-  // const [adminId, setAdminId] = useState<string>();
-  const [spotData, setSpotData] = useState<Spot[] | null>();
-  // const loginAccount = supabase.auth;
   const { adminId } = useUser();
-  const { spotList } = useSpot(adminId);
-  // const getSpotsEdit = useCallback(async (admin_id) => {
-  //   // DBからスポット情報を取得　WHERE旬はareaカラムは兵庫県で絞り、admin_idカラムはadminIdで絞ってます
-  //   const { data: spot, error } = await supabase
-  //     .from<Spot>('spots')
-  //     .select('*')
-  //     .eq(`area`, `兵庫県`)
-  //     .eq(`admin_id`, admin_id);
-  //   // spotデータがあればuseSateのspotDataに代入
-  //   if (spot) {
-  //     setSpotData(spot);
-  //   }
-  // }, []);
-  // セッション情報のjsonが直ぐに取得できないことがあるので、if文でデータが取得できるまで待ってから取得
-  // useEffect(() => {
-  //   if (loginAccount.session()?.user?.id !== undefined) {
-  //     //ここでgetSpotsEditの引数にadmin_idを渡していないのはsetAdminIdが間に合わないから
-  //     // console.log(loginAccount.session()?.user?.id);
-  //     setAdminId(loginAccount.session()?.user?.id);
-  //     getSpotsEdit(supabase.auth.session()?.user?.id);
-  //   }
-  // }, [loginAccount.session()?.user?.id]);
-
-  // console.log(spotData);
-  // console.log(adminId);
-  // console.log(spotList);
+  const [adminData, setAdminData] = useState<Admin | null>();
 
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
@@ -54,6 +21,36 @@ export const Sidebar: VFC<Props> = (props) => {
       duration: 3000,
     });
   }, []);
+
+  // adminsテーブルからadminidと一致するデータを取得
+  const getAdmin = useCallback(
+    async () => {
+      if (adminId === null) return;
+      const { data, error } = await supabase
+        .from<Admin>('admins')
+        .select('*')
+        .eq('id', adminId)
+        // single()で一件だけ取得する
+        .single();
+      if (error) {
+        toast.error(error.message);
+      }
+      if (data == null) {
+        toast.error('データが取得できませんでした');
+      }
+      setAdminData(data);
+    },
+    // adminIdが変更されたら実行
+    [adminId],
+  );
+
+  useEffect(
+    () => {
+      getAdmin();
+    },
+    // adminidが変わったらgetAdminを実行
+    [adminId],
+  );
 
   return (
     <div>
@@ -70,11 +67,30 @@ export const Sidebar: VFC<Props> = (props) => {
               width={70}
               className='rounded-full'
             />
+            {/* avatar画像を取得するタスクがまだなのでコメントアウト */}
+            {/* {adminData?.avatar_url ? (
+              <Image
+              // avatar_urlだとDBからデータ引っ張れないので別の書き方をしてください 
+                src='/0.5032829142478012.jpeg'
+                alt='admin_image'
+                height={70}
+                width={70}
+                className='rounded-full'
+              />
+            ) : (
+              <Image
+                src='/samples/spot-pic.jpeg'
+                alt='admin_image'
+                height={70}
+                width={70}
+                className='rounded-full'
+              />
+            )} */}
             <div className='text-white p-3'>
               <p className='text-xs pb-2 md:text-sm'>ようこそ</p>
 
-              {props.group ? (
-                <p className='text-xs pb-2 md:text-sm'>{props.group}</p>
+              {adminData ? (
+                <p className='text-xs pb-2 md:text-sm'>{adminData?.group}様</p>
               ) : (
                 <p className='text-xs pb-2 md:text-sm'>自治体担当者様</p>
               )}

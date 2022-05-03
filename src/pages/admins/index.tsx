@@ -22,8 +22,11 @@ const schema = z.object({
   // avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
   email: z.string().email({ message: '有効なメールアドレスを入力してください！' }),
   password: z.string().min(2, { message: 'パスワード は2文字以上の値で入力してください！' }),
-  prefecture: z.string().min(2, { message: '都道府県 は2文字以上の値で入力してください！' }).regex(/^.*?(都|道|府|県)$/, { message: '正しい都道府県名を入力してください！' }),
-  group: z.string().min(2, { message: '自治体 名 は2文字以上の値で入力してください！' })
+  prefecture: z
+    .string()
+    .min(2, { message: '都道府県 は2文字以上の値で入力してください！' })
+    .regex(/^.*?(都|道|府|県)$/, { message: '正しい都道府県名を入力してください！' }),
+  group: z.string().min(2, { message: '自治体 名 は2文字以上の値で入力してください！' }),
 });
 
 const ProfileEdit: VFC = () => {
@@ -64,9 +67,8 @@ const ProfileEdit: VFC = () => {
       password: admins.password,
       prefecture: admins.prefecture,
       group: admins.group,
-    })
-  }, [admins])
-
+    });
+  }, [admins]);
 
   // useEffect(() => {
   //   getProfile(id || '');
@@ -183,20 +185,22 @@ const ProfileEdit: VFC = () => {
   //   return <div>エラーが発生しました。</div>;
   // }
 
-  console.log('avatarUrl', avatarUrl)
-  console.log('avatarDownloadUrl', avatarDownloadUrl)
+  console.log('avatarUrl', avatarUrl);
+  console.log('avatarDownloadUrl', avatarDownloadUrl);
 
   return (
     <>
       <div className='flex bg-gray-100 h-full'>
-        <Sidebar group={''} />
+        <Sidebar />
         <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg'>
           <h1 className='text-3xl mt-24'>プロフィール編集</h1>
           {/* <button onClick={() => setGroup(group + '1')}>test</button> */}
-          <form onSubmit={form.onSubmit((values) => {
-            console.log(values);
-            update({ "id": admins.id, ...form.values });
-          })}>
+          <form
+            onSubmit={form.onSubmit((values) => {
+              console.log(values);
+              update({ id: admins.id, ...form.values });
+            })}
+          >
             {/* <form> */}
             {/* TODO: うまく動作できなかったためコメントアウト */}
             {/* <div className='pt-5 mt-5'>
@@ -224,7 +228,7 @@ const ProfileEdit: VFC = () => {
               required
               id='prefecture'
               placeholder='山形県'
-              classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-full p-2 rounded-l-md' }}
               {...form.getInputProps('prefecture')}
             />
             <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
@@ -238,7 +242,7 @@ const ProfileEdit: VFC = () => {
               required
               id='group'
               placeholder='遊佐町役場'
-              classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-full p-2 rounded-l-md' }}
               {...form.getInputProps('group')}
             />
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
@@ -253,7 +257,7 @@ const ProfileEdit: VFC = () => {
               id='email'
               autoComplete='email'
               placeholder='reco-spo@gmail.com'
-              classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-full p-2 rounded-l-md' }}
               {...form.getInputProps('email')}
             />
             <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
@@ -266,10 +270,10 @@ const ProfileEdit: VFC = () => {
               // }}
               required
               id='password'
-              type="password"
+              type='password'
               autoComplete='current-password'
               placeholder='test1234'
-              classNames={{ 'input': 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-full p-2 rounded-l-md' }}
               {...form.getInputProps('password')}
             />
             {/* <div className='text-center pb-10'>
@@ -283,14 +287,17 @@ const ProfileEdit: VFC = () => {
               </Link>
             </div> */}
             <div className='text-center pb-10'>
-              <Button type='submit' classNames={{ 'root': 'px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg' }}>
+              <Button
+                type='submit'
+                classNames={{ root: 'px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg' }}
+              >
                 変更
               </Button>
             </div>
           </form>
           <Toaster />
         </div>
-      </div >
+      </div>
     </>
   );
 };
