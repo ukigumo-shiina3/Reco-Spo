@@ -359,7 +359,7 @@ const SpotsPost: NextPage = () => {
     return (
       <>
         <div className='flex bg-gray-100 h-full'>
-          <Sidebar group={''} />
+          <Sidebar />
           <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
             {/* スポット投稿 */}
             <h1 className='text-3xl mt-24'>スポット投稿</h1>
