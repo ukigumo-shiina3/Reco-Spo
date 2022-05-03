@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import type { VFC } from 'react';
 import { Spot } from 'src/types/spot';
-
 type SpotCardProps = {
   spot: Spot;
 };
@@ -21,12 +20,17 @@ export const SpotShow: VFC<SpotCardProps> = (props) => {
         <p className='mb-2 text-sm md:text-xl '>{props.spot.appeal}</p>
       </div>
 
-      <img
+      {/* <img
         src='/samples/map-pic.png'
         alt='地図の画像'
         className='m-auto w-full h-80 p-8 my-12 sm:px-20 sm:h-96 sm:object-fill xl:h-full'
-      />
-
+      /> */}
+      <iframe
+        className='   w-full h-96'
+        frameBorder='0'
+        src={`https://maps.google.co.jp/maps?q=${props.spot.address}&output=embed`}
+        title='map'
+      ></iframe>
       <div className='flex'>
         <div className='p-5 sm:px-20'>
           <Image
