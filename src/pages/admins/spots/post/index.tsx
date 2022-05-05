@@ -17,12 +17,10 @@ import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
 import { Upload, Camera, X, Icon as TablerIcon } from 'tabler-icons-react';
 import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
 import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
-import UploadButton from 'src/components/Button/UploadButton/UploadButton';
 import SpotImage from 'src/components/Spot/SpotImage';
-import { getSpotsDetail } from 'src/hooks/useSpotDetailSelect';
-import { useRouter } from 'next/router';
 import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
+import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
 
 const SpotsPost: NextPage = () => {
   const [spotPost, setSpotPost] = useState<Spot>({
@@ -66,53 +64,27 @@ const SpotsPost: NextPage = () => {
 
   const user = supabase.auth.user();
   const theme = useMantineTheme();
-  const router = useRouter();
 
-  // const fetchSpot = useCallback(async (id: string) => {
-  //   try {
-  //     const data = await getSpotsDetail(id);
-  //     setSpot(data);
-  //   } catch (error) {
-  //     setError(true);
-  //   }
-  //   setLoading(false);
-  // }, []);
+  useEffect(() => {
+    setSession(supabase.auth.session());
 
-  // useEffect(() => {
-  //   if (router.asPath !== router.route) {
-  //     setId(String(router.query.id));
-  //   }
-  //   console.log('スポットID①', router.query.id);
-  // }, [router]);
+    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
+      setSession(session);
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     fetchSpot(router.query.id as string);
-  //   }
-  //   console.log('スポットID②', router.query.id);
-  // }, [id, fetchSpot, router.query.id]);
+  useEffect(() => {
+    getSpotImgae();
+  }, []);
 
-  // useEffect(() => {
-  //   setSession(supabase.auth.session());
-
-  //   supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
-  //     setSession(session);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   getSpotImgae(id || '');
-  // }, [user]);
-
-  const uploadAvatar = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
+  const uploadSpots = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
     try {
       setUploading(true);
 
       if (!event.target.files || event.target.files.length == 0) {
-        throw '変更するプロフィール画像を選択してください';
+        throw '変更するスポット画像を選択してください';
       }
 
-      const user = supabase.auth.user();
       const file = event.target.files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
@@ -126,17 +98,14 @@ const SpotsPost: NextPage = () => {
         throw uploadError;
       }
 
+      console.log('ユーザー', user?.id);
+
       const { error: updateError } = await supabase.from('spots').insert({
+        admin_id: user?.id,
+        prefecture_id: Number(spotPost.prefecture_id),
+        system_id: Number(spotPost.system_id),
         image_url: filePath,
       });
-
-      console.log('ユーザーアイディ', user?.id);
-      // const { error: updateError } = await supabase
-      //   .from('spots')
-      //   .update({
-      //     image_url: filePath,
-      //   })
-      //   .eq('id', id || '');
 
       if (updateError) {
         throw updateError;
@@ -150,23 +119,18 @@ const SpotsPost: NextPage = () => {
     }
   }, []);
 
-  function setProfile(spotImage: Spot | null) {
+  function setImage(spotImage: any) {
     if (!spotImage) {
       return;
     }
     setSpotImage(spotImage.image_url);
   }
 
-  const getSpotImgae = useCallback(async (id: string) => {
+  const getSpotImgae = useCallback(async () => {
     try {
       setLoading(true);
 
-      const { data, error } = await supabase
-        .from<Spot>('spots')
-        .select('id, image_url')
-        .eq('id', id || '')
-        .single();
-
+      const { data, error } = await supabase.from<Spot>('spots').select('image_url');
       // console.log('ユーザーアイディ', user?.id);
       // console.log('スポットデータ', data);
 
@@ -174,9 +138,9 @@ const SpotsPost: NextPage = () => {
         throw error;
       }
 
-      setProfile(data);
+      setImage(data);
     } catch (error) {
-      console.log('error', error.message);
+      console.log('エラー', error.message);
     } finally {
       setLoading(false);
     }
@@ -327,10 +291,12 @@ const SpotsPost: NextPage = () => {
     toast.success('スポットを登録しました', {});
     // }
   }, [
+    user,
     spotPost.prefecture_id,
     spotPost.system_id,
     spotPost.name,
     spotPost.title,
+    spotPost.image_url,
     spotPost.appeal,
     spotPost.area,
     spotPost.link,
@@ -366,6 +332,7 @@ const SpotsPost: NextPage = () => {
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
+            {/* console.log(spotImage)) */}
             {spotImage ? (
               <SpotImage url={spotImage} size={60} />
             ) : (
@@ -377,7 +344,7 @@ const SpotsPost: NextPage = () => {
                     className='m-auto mt-4 w-8 h-8'
                   />
                 </div>
-                <div className='bg-white w-16 h-16'>
+                {/* <div className='bg-white w-16 h-16'>
                   <img
                     src='/icons/camera-icon.png'
                     alt='カメラアイコン'
@@ -404,10 +371,10 @@ const SpotsPost: NextPage = () => {
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
-                </div>
+                </div> */}
               </div>
             )}
-            <UploadButton onUpload={uploadAvatar} loading={uploading} />
+            <SpotUploadButton onUpload={uploadSpots} loading={uploading} />
             <div className='mt-5'>
               <Dropzone
                 onDrop={(files) => console.log('accepted files', files)}
@@ -418,7 +385,6 @@ const SpotsPost: NextPage = () => {
                 {(status) => dropzoneChildren(status, theme)}
               </Dropzone>
             </div>
-
             {/* スポット情報 */}
             <div>
               <h2 className='mt-10 '>スポット情報</h2>
@@ -485,7 +451,6 @@ const SpotsPost: NextPage = () => {
                 </div>
               </div>
             </div>
-
             {/* スポット説明 */}
             <h2 className='mt-10'>スポット説明</h2>
             <div className='mt-10 text-xs'>
@@ -505,7 +470,6 @@ const SpotsPost: NextPage = () => {
                 />
               </div>
             </div>
-
             {/* スポット詳細 */}
             <h2 className='mt-10'>スポット詳細</h2>
             <div className='mt-10 text-xs'>
@@ -570,7 +534,6 @@ const SpotsPost: NextPage = () => {
                 />
               </div>
             </div>
-
             {/* お問い合わせ */}
             <h2 className='mt-10'>お問い合わせ先</h2>
             <div className='mt-10 text-xs'>
@@ -635,7 +598,6 @@ const SpotsPost: NextPage = () => {
                 />
               </div>
             </div>
-
             <div className='text-center pb-10'>
               <button
                 onClick={handleSpotPost}

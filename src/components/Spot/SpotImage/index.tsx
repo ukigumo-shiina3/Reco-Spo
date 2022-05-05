@@ -16,16 +16,19 @@ export default function SpotImage({ url, size }: { url: string | null; size: num
       if (error) {
         throw error;
       }
+      if (data == null) {
+        return;
+      }
       const url = URL.createObjectURL(data);
       setSpotUrl(url);
     } catch (error) {
-      console.log('Error downloading image: ', error.message);
+      console.log('画像ダウンロード時のエラー: ', error.message);
     }
   }
 
   return spotUrl ? (
     // eslint-disable-next-line jsx-a11y/alt-text
-    <img src={spotUrl} className='rounded-full mb-2' style={{ height: size, width: size }} />
+    <img src={spotUrl} className='mb-2' style={{ height: size, width: size }} />
   ) : (
     <div className='spot no-image' style={{ height: size, width: size }} />
   );
