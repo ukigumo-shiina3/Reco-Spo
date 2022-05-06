@@ -21,6 +21,8 @@ import SpotImage from 'src/components/Spot/SpotImage';
 import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
+import { SystemsCreatedAt } from 'src/types/systemsCreatedAt';
+import { getSystemsCreatedAt } from 'src/hooks/useSystemssCreatedAtSelect';
 
 const SpotsPost: NextPage = () => {
   const [spotPost, setSpotPost] = useState<Spot>({
@@ -52,6 +54,7 @@ const SpotsPost: NextPage = () => {
   });
 
   const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
+  const [systemsCreatedAt, setSystemsCreatedAt] = useState<SystemsCreatedAt[]>([]);
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [spot, setSpot] = useState<Spot>();
@@ -224,6 +227,20 @@ const SpotsPost: NextPage = () => {
   useEffect(() => {
     fetchPrefecturesListName();
   }, [user, fetchPrefecturesListName]);
+
+  const fetchSystemsdCreatedAt = useCallback(async () => {
+    try {
+      const data = await getSystemsCreatedAt();
+      setSystemsCreatedAt(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, [setSystemsCreatedAt]);
+
+  useEffect(() => {
+    fetchSystemsdCreatedAt();
+  }, [user, fetchPrefecturesCreatedAt]);
 
   const fetchSystemsListName = useCallback(async () => {
     try {
@@ -437,7 +454,7 @@ const SpotsPost: NextPage = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='system'>制度名</label>
-                  {systems_name.length == 0 ? null : (
+                  {systemsCreatedAt.length == 0 ? null : (
                     <select
                       value={spotPost.system_id}
                       onChange={(e) => {
@@ -445,8 +462,8 @@ const SpotsPost: NextPage = () => {
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
-                      {systems_name.map((value, index) => (
-                        <option key={index} value={value['id']}>
+                      {systemsCreatedAt.map((value, index) => (
+                        <option key={index} value={value['systems_index']}>
                           {value['systems_name']}
                         </option>
                       ))}
