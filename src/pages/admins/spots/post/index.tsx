@@ -267,25 +267,29 @@ const SpotsPost: NextPage = () => {
     // ) {
     //   toast.error('入力されていない項目があります', {});
     // } else {
-    const { data, error } = await supabase.from('spots').insert({
-      admin_id: user?.id,
-      prefecture_id: Number(spotPost.prefecture_id),
-      system_id: Number(spotPost.system_id),
-      name: spotPost.name,
-      title: spotPost.title,
-      image_url: spotPost.image_url,
-      appeal: spotPost.appeal,
-      area: spotPost.area,
-      link: spotPost.link,
-      target_person: spotPost.target_person,
-      usage_fee: spotPost.usage_fee,
-      term: spotPost.term,
-      postal_code: spotPost.postal_code,
-      address: spotPost.address,
-      manager: spotPost.manager,
-      tel: spotPost.tel,
-      email: spotPost.email,
-    });
+    const { data, error } = await supabase
+      .from('spots')
+      .update({
+        admin_id: user?.id,
+        prefecture_id: Number(spotPost.prefecture_id),
+        system_id: Number(spotPost.system_id),
+        name: spotPost.name,
+        title: spotPost.title,
+        image_url: spotPost.image_url,
+        appeal: spotPost.appeal,
+        area: spotPost.area,
+        link: spotPost.link,
+        target_person: spotPost.target_person,
+        usage_fee: spotPost.usage_fee,
+        term: spotPost.term,
+        postal_code: spotPost.postal_code,
+        address: spotPost.address,
+        manager: spotPost.manager,
+        tel: spotPost.tel,
+        email: spotPost.email,
+      })
+      .eq('id', spotPost.id);
+
     console.log({ data, error });
 
     toast.success('スポットを登録しました', {});
