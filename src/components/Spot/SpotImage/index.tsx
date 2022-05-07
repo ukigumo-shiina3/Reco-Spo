@@ -28,7 +28,7 @@ export default function SpotImage({ url, size }: { url: string | null; size: num
 
   return spotUrl ? (
     // eslint-disable-next-line jsx-a11y/alt-text
-    <img src={spotUrl} className='mb-2' style={{ height: size, width: size }} />
+    <img src={spotUrl} className='mt-6' style={{ height: size, width: size }} />
   ) : (
     <div className='spot no-image' style={{ height: size, width: size }} />
   );
