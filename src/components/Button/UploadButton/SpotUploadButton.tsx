@@ -88,7 +88,7 @@ export default function SpotUploadButton(props: SpotUploadButtonProps) {
         }}
         type='file'
         id='single'
-        // accept='image/*'
+        multiple
         onChange={props.onUpload}
         onClick={(e) => e.stopPropagation()}
         disabled={props.loading}
