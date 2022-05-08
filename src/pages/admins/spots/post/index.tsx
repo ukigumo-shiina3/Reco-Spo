@@ -83,7 +83,6 @@ const SpotsPost: NextPage = () => {
       if (!event.target.files || event.target.files.length == 0) {
         throw '変更するスポット画像を選択してください';
       }
-
       const file = event.target.files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
@@ -209,74 +208,96 @@ const SpotsPost: NextPage = () => {
     });
   }, []);
 
-  const handleSpotPost = useCallback(async () => {
-    console.log(user?.id);
+  const handleSpotPost = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      console.log(user?.id);
 
-    // if (
-    //   name === '' ||
-    //   title === '' ||
-    //   appeal === '' ||
-    //   area === '' ||
-    //   link === '' ||
-    //   targetPerson === '' ||
-    //   usageFee === '' ||
-    //   term === '' ||
-    //   postal_code === '' ||
-    //   address === '' ||
-    //   manager === '' ||
-    //   tel === '' ||
-    //   email === ''
-    // ) {
-    //   toast.error('入力されていない項目があります', {});
-    // } else {
-    console.log('イメージ', spotPost.image_url);
+      setUploading(true);
 
-    const { data, error } = await supabase
-      .from('spots')
-      .update({
-        admin_id: user?.id,
-        prefecture_id: Number(spotPost.prefecture_id),
-        system_id: Number(spotPost.system_id),
-        name: spotPost.name,
-        title: spotPost.title,
-        image_url: spotPost.image_url,
-        appeal: spotPost.appeal,
-        area: spotPost.area,
-        link: spotPost.link,
-        target_person: spotPost.target_person,
-        usage_fee: spotPost.usage_fee,
-        term: spotPost.term,
-        postal_code: spotPost.postal_code,
-        address: spotPost.address,
-        manager: spotPost.manager,
-        tel: spotPost.tel,
-        email: spotPost.email,
-      })
-      .eq('id', spotPost.id);
+      if (!event.target.files || event.target.files.length == 0) {
+        throw '変更するスポット画像を選択してください';
+      }
+      const file = event.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
 
-    console.log({ data, error });
+      const { error: uploadError } = await supabase.storage
+        .from(DEFAULT_SPOTS_BUCKET)
+        .upload(filePath, file);
 
-    toast.success('スポットを登録しました', {});
-    // }
-  }, [
-    user,
-    spotPost.prefecture_id,
-    spotPost.system_id,
-    spotPost.name,
-    spotPost.title,
-    spotPost.image_url,
-    spotPost.appeal,
-    spotPost.area,
-    spotPost.link,
-    spotPost.target_person,
-    spotPost.usage_fee,
-    spotPost.term,
-    spotPost.postal_code,
-    spotPost.address,
-    spotPost.manager,
-    spotPost.tel,
-    spotPost.email,
-  ]);
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // if (
+      //   name === '' ||
+      //   title === '' ||
+      //   appeal === '' ||
+      //   area === '' ||
+      //   link === '' ||
+      //   targetPerson === '' ||
+      //   usageFee === '' ||
+      //   term === '' ||
+      //   postal_code === '' ||
+      //   address === '' ||
+      //   manager === '' ||
+      //   tel === '' ||
+      //   email === ''
+      // ) {
+      //   toast.error('入力されていない項目があります', {});
+      // } else {
+      console.log('イメージ', spotPost.image_url);
+
+      const { data, error } = await supabase
+        .from('spots')
+        .update({
+          admin_id: user?.id,
+          prefecture_id: Number(spotPost.prefecture_id),
+          system_id: Number(spotPost.system_id),
+          name: spotPost.name,
+          title: spotPost.title,
+          image_url: filePath,
+          // image_url: spotPost.image_url,
+          appeal: spotPost.appeal,
+          area: spotPost.area,
+          link: spotPost.link,
+          target_person: spotPost.target_person,
+          usage_fee: spotPost.usage_fee,
+          term: spotPost.term,
+          postal_code: spotPost.postal_code,
+          address: spotPost.address,
+          manager: spotPost.manager,
+          tel: spotPost.tel,
+          email: spotPost.email,
+        })
+        .eq('id', spotPost.id);
+
+      console.log({ data, error });
+
+      toast.success('スポットを登録しました', {});
+      // }
+    },
+    [
+      user,
+      spotPost.prefecture_id,
+      spotPost.system_id,
+      spotPost.name,
+      spotPost.title,
+      spotPost.image_url,
+      spotPost.appeal,
+      spotPost.area,
+      spotPost.link,
+      spotPost.target_person,
+      spotPost.usage_fee,
+      spotPost.term,
+      spotPost.postal_code,
+      spotPost.address,
+      spotPost.manager,
+      spotPost.tel,
+      spotPost.email,
+    ],
+  );
 
   if (loading) {
     return (
@@ -305,6 +326,13 @@ const SpotsPost: NextPage = () => {
               <SpotImage url={spotImage} size={60} />
             ) : (
               <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
+                <div className='bg-white w-16 h-16'>
+                  <img
+                    src='/icons/camera-icon.png'
+                    alt='カメラアイコン'
+                    className='m-auto mt-4 w-8 h-8'
+                  />
+                </div>
                 {/* <div className='bg-white w-16 h-16'>
                   <img
                     src='/icons/camera-icon.png'
@@ -332,14 +360,7 @@ const SpotsPost: NextPage = () => {
                     alt='カメラアイコン'
                     className='m-auto mt-4 w-8 h-8'
                   />
-                </div>
-                <div className='bg-white w-16 h-16'>
-                  <img
-                    src='/icons/camera-icon.png'
-                    alt='カメラアイコン'
-                    className='m-auto mt-4 w-8 h-8'
-                  />
-                </div> */}
+                </div>  */}
               </div>
             )}
             <SpotUploadButton onUpload={uploadSpots} loading={uploading} />
