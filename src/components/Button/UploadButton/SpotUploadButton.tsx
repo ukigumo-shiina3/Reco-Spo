@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-no-undef */
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, useMemo } from 'react';
 import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
-import { Upload, Camera, X, Icon as TablerIcon } from 'tabler-icons-react';
+import { Upload, Camera, X, Icon as TablerIcon, Loader } from 'tabler-icons-react';
 
 export type SpotUploadButtonProps = {
   onUpload: ChangeEventHandler<HTMLInputElement>;
@@ -28,7 +29,7 @@ const ImageUploadIcon = ({
   }
 
   if (status.rejected) {
-    return <X {...props} />;
+    return <Loader {...props} />;
   }
 
   return <Camera {...props} />;
@@ -61,28 +62,31 @@ const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
   </Group>
 );
 
-export default function SpotUploadButton(props: SpotUploadButtonProps) {
+export default function SpotUploadButton({ loading, onUpload }: SpotUploadButtonProps) {
   const theme = useMantineTheme();
-  return (
-    <div>
-      <label className='ml-3' htmlFor='single'>
-        {props.loading ? (
-          '.......'
-        ) : (
-          <div className='mt-5'>
-            <Dropzone
-              onDrop={(files) => console.log('accepted files', files)}
-              onReject={(files) => console.log('rejected files', files)}
-              accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}
-              multiple={true}
-            >
-              {(status) => dropzoneChildren(status, theme)}
-              {/* {console.log('status', status)} */}
-            </Dropzone>
-          </div>
-        )}
-      </label>
-      <input
+  useMemo(
+    () => (
+      <div>
+        <label className='ml-3' htmlFor='single'>
+          {loading ? (
+            '.......'
+          ) : (
+            <div className='mt-5'>
+              <Dropzone
+                onDrop={(files) => console.log('accepted files', files)}
+                onReject={(files) => console.log('rejected files', files)}
+                accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}
+                multiple={true}
+              >
+                {(status) => dropzoneChildren(status, theme)}
+                {/* {console.log('status', status)} */}
+                onChange={onUpload}
+                disabled={loading}
+              </Dropzone>
+            </div>
+          )}
+        </label>
+        {/* <input
         style={{
           visibility: 'hidden',
         }}
@@ -92,7 +96,9 @@ export default function SpotUploadButton(props: SpotUploadButtonProps) {
         onChange={props.onUpload}
         onClick={(e) => e.stopPropagation()}
         disabled={props.loading}
-      />
-    </div>
+      /> */}
+      </div>
+    ),
+    [loading, onUpload],
   );
 }
