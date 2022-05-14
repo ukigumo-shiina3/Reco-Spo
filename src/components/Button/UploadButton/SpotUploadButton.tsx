@@ -3,10 +3,10 @@
 import { ChangeEventHandler, useMemo } from 'react';
 import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
-import { Upload, Camera, X, Icon as TablerIcon, Loader } from 'tabler-icons-react';
+import { Upload, Camera, Icon as TablerIcon, Loader } from 'tabler-icons-react';
 
 export type SpotUploadButtonProps = {
-  onUpload: ChangeEventHandler<HTMLInputElement>;
+  onUpload: (files: File[]) => void;
   loading: boolean;
 };
 
@@ -62,43 +62,31 @@ const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
   </Group>
 );
 
-export default function SpotUploadButton({ loading, onUpload }: SpotUploadButtonProps) {
+// export default function SpotUploadButton(props: SpotUploadButtonProps) {
+export default function SpotUploadButton(props: any) {
   const theme = useMantineTheme();
-  useMemo(
+  return useMemo(
     () => (
       <div>
         <label className='ml-3' htmlFor='single'>
-          {loading ? (
+          {props.loading ? (
             '.......'
           ) : (
             <div className='mt-5'>
               <Dropzone
-                onDrop={(files) => console.log('accepted files', files)}
+                onDrop={props.onUpload}
                 onReject={(files) => console.log('rejected files', files)}
                 accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}
                 multiple={true}
+                disabled={props.loading}
               >
                 {(status) => dropzoneChildren(status, theme)}
-                {/* {console.log('status', status)} */}
-                onChange={onUpload}
-                disabled={loading}
               </Dropzone>
             </div>
           )}
         </label>
-        {/* <input
-        style={{
-          visibility: 'hidden',
-        }}
-        type='file'
-        id='single'
-        multiple
-        onChange={props.onUpload}
-        onClick={(e) => e.stopPropagation()}
-        disabled={props.loading}
-      /> */}
       </div>
     ),
-    [loading, onUpload],
+    [props.loading, theme],
   );
 }

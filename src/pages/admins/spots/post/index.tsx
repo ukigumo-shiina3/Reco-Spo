@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
@@ -14,7 +14,6 @@ import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
 import { Spinner } from '@chakra-ui/react';
 import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
-import SpotImage from 'src/components/Spot/SpotImage';
 import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
@@ -61,6 +60,7 @@ const SpotsPost: NextPage = () => {
   const [uploading, setUploading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
 
   const user = supabase.auth.user();
 
@@ -76,14 +76,16 @@ const SpotsPost: NextPage = () => {
     getSpotImgae();
   }, []);
 
-  const uploadSpots = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
+  const uploadSpots = useCallback(async (files) => {
+    console.log('イベント', files);
+
     try {
       setUploading(true);
 
-      if (!event.target.files || event.target.files.length == 0) {
+      if (!files || files.length == 0) {
         throw '変更するスポット画像を選択してください';
       }
-      const file = event.target.files[0];
+      const file = files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
@@ -208,96 +210,82 @@ const SpotsPost: NextPage = () => {
     });
   }, []);
 
-  const handleSpotPost = useCallback(
-    async (event: ChangeEvent<HTMLInputElement>) => {
-      console.log(user?.id);
-
-      setUploading(true);
-
-      if (!event.target.files || event.target.files.length == 0) {
-        throw '変更するスポット画像を選択してください';
-      }
-      const file = event.target.files[0];
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from(DEFAULT_SPOTS_BUCKET)
-        .upload(filePath, file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      // if (
-      //   name === '' ||
-      //   title === '' ||
-      //   appeal === '' ||
-      //   area === '' ||
-      //   link === '' ||
-      //   targetPerson === '' ||
-      //   usageFee === '' ||
-      //   term === '' ||
-      //   postal_code === '' ||
-      //   address === '' ||
-      //   manager === '' ||
-      //   tel === '' ||
-      //   email === ''
-      // ) {
-      //   toast.error('入力されていない項目があります', {});
-      // } else {
-      console.log('イメージ', spotPost.image_url);
-
-      const { data, error } = await supabase
-        .from('spots')
-        .update({
-          admin_id: user?.id,
-          prefecture_id: Number(spotPost.prefecture_id),
-          system_id: Number(spotPost.system_id),
-          name: spotPost.name,
-          title: spotPost.title,
-          image_url: filePath,
-          // image_url: spotPost.image_url,
-          appeal: spotPost.appeal,
-          area: spotPost.area,
-          link: spotPost.link,
-          target_person: spotPost.target_person,
-          usage_fee: spotPost.usage_fee,
-          term: spotPost.term,
-          postal_code: spotPost.postal_code,
-          address: spotPost.address,
-          manager: spotPost.manager,
-          tel: spotPost.tel,
-          email: spotPost.email,
-        })
-        .eq('id', spotPost.id);
-
-      console.log({ data, error });
-
-      toast.success('スポットを登録しました', {});
-      // }
+  const handleDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFiles(acceptedFiles);
     },
-    [
-      user,
-      spotPost.prefecture_id,
-      spotPost.system_id,
-      spotPost.name,
-      spotPost.title,
-      spotPost.image_url,
-      spotPost.appeal,
-      spotPost.area,
-      spotPost.link,
-      spotPost.target_person,
-      spotPost.usage_fee,
-      spotPost.term,
-      spotPost.postal_code,
-      spotPost.address,
-      spotPost.manager,
-      spotPost.tel,
-      spotPost.email,
-    ],
+    [setFiles],
   );
+
+  const handleSpotPost = useCallback(async () => {
+    // console.log(user?.id);
+
+    setUploading(true);
+
+    if (!files || files.length == 0) {
+      throw '変更するスポット画像を選択してください';
+    }
+    const file = files[0];
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from(DEFAULT_SPOTS_BUCKET)
+      .upload(filePath, file);
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    // console.log('イメージ', spotPost.image_url);
+
+    const { data, error } = await supabase
+      .from('spots')
+      .update({
+        admin_id: user?.id,
+        prefecture_id: Number(spotPost.prefecture_id),
+        system_id: Number(spotPost.system_id),
+        name: spotPost.name,
+        title: spotPost.title,
+        image_url: filePath,
+        appeal: spotPost.appeal,
+        area: spotPost.area,
+        link: spotPost.link,
+        target_person: spotPost.target_person,
+        usage_fee: spotPost.usage_fee,
+        term: spotPost.term,
+        postal_code: spotPost.postal_code,
+        address: spotPost.address,
+        manager: spotPost.manager,
+        tel: spotPost.tel,
+        email: spotPost.email,
+      })
+      .eq('id', spotPost.id);
+
+    console.log({ data, error });
+
+    toast.success('スポットを登録しました', {});
+    // }
+  }, [
+    user,
+    spotPost.prefecture_id,
+    spotPost.system_id,
+    spotPost.name,
+    spotPost.title,
+    spotPost.image_url,
+    spotPost.appeal,
+    spotPost.area,
+    spotPost.link,
+    spotPost.target_person,
+    spotPost.usage_fee,
+    spotPost.term,
+    spotPost.postal_code,
+    spotPost.address,
+    spotPost.manager,
+    spotPost.tel,
+    spotPost.email,
+  ]);
 
   if (loading) {
     return (
@@ -322,48 +310,33 @@ const SpotsPost: NextPage = () => {
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
             {/* console.log(spotImage)) */}
-            {spotImage ? (
-              <SpotImage url={spotImage} size={60} />
-            ) : (
-              <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
-                <div className='bg-white w-16 h-16'>
-                  <img
-                    src='/icons/camera-icon.png'
-                    alt='カメラアイコン'
-                    className='m-auto mt-4 w-8 h-8'
-                  />
+            {/* {console.log('spotImage', spotImage)}
+            {console.log('files', files)} */}
+            <div className='flex flex-wrap items-end mt-6'>
+              {files && files.length > 0 ? (
+                files.map((file, index) => (
+                  // <SpotImage key={index} url={URL.createObjectURL(file)} size={60} />
+                  <div key={index} className='py-2 px-1'>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      style={{ height: index === 0 ? 90 : 60, width: index === 0 ? 90 : 60 }}
+                      alt='スポットイメージ画像'
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
+                  <div className='bg-white w-16 h-16'>
+                    <img
+                      src='/icons/camera-icon.png'
+                      alt='カメラアイコン'
+                      className='m-auto mt-4 w-8 h-8'
+                    />
+                  </div>
                 </div>
-                {/* <div className='bg-white w-16 h-16'>
-                  <img
-                    src='/icons/camera-icon.png'
-                    alt='カメラアイコン'
-                    className='m-auto mt-4 w-8 h-8'
-                  />
-                </div>
-                <div className='bg-white w-16 h-16'>
-                  <img
-                    src='/icons/camera-icon.png'
-                    alt='カメラアイコン'
-                    className='m-auto mt-4 w-8 h-8'
-                  />
-                </div>
-                <div className='bg-white w-16 h-16'>
-                  <img
-                    src='/icons/camera-icon.png'
-                    alt='カメラアイコン'
-                    className='m-auto mt-4 w-8 h-8'
-                  />
-                </div>
-                <div className='bg-white w-16 h-16'>
-                  <img
-                    src='/icons/camera-icon.png'
-                    alt='カメラアイコン'
-                    className='m-auto mt-4 w-8 h-8'
-                  />
-                </div>  */}
-              </div>
-            )}
-            <SpotUploadButton onUpload={uploadSpots} loading={uploading} />
+              )}
+            </div>
+            <SpotUploadButton onUpload={handleDrop} loading={uploading} />
             {/* スポット情報 */}
             <div>
               <h2 className='mt-10 '>スポット情報</h2>
