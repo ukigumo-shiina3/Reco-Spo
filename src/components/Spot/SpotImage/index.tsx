@@ -19,6 +19,7 @@ export default function SpotImage({ url, size }: { url: string | null; size: num
       if (data == null) {
         return;
       }
+      // クライアント(ブラウザ) のメモリに保存された blobにアクセス可能な一意のURLを生成
       const url = URL.createObjectURL(data);
       setSpotUrl(url);
     } catch (error) {
