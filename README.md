@@ -12,7 +12,7 @@ https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
 
 ### ER 図
 
-https://drive.google.com/file/d/1DDpBtK-arCb0H1jo052Qhf90IAxT7OeD/view?usp=sharing
+https://drive.google.com/file/d/1JFDpN_QdAhH_9otuNCDOeAQyN6PZXCqv/view?usp=sharing
 
 ### テーブル定義書
 
