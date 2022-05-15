@@ -76,49 +76,6 @@ const SpotsPost: NextPage = () => {
     getSpotImgae();
   }, []);
 
-  const uploadSpots = useCallback(async (files) => {
-    console.log('イベント', files);
-
-    try {
-      setUploading(true);
-
-      if (!files || files.length == 0) {
-        throw '変更するスポット画像を選択してください';
-      }
-      const file = files[0];
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from(DEFAULT_SPOTS_BUCKET)
-        .upload(filePath, file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      // console.log('ユーザー', user?.id);
-
-      const { error: updateError } = await supabase.from('spots').insert({
-        admin_id: user?.id,
-        prefecture_id: Number(spotPost.prefecture_id),
-        system_id: Number(spotPost.system_id),
-        image_url: filePath,
-      });
-
-      if (updateError) {
-        throw updateError;
-      }
-
-      setSpotImage(filePath);
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setUploading(false);
-    }
-  }, []);
-
   function setImage(spotImage: any) {
     if (!spotImage) {
       return;
@@ -218,7 +175,7 @@ const SpotsPost: NextPage = () => {
   );
 
   const handleSpotPost = useCallback(async () => {
-    // console.log(user?.id);
+    // console.log('ファイル', files);
 
     setUploading(true);
 
@@ -239,36 +196,34 @@ const SpotsPost: NextPage = () => {
     }
 
     // console.log('イメージ', spotPost.image_url);
+    // console.log('ユーザーID', user?.id);
 
-    const { data, error } = await supabase
-      .from('spots')
-      .update({
-        admin_id: user?.id,
-        prefecture_id: Number(spotPost.prefecture_id),
-        system_id: Number(spotPost.system_id),
-        name: spotPost.name,
-        title: spotPost.title,
-        image_url: filePath,
-        appeal: spotPost.appeal,
-        area: spotPost.area,
-        link: spotPost.link,
-        target_person: spotPost.target_person,
-        usage_fee: spotPost.usage_fee,
-        term: spotPost.term,
-        postal_code: spotPost.postal_code,
-        address: spotPost.address,
-        manager: spotPost.manager,
-        tel: spotPost.tel,
-        email: spotPost.email,
-      })
-      .eq('id', spotPost.id);
+    const { data, error } = await supabase.from('spots').insert({
+      admin_id: user?.id,
+      prefecture_id: Number(spotPost.prefecture_id),
+      system_id: Number(spotPost.system_id),
+      name: spotPost.name,
+      title: spotPost.title,
+      image_url: filePath,
+      appeal: spotPost.appeal,
+      area: spotPost.area,
+      link: spotPost.link,
+      target_person: spotPost.target_person,
+      usage_fee: spotPost.usage_fee,
+      term: spotPost.term,
+      postal_code: spotPost.postal_code,
+      address: spotPost.address,
+      manager: spotPost.manager,
+      tel: spotPost.tel,
+      email: spotPost.email,
+    });
 
     console.log({ data, error });
 
     toast.success('スポットを登録しました', {});
-    // }
   }, [
-    user,
+    spotPost.id,
+    user?.id,
     spotPost.prefecture_id,
     spotPost.system_id,
     spotPost.name,
@@ -310,8 +265,8 @@ const SpotsPost: NextPage = () => {
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
             {/* console.log(spotImage)) */}
-            {/* {console.log('spotImage', spotImage)}
-            {console.log('files', files)} */}
+            {/* {/* {console.log('spotImage', spotImage)} */}
+            {/* {console.log('ファイル', files)} */}
             <div className='flex flex-wrap items-end mt-6'>
               {files && files.length > 0 ? (
                 files.map((file, index) => (
@@ -375,6 +330,7 @@ const SpotsPost: NextPage = () => {
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
+                      {/* {console.log(spotPost.prefecture_id)} */}
                       {prefecturesCreatedAt.map((value, index) => (
                         <option key={index} value={value['prefectures_index']}>
                           {value['prefectures_name']}
@@ -393,6 +349,7 @@ const SpotsPost: NextPage = () => {
                       }}
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
+                      {/* {console.log(spotPost.system_id)} */}
                       {systemsCreatedAt.map((value, index) => (
                         <option key={index} value={value['systems_index']}>
                           {value['systems_name']}
