@@ -1,11 +1,11 @@
 export type SpotEdit = {
-  id: string;
+  id?: string;
   prefecture_id?: string;
-  prefectures: {
+  prefectures?: {
     prefectures_name: string[];
   };
   system_id?: string;
-  systems: {
+  systems?: {
     systems_name: string[];
   };
   name?: string;
