@@ -1,6 +1,6 @@
 export type Spot = {
+  id?: string;
   admin_id?: string;
-  id: string;
   prefecture_id: string;
   prefectures: {
     prefectures_name: string[];
