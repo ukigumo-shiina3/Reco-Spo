@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-no-undef */
-import { ChangeEventHandler, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
 import { Upload, Camera, Icon as TablerIcon, Loader } from 'tabler-icons-react';
@@ -62,8 +60,7 @@ const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
   </Group>
 );
 
-// export default function SpotUploadButton(props: SpotUploadButtonProps) {
-export default function SpotUploadButton(props: any) {
+export default function SpotUploadButton(props: SpotUploadButtonProps) {
   const theme = useMantineTheme();
   return useMemo(
     () => (
@@ -87,6 +84,6 @@ export default function SpotUploadButton(props: any) {
         </label>
       </div>
     ),
-    [props.loading, theme],
+    [props.onUpload, props.loading, theme],
   );
 }
