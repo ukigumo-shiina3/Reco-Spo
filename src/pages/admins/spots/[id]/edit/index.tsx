@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { NextPage } from 'next';
+import { Session } from '@supabase/supabase-js';
 import { Spot } from 'src/types/spot';
 import { SpotEdit } from 'src/types/spotEdit';
 import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
@@ -17,6 +19,10 @@ import { useSpot, useUser } from 'src/hooks/useSpotEditSelect';
 import { Select } from '@mantine/core';
 import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
+import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
+import { getSystemsCreatedAt } from 'src/hooks/useSystemssCreatedAtSelect';
+import { SystemsCreatedAt } from 'src/types/systemsCreatedAt';
 
 const user = supabase.auth.user();
 
@@ -36,6 +42,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     },
     name: '',
     title: '',
+    image_url: '',
     appeal: '',
     area: '',
     link: '',
@@ -50,10 +57,54 @@ const SpotsEdit: NextPage<Spot> = () => {
   });
 
   const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
+  const [systemsCreatedAt, setSystemsCreatedAt] = useState<SystemsCreatedAt[]>([]);
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
+  const [spotImage, setSpotImage] = useState<string | null>('');
+  const [session, setSession] = useState<Session | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [uploading, setUploading] = useState<boolean>(false);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
+      setSession(session);
+    });
+  }, []);
+
+  useEffect(() => {
+    getSpotImgae();
+  }, []);
+
+  function setImage(spotImage: any) {
+    if (!spotImage) {
+      return;
+    }
+    setSpotImage(spotImage.image_url);
+  }
+
+  const getSpotImgae = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const { data, error } = await supabase.from<Spot>('spots').select('image_url');
+      // console.log('ユーザーアイディ', user?.id);
+      // console.log('スポットデータ', data);
+
+      if (error) {
+        throw error;
+      }
+
+      setImage(data);
+    } catch (error) {
+      console.log('エラー', error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const fetchPrefecturesCreatedAt = useCallback(async () => {
     try {
@@ -65,6 +116,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     }
     setLoading(false);
   }, [setPrefecturesCreatedAt]);
+
   useEffect(() => {
     fetchPrefecturesCreatedAt();
   }, [user, fetchPrefecturesCreatedAt]);
@@ -79,6 +131,20 @@ const SpotsEdit: NextPage<Spot> = () => {
     setLoading(false);
   }, [setPrefecturesName]);
 
+  const fetchSystemsdCreatedAt = useCallback(async () => {
+    try {
+      const data = await getSystemsCreatedAt();
+      setSystemsCreatedAt(data);
+    } catch (error) {
+      setError(true);
+    }
+    setLoading(false);
+  }, [setSystemsCreatedAt]);
+
+  useEffect(() => {
+    fetchSystemsdCreatedAt();
+  }, [user, fetchPrefecturesCreatedAt]);
+
   const fetchSystemsListName = useCallback(async () => {
     try {
       const data = await getSystems();
@@ -88,6 +154,10 @@ const SpotsEdit: NextPage<Spot> = () => {
     }
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    fetchSystemsListName();
+  }, [user, fetchSystemsListName]);
 
   // マンタインのセレクトボックスを使うために必要な値をspotから抽出
   const getSpotIndex = spot?.map((spot, i) => {
@@ -99,7 +169,32 @@ const SpotsEdit: NextPage<Spot> = () => {
   // spotのINDEXを取得する関数
   const [spotIndex, setSpotIndex] = useState<string | null>('0');
 
+  const handleDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFiles(acceptedFiles);
+    },
+    [setFiles],
+  );
+
   const handleSpotEdit = useCallback(async () => {
+    setUploading(true);
+
+    if (!files || files.length == 0) {
+      throw '変更するスポット画像を選択してください';
+    }
+    const file = files[0];
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from(DEFAULT_SPOTS_BUCKET)
+      .upload(filePath, file);
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
     const { data, error } = await supabase
       .from('spots')
       .update({
@@ -108,6 +203,7 @@ const SpotsEdit: NextPage<Spot> = () => {
         system_id: spotEdit.system_id,
         name: spotEdit.name,
         title: spotEdit.title,
+        image_url: filePath,
         appeal: spotEdit.appeal,
         area: spotEdit.area,
         link: spotEdit.link,
@@ -135,6 +231,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     spotEdit.system_id,
     spotEdit.name,
     spotEdit.title,
+    spotEdit.image_url,
     spotEdit.appeal,
     spotEdit.area,
     spotEdit.link,
@@ -195,50 +292,39 @@ const SpotsEdit: NextPage<Spot> = () => {
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
-            <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
-              <div className='bg-white w-16 h-16'>
-                <img
-                  src='/icons/camera-icon.png'
-                  alt='カメラアイコン'
-                  className='m-auto mt-4 w-8 h-8'
-                />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img
-                  src='/icons/camera-icon.png'
-                  alt='カメラアイコン'
-                  className='m-auto mt-4 w-8 h-8'
-                />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img
-                  src='/icons/camera-icon.png'
-                  alt='カメラアイコン'
-                  className='m-auto mt-4 w-8 h-8'
-                />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img
-                  src='/icons/camera-icon.png'
-                  alt='カメラアイコン'
-                  className='m-auto mt-4 w-8 h-8'
-                />
-              </div>
-              <div className='bg-white w-16 h-16'>
-                <img
-                  src='/icons/camera-icon.png'
-                  alt='カメラアイコン'
-                  className='m-auto mt-4 w-8 h-8'
-                />
-              </div>
+            <div className='flex flex-wrap items-end mt-6'>
+              {files && files.length > 0 ? (
+                files.map((file, index) => (
+                  // <SpotImage key={index} url={URL.createObjectURL(file)} size={60} />
+                  <div key={index} className='py-2 px-1'>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      style={{ height: index === 0 ? 90 : 60, width: index === 0 ? 90 : 60 }}
+                      alt='スポットイメージ画像'
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
+                  <div className='bg-white w-16 h-16'>
+                    {/* {spot ? (
+                      <img src={spotEdit.image_url} />
+                    ) : (
+                      <img src={spotEdit.image_url(files)} />
+                      <img
+                      src={URL.createObjectURL(file)} /> */}
+                    <img
+                      src='/icons/camera-icon.png'
+                      alt='カメラアイコン'
+                      className='m-auto mt-4 w-8 h-8'
+                    />
+                    {/* )} */}
+                  </div>
+                </div>
+              )}
             </div>
-            <div className='mt-5'>
-              <img
-                src='/samples/image-upload.png'
-                alt='画像アップロードアイコン'
-                className='w-hull h-18 sm:h-24'
-              />
-            </div>
+
+            <SpotUploadButton onUpload={handleDrop} loading={uploading} />
             {/* スポット情報 */}
             <div>
               <h2 className='mt-10 '>スポット情報</h2>
@@ -279,6 +365,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                         }}
                         className='w-full p-2 rounded-md'
                       >
+                        <option value='prefectures_select'>都道府県を選択</option>
                         {prefecturesCreatedAt.map((value, index) => (
                           <option
                             key={index}
@@ -294,7 +381,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='system'>制度名</label>
-                  {systems_name.length == 0 ? null : (
+                  {systemsCreatedAt.length == 0 ? null : (
                     <select
                       value={spotEdit.system_id}
                       onChange={(e) => {
@@ -302,8 +389,13 @@ const SpotsEdit: NextPage<Spot> = () => {
                       }}
                       className='w-full p-2 rounded-md'
                     >
-                      {systems_name.map((value, index) => (
-                        <option key={index} value={value['id']}>
+                      <option value='systems_select'>制度を選択</option>
+                      {systemsCreatedAt.map((value, index) => (
+                        <option
+                          key={index}
+                          value={value['systems_index']}
+                          selected={value['systems_index'] === spotEdit.system_id}
+                        >
                           {value['systems_name']}
                         </option>
                       ))}

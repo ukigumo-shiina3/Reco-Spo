@@ -322,6 +322,7 @@ const SpotsPost: NextPage = () => {
                 </div>
                 <div className='mb-5'>
                   <label htmlFor='prefectures_name'>都道府県名</label>
+                  {/* {console.log(prefecturesCreatedAt)} */}
                   {prefecturesCreatedAt.length == 0 ? null : (
                     <select
                       value={spotPost.prefecture_id}
@@ -331,6 +332,7 @@ const SpotsPost: NextPage = () => {
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
                       {/* {console.log(spotPost.prefecture_id)} */}
+                      <option value='prefectures_select'>都道府県を選択</option>
                       {prefecturesCreatedAt.map((value, index) => (
                         <option key={index} value={value['prefectures_index']}>
                           {value['prefectures_name']}
@@ -350,6 +352,7 @@ const SpotsPost: NextPage = () => {
                       className='w-full p-2 rounded-md placeholder-gray-500'
                     >
                       {/* {console.log(spotPost.system_id)} */}
+                      <option value='systems_select'>制度を選択</option>
                       {systemsCreatedAt.map((value, index) => (
                         <option key={index} value={value['systems_index']}>
                           {value['systems_name']}
