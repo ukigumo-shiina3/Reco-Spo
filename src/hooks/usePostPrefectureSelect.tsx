@@ -4,7 +4,7 @@ import { Prefectures } from 'src/types/prefectures';
 export const getPrefectures = async () => {
   const { data, error } = await supabase
     .from<Prefectures>('prefectures')
-    .select('id, prefectures_name');
+    .select('prefectures_index, prefectures_name');
   if (!data) {
     return [];
   }
