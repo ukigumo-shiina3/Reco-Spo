@@ -8,6 +8,7 @@ import { SearchButton } from '../Button/SearchButton';
 import { supabase } from 'src/libs/supabase';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
+import { useSelectSpots } from 'src/hooks/useSpotIdSelect';
 
 const user = supabase.auth.user();
 
@@ -17,14 +18,16 @@ export const SearchModal: VFC = () => {
   const [systems_name, setSystemsName] = useState<Systems[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
-
+  const { getSpots, selectSpots } = useSelectSpots();
   const openModal = useCallback(() => {
     setIsOpen(true);
   }, []);
+  getSpots();
+  console.log(selectSpots);
 
   const closeModal = useCallback(() => {
-    setPrefecturesName([]);
-    setSystemsName([]);
+    // setPrefecturesName([]);
+    // setSystemsName([]);
     setIsOpen(false);
   }, []);
 
@@ -50,6 +53,11 @@ export const SearchModal: VFC = () => {
       setError(true);
     }
   }, []);
+
+  // 絞り込みボタン
+  const doSearch = () => {
+    closeModal();
+  };
 
   useEffect(() => {
     fetchSystemsListName();
@@ -133,7 +141,10 @@ export const SearchModal: VFC = () => {
                     ))}
                   </div>
                   <div className='flex justify-center mt-12'>
-                    <button className='text-md text-center bg-blue-400 rounded-lg text-white py-4 px-8'>
+                    <button
+                      className='text-md text-center bg-blue-400 rounded-lg text-white py-4 px-8'
+                      onClick={doSearch}
+                    >
                       絞り込む
                     </button>
                   </div>
