@@ -38,7 +38,7 @@ export const SearchModal: VFC = () => {
   //  県名のINDEXを格納するためのstateを取得する
   const [prefecturesIndex, setPrefecturesIndex] = useState<Prefectures['prefectures_index'][]>([]);
   //  制度名のINDEXを格納するためのstateを取得する
-  const [systemIndexs, setSystemIndexs] = useState<Systems['systems_index'][]>([]);
+  const [systemIndex, setSystemIndex] = useState<Systems['systems_index'][]>([]);
   // モーダルを表示する
   const openModal = useCallback(() => {
     setIsOpen(true);
@@ -51,10 +51,11 @@ export const SearchModal: VFC = () => {
   // 検索を実行する
   const handleSearch = useCallback(() => {
     console.log('pushpush');
-    isTrueSetWords(prefecturesIndex, systemIndexs);
+    isTrueSetWords(prefecturesIndex, systemIndex);
     setWordBlank();
     closeModal();
-  }, []);
+  }, [prefecturesIndex, systemIndex]);
+
   // 　モーダルに表示する県名を取得
   const fetchPrefecturesListName = useCallback(async () => {
     try {
@@ -92,19 +93,19 @@ export const SearchModal: VFC = () => {
   // prefecturesとsystemsの中身を空にする
   const setWordBlank = () => {
     setPrefecturesIndex([]);
-    setSystemIndexs([]);
+    setSystemIndex([]);
   };
   // 選択した制度名のINDEXを取得する
   const getSystemIndex = (e: SetStateAction<string[]>) => {
-    setSystemIndexs(e);
+    setSystemIndex(e);
   };
   // 選択した県名のINDEXを取得する
   const getPrefectureIndex = (e: SetStateAction<string[]>) => {
     setPrefecturesIndex(e);
   };
-  console.log('systems', systemIndexs);
-  console.log('systems', systemIndexs.length);
 
+  console.log('systems', systemIndex);
+  console.log('systems', systemIndex.length);
   console.log(`prefectures`, prefecturesIndex);
   console.log(`prefectures`, prefecturesIndex.length);
   // 県名と制度名が１つでもあればrecoilに値をセットする
@@ -198,12 +199,12 @@ export const SearchModal: VFC = () => {
                     ))}
                   </Chips>
                 </div>
-                {console.log('個数', systemIndexs.length + prefecturesIndex.length)}
+                {console.log('個数', systemIndex.length + prefecturesIndex.length)}
                 <div className='flex justify-center mt-12'>
                   <button
                     className='text-md text-center bg-blue-400 rounded-lg text-white py-4 px-8'
                     onClick={handleSearch}
-                    disabled={systemIndexs.length === 0 && prefecturesIndex.length === 0}
+                    disabled={systemIndex.length === 0 && prefecturesIndex.length === 0}
                   >
                     絞り込む
                   </button>
