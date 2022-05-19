@@ -199,9 +199,9 @@ const ProfileEdit: VFC = () => {
             })}
           >
             {/* <form> */}
-            <div className='pt-5 mt-5'>
+            <div className='flex justify-start pt-5 mt-5'>
               <div className='flex flex-col justify-center items-center text-sm mt-2'>
-                <Avatar url={avatarDownloadUrl} dummyImageUrl="/icons/profile-icon.png" size={60} />
+                <Avatar url={avatarDownloadUrl} dummyImageUrl="/icons/profile-icon.png" size={80} />
                 <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
             </div>
