@@ -23,12 +23,6 @@ export const WrapSpotCard = () => {
     setSpots(data);
   }, [searchWords]);
 
-  // 全spotdata取得/リセットボタン
-  const resetSpots = useCallback(async () => {
-    const data = (await getSpots()) as SetStateAction<Spot[]>;
-    setSpots(data);
-  }, []);
-
   // 初期表示時にfetchSpotを実行
   useEffect(() => {
     fetchSpot();

@@ -7,7 +7,7 @@ import { getSystems } from 'src/hooks/useSystemSelect';
 import { SearchButton } from '../Button/SearchButton';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
-import { Chip, Chips, createStyles } from '@mantine/core';
+import { Button, Chip, Chips, createStyles } from '@mantine/core';
 import { useSetRecoilState } from 'recoil';
 import { searchValue } from 'src/recoil/atom';
 
@@ -55,7 +55,14 @@ export const SearchModal: VFC = () => {
     setWordBlank();
     closeModal();
   }, [prefecturesIndex, systemIndex]);
-
+  // 全spotdata取得/元に戻すボタン
+  const resetSpots = useCallback(async () => {
+    setSearchWords({
+      names: [],
+      system_ids: [],
+      is_data: false,
+    });
+  }, []);
   // 　モーダルに表示する県名を取得
   const fetchPrefecturesListName = useCallback(async () => {
     try {
@@ -124,10 +131,25 @@ export const SearchModal: VFC = () => {
 
   return (
     <>
-      <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
-        <SearchButton />
+      <div className='flex justify-end'>
+        <div className='p-2 mt-8 cursor-pointer font-bold'>
+          <div
+            className='inline-block px-5 py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            onClick={resetSpots}
+          >
+            元に戻す
+          </div>
+          <div
+            className='ml-4 inline-block px-5 py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            onClick={openModal}
+          >
+            絞り込む
+          </div>
+        </div>
+        {/* <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
+          <SearchButton />
+        </div> */}
       </div>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={closeModal}>
           <div className='min-h-screen px-4 text-center border-2'>
