@@ -2,16 +2,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, SetStateAction, useCallback, useEffect, useMemo, useState, VFC } from 'react';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
-import { SearchButton } from '../Button/SearchButton';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
-import { Button, Chip, Chips, createStyles } from '@mantine/core';
+import { Chip, Chips, createStyles } from '@mantine/core';
 import { useSetRecoilState } from 'recoil';
 import { searchValue } from 'src/recoil/atom';
 import { GrUpdate } from 'react-icons/gr';
 import { GoSearch } from 'react-icons/go';
+import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 
 export const SearchModal: VFC = () => {
   // マンタインのChipsに必要な関数追加分ここから
@@ -68,7 +67,7 @@ export const SearchModal: VFC = () => {
   // 　モーダルに表示する県名を取得
   const fetchPrefecturesListName = useCallback(async () => {
     try {
-      const data = await getPrefectures();
+      const data = await getPrefecturesCreatedAt();
       console.log(data);
 
       setPrefecturesName(data);

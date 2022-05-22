@@ -5,7 +5,6 @@ import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
 import { getSystems } from 'src/hooks/useSystemSelect';
@@ -119,7 +118,7 @@ const SpotsPost: NextPage = () => {
 
   const fetchPrefecturesListName = useCallback(async () => {
     try {
-      const data = await getPrefectures();
+      const data = await getPrefecturesCreatedAt();
       setPrefecturesName(data);
     } catch (error) {
       setError(true);
