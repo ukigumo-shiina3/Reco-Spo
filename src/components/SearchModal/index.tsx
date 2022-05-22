@@ -132,19 +132,19 @@ export const SearchModal: VFC = () => {
 
   return (
     <>
-      <div className='flex justify-end'>
+      <div className='flex justify-center sm:justify-end'>
         <div className='p-2 mt-8 cursor-pointer font-bold'>
           <div
-            className='inline-block  px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            className='inline-block  px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-red-400 rounded-full hover:bg-red-200 md:mx-0'
             onClick={resetSpots}
           >
             <span className='flex items-center'>
-              <GrUpdate />
+              <GrUpdate color='#white' />
               　元に戻す
             </span>
           </div>
           <div
-            className='ml-4 inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            className='ml-4 inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-red-400 rounded-full hover:bg-red-200 md:mx-0'
             onClick={openModal}
           >
             <span className='flex items-center'>
@@ -153,9 +153,6 @@ export const SearchModal: VFC = () => {
             </span>
           </div>
         </div>
-        {/* <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
-          <SearchButton />
-        </div> */}
       </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={closeModal}>
