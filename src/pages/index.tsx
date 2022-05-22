@@ -18,6 +18,7 @@ const Index: NextPage = () => {
   const fetchSpot = async () => {
     try {
       const data = await getSpots();
+      if (!data) return;
       setSpots(data);
     } catch (error) {
       setError(true);
