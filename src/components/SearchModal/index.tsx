@@ -10,6 +10,8 @@ import { Systems } from 'src/types/systems';
 import { Button, Chip, Chips, createStyles } from '@mantine/core';
 import { useSetRecoilState } from 'recoil';
 import { searchValue } from 'src/recoil/atom';
+import { GrUpdate } from 'react-icons/gr';
+import { GoSearch } from 'react-icons/go';
 
 export const SearchModal: VFC = () => {
   // マンタインのChipsに必要な関数追加分ここから
@@ -134,16 +136,22 @@ export const SearchModal: VFC = () => {
       <div className='flex justify-end'>
         <div className='p-2 mt-8 cursor-pointer font-bold'>
           <div
-            className='inline-block px-5 py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            className='inline-block  px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
             onClick={resetSpots}
           >
-            元に戻す
+            <span className='flex items-center'>
+              <GrUpdate />
+              　元に戻す
+            </span>
           </div>
           <div
-            className='ml-4 inline-block px-5 py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            className='ml-4 inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
             onClick={openModal}
           >
-            絞り込む
+            <span className='flex items-center'>
+              <GoSearch />
+              　絞り込む
+            </span>
           </div>
         </div>
         {/* <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
