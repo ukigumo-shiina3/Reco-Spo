@@ -135,20 +135,20 @@ export const SearchModal: VFC = () => {
       <div className='flex justify-center sm:justify-end'>
         <div className='p-2 mt-8 cursor-pointer font-bold'>
           <div
-            className='inline-block  px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-red-400 rounded-full hover:bg-red-200 md:mx-0'
+            className='ml-4 border-solid border-2 border-black inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-black hover:text-white bg-white  hover:bg-gray-400 rounded-full  md:mx-0'
             onClick={resetSpots}
           >
-            <span className='flex items-center'>
-              <GrUpdate color='#white' />
+            <span className='flex items-center '>
+              <GrUpdate color={'#000'} />
               　元に戻す
             </span>
           </div>
           <div
-            className='ml-4 inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-white bg-red-400 rounded-full hover:bg-red-200 md:mx-0'
+            className='ml-4 border-solid border-2 border-black inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-black hover:text-white bg-white  hover:bg-gray-400 rounded-full  md:mx-0'
             onClick={openModal}
           >
-            <span className='flex items-center'>
-              <GoSearch />
+            <span className='flex items-center '>
+              <GoSearch color={'#000'} />
               　絞り込む
             </span>
           </div>
