@@ -102,26 +102,26 @@ const SpotsEdit: NextPage<Spot> = () => {
     }
   }, []);
 
-  const downloadImage = useCallback(async (path) => {
-    try {
-      const { data, error } = await supabase.storage.from('admins').download(path);
-      if (!data) {
-        return;
-      }
-      if (error) {
-        throw error;
-      }
+  // const downloadImage = useCallback(async (path: string) => {
+  //   try {
+  //     const { data, error } = await supabase.storage.from('admins').download(path);
+  //     if (!data) {
+  //       return;
+  //     }
+  //     if (error) {
+  //       throw error;
+  //     }
 
-      let reader = new FileReader();
-      reader.readAsDataURL(data); // Blob を base64 へ変換し onload を呼び出します
+  //     let reader = new FileReader();
+  //     reader.readAsDataURL(data); // Blob を base64 へ変換し onload を呼び出します
 
-      reader.onload = () => {
-        setAvatarImage(reader.result as string);
-      };
-    } catch (error) {
-      console.log('Error downloading image: ', error.message);
-    }
-  }, []);
+  //     reader.onload = () => {
+  //       setAvatarImage(reader.result as string);
+  //     };
+  //   } catch (error) {
+  //     console.log('Error downloading image: ', error.message);
+  //   }
+  // }, []);
 
   const fetchPrefecturesCreatedAt = useCallback(async () => {
     try {
@@ -293,8 +293,9 @@ const SpotsEdit: NextPage<Spot> = () => {
                     //   <div key={index} className='py-2 px-1'>
                     <img
                       // src={spotEdit.image_url}
-                      // src={URL.createObjectURL(spotEdit.image_url)}
-                      src={downloadImage}
+                      // TODO: image_url: Blob | MediaSourceと型を合わせてみたが、それでもローディングの箇所にエラーが出るためそこを改善する
+                      src={URL.createObjectURL(spotEdit.image_url)}
+                      // src={downloadImage}
                       style={{ height: 60, width: 60 }}
                       alt='スポットイメージ画像'
                     />

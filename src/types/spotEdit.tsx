@@ -10,9 +10,9 @@ export type SpotEdit = {
   };
   name?: string;
   title?: string;
-  image_url: string;
+  // image_url: string | Blob;
   // image_url?: any;
-  // image_url?: Blob | MediaSource;
+  image_url: Blob | MediaSource;
   appeal?: string;
   area?: string;
   link?: string;
