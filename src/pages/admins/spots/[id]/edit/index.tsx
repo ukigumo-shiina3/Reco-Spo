@@ -10,7 +10,6 @@ import { NextPage } from 'next';
 import { Session } from '@supabase/supabase-js';
 import { Spot } from 'src/types/spot';
 import { SpotEdit } from 'src/types/spotEdit';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
@@ -123,7 +122,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const fetchPrefecturesListName = useCallback(async () => {
     try {
-      const data = await getPrefectures();
+      const data = await getPrefecturesCreatedAt();
       setPrefecturesName(data);
     } catch (error) {
       setError(true);

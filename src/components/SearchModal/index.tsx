@@ -2,14 +2,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, SetStateAction, useCallback, useEffect, useMemo, useState, VFC } from 'react';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
 import { getSystems } from 'src/hooks/useSystemSelect';
-import { SearchButton } from '../Button/SearchButton';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
-import { Button, Chip, Chips, createStyles } from '@mantine/core';
+import { Chip, Chips, createStyles } from '@mantine/core';
 import { useSetRecoilState } from 'recoil';
 import { searchValue } from 'src/recoil/atom';
+import { GrUpdate } from 'react-icons/gr';
+import { GoSearch } from 'react-icons/go';
+import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 
 export const SearchModal: VFC = () => {
   // マンタインのChipsに必要な関数追加分ここから
@@ -66,7 +67,7 @@ export const SearchModal: VFC = () => {
   // 　モーダルに表示する県名を取得
   const fetchPrefecturesListName = useCallback(async () => {
     try {
-      const data = await getPrefectures();
+      const data = await getPrefecturesCreatedAt();
       console.log(data);
 
       setPrefecturesName(data);
@@ -131,24 +132,27 @@ export const SearchModal: VFC = () => {
 
   return (
     <>
-      <div className='flex justify-end'>
+      <div className='flex justify-center sm:justify-end'>
         <div className='p-2 mt-8 cursor-pointer font-bold'>
           <div
-            className='inline-block px-5 py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            className='ml-4 border-solid border-2 border-black inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-black hover:text-white bg-white  hover:bg-gray-400 rounded-full'
             onClick={resetSpots}
           >
-            元に戻す
+            <span className='flex items-center '>
+              <GrUpdate color={'#000'} />
+              <p className='ml-4'>元に戻す</p>
+            </span>
           </div>
           <div
-            className='ml-4 inline-block px-5 py-3 mx-auto text-white bg-blue-600 rounded-full hover:bg-blue-700 md:mx-0'
+            className='ml-4 border-solid border-2 border-black inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-black hover:text-white bg-white  hover:bg-gray-400 rounded-full'
             onClick={openModal}
           >
-            絞り込む
+            <span className='flex items-center '>
+              <GoSearch color={'#000'} />
+              <p className='ml-4'>絞り込む</p>
+            </span>
           </div>
         </div>
-        {/* <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
-          <SearchButton />
-        </div> */}
       </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={closeModal}>
