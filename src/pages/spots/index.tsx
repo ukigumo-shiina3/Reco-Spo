@@ -1,26 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from 'next';
-import { SpotCard } from 'src/components/Spot/SpotCard';
-import { useCallback, useEffect, useState } from 'react';
-import { getSpots } from 'src/hooks/useSpotCardSelect';
 import SearchModal from 'src/components/SearchModal';
 import { UserLayout } from 'src/components/Layout/UserLayout';
-import { Spot } from 'src/types/spot';
 import { Pagination, SimpleGrid } from '@mantine/core';
 import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
+import { useState } from 'react';
 
 const Spots: NextPage = () => {
-  const [spots, setSpots] = useState<Spot[]>([]);
   const [activePage, setPage] = useState(1);
-
-  const fetchSpot = useCallback(async () => {
-    const data = await getSpots();
-    setSpots(data || []);
-  }, []);
-
-  useEffect(() => {
-    fetchSpot();
-  }, [fetchSpot]);
 
   return (
     <UserLayout>

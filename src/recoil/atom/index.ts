@@ -12,3 +12,12 @@ export const adminsState: RecoilState<Admin> = atom({
     group: '',
   },
 });
+// WrapSpotCardで表示するspotの条件値を納める
+export const searchValue = atom({
+  key: 'searchValue',
+  default: {
+    names: [] as string[],
+    system_ids: [] as string[],
+    is_data: false,
+  },
+});
