@@ -16,7 +16,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
 import { Button, TextInput } from '@mantine/core';
 import { useRecoil } from 'src/recoil/hooks';
-import { useSupabase } from 'src/hooks/useSupabase';
+import { useAdminImage } from 'src/hooks/useAdminImage';
 
 const schema = z.object({
   // avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
@@ -31,7 +31,7 @@ const schema = z.object({
 
 const ProfileEdit: VFC = () => {
   const { admins, avatarUrl, loading, errorState } = useRecoil();
-  const { uploading, uploadAvatar, avatarDownloadUrl, update } = useSupabase();
+  const { uploading, uploadAvatar, avatarDownloadUrl, update } = useAdminImage();
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
