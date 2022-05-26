@@ -19,6 +19,7 @@ import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
 import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
 import { getSystemsCreatedAt } from 'src/hooks/useSystemssCreatedAtSelect';
 import { SystemsCreatedAt } from 'src/types/systemsCreatedAt';
+import { useSpotImage } from 'src/hooks/useSpotImage';
 
 const user = supabase.auth.user();
 
@@ -28,6 +29,7 @@ const SpotsEdit: NextPage<Spot> = () => {
 
   const [spotEdit, setSpotEdit] = useState<SpotEdit>({
     id: '',
+    admin_id: '',
     prefecture_id: '',
     prefectures: {
       prefectures_name: [],
@@ -60,8 +62,7 @@ const SpotsEdit: NextPage<Spot> = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
   const [error, setError] = useState(false);
-  const [avatarImage, setAvatarImage] = useState('');
-  const [changeImageUrl, setChangeImageUrl] = useState('');
+  const { spotDownloadUrl, update } = useSpotImage();
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -227,6 +228,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     //  表示するINDEXを０番に設定(編集されたスポットが表示されるようにする)
     setSpotIndex('0');
   }, [
+    user,
     spotEdit.prefecture_id,
     spotEdit.system_id,
     spotEdit.name,
@@ -295,6 +297,7 @@ const SpotsEdit: NextPage<Spot> = () => {
                       // src={spotEdit.image_url}
                       // TODO: image_url: Blob | MediaSourceと型を合わせてみたが、それでもローディングの箇所にエラーが出るためそこを改善する
                       src={URL.createObjectURL(spotEdit.image_url)}
+                      // src={URL.revokeObjectURL(spotEdit.image_url)}
                       // src={downloadImage}
                       style={{ height: 60, width: 60 }}
                       alt='スポットイメージ画像'
