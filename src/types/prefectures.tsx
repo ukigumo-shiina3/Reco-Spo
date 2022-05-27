@@ -1,4 +1,4 @@
 export type Prefectures = {
-  id: string;
+  prefectures_index: string;
   prefectures_name: string;
 };

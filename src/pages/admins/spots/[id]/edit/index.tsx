@@ -20,6 +20,7 @@ import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButto
 import { getSystemsCreatedAt } from 'src/hooks/useSystemssCreatedAtSelect';
 import { SystemsCreatedAt } from 'src/types/systemsCreatedAt';
 import { useSpotImage } from 'src/hooks/useSpotImage';
+import SpotImage from 'src/components/Spot/SpotImage';
 
 const user = supabase.auth.user();
 
@@ -288,38 +289,16 @@ const SpotsEdit: NextPage<Spot> = () => {
             </h2>
             <div className='flex flex-wrap items-end mt-6'>
               <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
-                <div className='bg-white w-16 h-16'>
-                  {console.log('イメージ', spotEdit.image_url)}
-                  {spot ? (
-                    // files.map((file, index) => (
-                    //   <div key={index} className='py-2 px-1'>
-                    <img
-                      // src={spotEdit.image_url}
-                      // TODO: image_url: Blob | MediaSourceと型を合わせてみたが、それでもローディングの箇所にエラーが出るためそこを改善する
-                      src={URL.createObjectURL(spotEdit.image_url)}
-                      // src={URL.revokeObjectURL(spotEdit.image_url)}
-                      // src={downloadImage}
-                      style={{ height: 60, width: 60 }}
-                      alt='スポットイメージ画像'
+                {/* <form> */}
+                <div className='flex justify-start pt-5 mt-5'>
+                  <div className='flex flex-col justify-center items-center text-sm mt-2'>
+                    <SpotImage
+                      url={spotDownloadUrl}
+                      dummyImageUrl='/icons/profile-icon.png'
+                      size={80}
                     />
-                  ) : (
-                    // </div>
-
-                    {
-                      /* {spotEdit.image_url ? (
-                      <img
-                        src={URL.createObjectURL(spotEdit.image_url)}
-                        style={{ height: 60, width: 60 }}
-                        alt='スポットイメージ画像'
-                      />
-                    ) : (
-                    <img
-                      src='/icons/camera-icon.png'
-                      alt='カメラアイコン'
-                      className='m-auto mt-4 w-8 h-8'
-                    /> */
-                    }
-                  )}
+                    <UploadButton onUpload={uploadAvatar} loading={uploading} />
+                  </div>
                 </div>
               </div>
               {files && files.length > 0

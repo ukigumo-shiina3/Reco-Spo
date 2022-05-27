@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState, VFC } from 'react';
+import { useEffect, useMemo, useState, VFC } from 'react';
 import { useCallback } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
@@ -52,23 +52,24 @@ export const Sidebar: VFC = () => {
     [adminId],
   );
 
-  return (
-    <div>
-      <div className='flex-1 w-28 h-full text-center bg-blue-300 md:w-56 '>
-        <div>
-          <div className='bg-blue-400 py-10'>
-            <a className='font-fancy font-bold text-white text-xl md:text-4xl'>Reco Spo</a>
-          </div>
-          <div className='py-8 px-1 md:flex justify-center '>
-            <Image
-              src='/samples/spot-pic.jpeg'
-              alt='admin_image'
-              height={70}
-              width={70}
-              className='rounded-full'
-            />
-            {/* avatar画像を取得するタスクがまだなのでコメントアウト */}
-            {/* {adminData?.avatar_url ? (
+  return useMemo(
+    () => (
+      <div>
+        <div className='flex-1 w-28 h-full text-center bg-blue-300 md:w-56 '>
+          <div>
+            <div className='bg-blue-400 py-10'>
+              <a className='font-fancy font-bold text-white text-xl md:text-4xl'>Reco Spo</a>
+            </div>
+            <div className='py-8 px-1 md:flex justify-center '>
+              <Image
+                src='/samples/spot-pic.jpeg'
+                alt='admin_image'
+                height={70}
+                width={70}
+                className='rounded-full'
+              />
+              {/* avatar画像を取得するタスクがまだなのでコメントアウト */}
+              {/* {adminData?.avatar_url ? (
               <Image
               // avatar_urlだとDBからデータ引っ張れないので別の書き方をしてください 
                 src='/0.5032829142478012.jpeg'
@@ -86,39 +87,41 @@ export const Sidebar: VFC = () => {
                 className='rounded-full'
               />
             )} */}
-            <div className='text-white p-3'>
-              <p className='text-xs pb-2 md:text-sm'>ようこそ</p>
+              <div className='text-white p-3'>
+                <p className='text-xs pb-2 md:text-sm'>ようこそ</p>
 
-              {adminData ? (
-                <p className='text-xs pb-2 md:text-sm'>{adminData?.group}様</p>
-              ) : (
-                <p className='text-xs pb-2 md:text-sm'>自治体担当者様</p>
-              )}
+                {adminData ? (
+                  <p className='text-xs pb-2 md:text-sm'>{adminData?.group}様</p>
+                ) : (
+                  <p className='text-xs pb-2 md:text-sm'>自治体担当者様</p>
+                )}
+              </div>
             </div>
+            <div className='flex flex-col'>
+              <Link href='/admins/' passHref>
+                <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+                  プロフィール編集
+                </a>
+              </Link>
+              <Link href='/admins/spots/post' passHref>
+                <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+                  スポット投稿
+                </a>
+              </Link>
+              <Link href={`/admins/spots/${adminId}/edit`} passHref>
+                <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+                  スポット編集
+                </a>
+              </Link>
+              <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
+                <button onClick={HandleLogout}>ログアウト</button>
+              </a>
+            </div>
+            <Toaster />
           </div>
-          <div className='flex flex-col'>
-            <Link href='/admins/' passHref>
-              <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
-                プロフィール編集
-              </a>
-            </Link>
-            <Link href='/admins/spots/post' passHref>
-              <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
-                スポット投稿
-              </a>
-            </Link>
-            <Link href={`/admins/spots/${adminId}/edit`} passHref>
-              <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
-                スポット編集
-              </a>
-            </Link>
-            <a className='text-xs text-center text-white  hover:bg-blue-400 py-8 lg:text-sm '>
-              <button onClick={HandleLogout}>ログアウト</button>
-            </a>
-          </div>
-          <Toaster />
         </div>
       </div>
-    </div>
+    ),
+    [adminData, HandleLogout],
   );
 };

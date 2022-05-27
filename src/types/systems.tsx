@@ -1,4 +1,4 @@
 export type Systems = {
-  id: string;
+  systems_index: string;
   systems_name: string;
 };

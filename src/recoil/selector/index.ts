@@ -1,5 +1,7 @@
 import { RecoilState, selector } from 'recoil';
-import { adminsState } from '../atom';
+import { supabase } from 'src/libs/supabase';
+import { Spot } from 'src/types/spot';
+import { adminsState, searchValue } from '../atom';
 
 export const adminIdState: RecoilState<string> = selector({
   key: 'adminIdState', // unique ID (with respect to other atoms/selectors)
@@ -72,3 +74,25 @@ export const groupState: RecoilState<string> = selector({
     set(adminsState, { ...admins, group: newValue ? newValue.toString() : '' });
   },
 });
+
+// WrapSpotCardで表示するspotの式
+// 非同期処理を含むものは現状普通に利用しようとすると対応していないので今回はselectorやめときます
+// export const getSearchSpots = selector({
+//   key: 'getSearchSpots',
+//   get: async ({ get }) => {
+//     const sv = get(searchValue);
+//     const { data: resultSpots, error } = await supabase
+//       .from<Spot>('spots')
+//       .select('*, prefectures!inner(prefectures_name), systems!inner(systems_name)')
+//       .in('name', sv.names)
+//       .in('system_id', sv.system_ids);
+
+//     if (!resultSpots) {
+//       return [];
+//     }
+//     if (error) {
+//       alert(error);
+//     }
+//     return resultSpots;
+//   },
+// });

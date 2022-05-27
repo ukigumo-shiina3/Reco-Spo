@@ -8,8 +8,8 @@ export type UploadButtonProps = {
 
 export default function UploadButton({ loading, onUpload }: UploadButtonProps) {
   return useMemo(() => (
-    <div>
-      <label className='ml-3' htmlFor='single'>
+    <div className="flex flex-col justify-center items-center">
+      <label className="w-full py-1" htmlFor='single'>
         {loading ? '.......' : '変更'}
       </label>
       {/* <input
@@ -26,6 +26,7 @@ export default function UploadButton({ loading, onUpload }: UploadButtonProps) {
       <Input
         type='file'
         id='single'
+        className="hidden"
         style={{
           visibility: 'hidden',
         }}

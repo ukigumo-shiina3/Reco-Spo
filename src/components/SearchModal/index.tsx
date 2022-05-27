@@ -1,66 +1,159 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useCallback, useEffect, useState, VFC } from 'react';
-import { getPrefectures } from 'src/hooks/usePostPrefectureSelect';
+import { Fragment, SetStateAction, useCallback, useEffect, useMemo, useState, VFC } from 'react';
 import { getSystems } from 'src/hooks/useSystemSelect';
-import { SearchButton } from '../Button/SearchButton';
-import { supabase } from 'src/libs/supabase';
 import { Prefectures } from 'src/types/prefectures';
 import { Systems } from 'src/types/systems';
-
-const user = supabase.auth.user();
+import { Chip, Chips, createStyles } from '@mantine/core';
+import { useSetRecoilState } from 'recoil';
+import { searchValue } from 'src/recoil/atom';
+import { GrUpdate } from 'react-icons/gr';
+import { GoSearch } from 'react-icons/go';
+import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 
 export const SearchModal: VFC = () => {
+  // マンタインのChipsに必要な関数追加分ここから
+  const useStyles = createStyles((theme, _params, getRef) => ({
+    iconWrapper: {
+      ref: getRef('iconWrapper'),
+    },
+    checked: {
+      backgroundColor: `${theme.colors.blue[6]} !important`,
+      color: theme.white,
+      [`& .${getRef('iconWrapper')}`]: {
+        color: theme.white,
+      },
+    },
+  }));
+  const { classes } = useStyles();
+  // マンタインのChipsに必要な関数追加分ここまで
+  // Recoilから県と制度のINDEXを格納するためのsetterを取得する
+  const setSearchWords = useSetRecoilState(searchValue);
+  //  モーダルの表示状態を格納するためのstateを取得する
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  // 県名を格納するためのstateを取得する
   const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
-  const [systems_name, setSystemsName] = useState<Systems[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState(false);
-
+  // 制度名を格納するためのstateを取得する
+  const [systems_name, setSystem_name] = useState<Systems[]>([]);
+  //  県名のINDEXを格納するためのstateを取得する
+  const [prefecturesIndex, setPrefecturesIndex] = useState<Prefectures['prefectures_index'][]>([]);
+  //  制度名のINDEXを格納するためのstateを取得する
+  const [systemIndex, setSystemIndex] = useState<Systems['systems_index'][]>([]);
+  // モーダルを表示する
   const openModal = useCallback(() => {
     setIsOpen(true);
   }, []);
-
+  // モーダルを閉じる
   const closeModal = useCallback(() => {
-    setPrefecturesName([]);
-    setSystemsName([]);
+    setWordBlank();
     setIsOpen(false);
   }, []);
-
+  // 検索を実行する
+  const handleSearch = useCallback(() => {
+    console.log('pushpush');
+    isTrueSetWords(prefecturesIndex, systemIndex);
+    setWordBlank();
+    closeModal();
+  }, [prefecturesIndex, systemIndex]);
+  // 全spotdata取得/元に戻すボタン
+  const resetSpots = useCallback(async () => {
+    setSearchWords({
+      names: [],
+      system_ids: [],
+      is_data: false,
+    });
+  }, []);
+  // 　モーダルに表示する県名を取得
   const fetchPrefecturesListName = useCallback(async () => {
     try {
-      const data = await getPrefectures();
+      const data = await getPrefecturesCreatedAt();
+      console.log(data);
+
       setPrefecturesName(data);
     } catch (error) {
-      setError(true);
+      //  error処理
     }
-    setLoading(false);
-  }, [setPrefecturesName]);
-
-  useEffect(() => {
-    fetchPrefecturesListName();
-  }, [user, fetchPrefecturesListName]);
-
+    // １度だけ読み込めばいい
+  }, []);
+  // モーダルに表示する制度名を取得
   const fetchSystemsListName = useCallback(async () => {
     try {
       const data = await getSystems();
-      setSystemsName(data);
+      console.log(data);
+
+      setSystem_name(data);
     } catch (error) {
-      setError(true);
+      // error処理
     }
+    // １度だけ読み込めばいい
   }, []);
 
+  // 初期表示時にfetchPrefecturesListNameを実行
+  useEffect(() => {
+    fetchPrefecturesListName();
+  }, []);
+  // 初期表示時にfetchSystemsListNameを実行
   useEffect(() => {
     fetchSystemsListName();
-  }, [user, fetchSystemsListName]);
+  }, []);
+
+  // prefecturesとsystemsの中身を空にする
+  const setWordBlank = () => {
+    setPrefecturesIndex([]);
+    setSystemIndex([]);
+  };
+  // 選択した制度名のINDEXを取得する
+  const getSystemIndex = (e: SetStateAction<string[]>) => {
+    setSystemIndex(e);
+  };
+  // 選択した県名のINDEXを取得する
+  const getPrefectureIndex = (e: SetStateAction<string[]>) => {
+    setPrefecturesIndex(e);
+  };
+
+  console.log('systems', systemIndex);
+  console.log('systems', systemIndex.length);
+  console.log(`prefectures`, prefecturesIndex);
+  console.log(`prefectures`, prefecturesIndex.length);
+  // 県名と制度名が１つでもあればrecoilに値をセットする
+  const isTrueSetWords = (prefectures: string[], systems: string[]) => {
+    if (prefectures.length > 0 || systems.length > 0) {
+      setSearchWords({
+        names: prefectures,
+        system_ids: systems,
+        is_data: true,
+      });
+      console.log('true');
+    } else {
+      console.log('false');
+    }
+  };
 
   return (
     <>
-      <div className='p-2 mt-8 cursor-pointer font-bold' onClick={openModal}>
-        <SearchButton />
+      <div className='flex justify-center sm:justify-end'>
+        <div className='p-2 mt-8 cursor-pointer font-bold'>
+          <div
+            className='ml-4 border-solid border-2 border-black inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-black hover:text-white bg-white  hover:bg-gray-400 rounded-full'
+            onClick={resetSpots}
+          >
+            <span className='flex items-center '>
+              <GrUpdate color={'#000'} />
+              <p className='ml-4'>元に戻す</p>
+            </span>
+          </div>
+          <div
+            className='ml-4 border-solid border-2 border-black inline-block px-4 py-2 md:px-5 md:py-3 mx-auto text-black hover:text-white bg-white  hover:bg-gray-400 rounded-full'
+            onClick={openModal}
+          >
+            <span className='flex items-center '>
+              <GoSearch color={'#000'} />
+              <p className='ml-4'>絞り込む</p>
+            </span>
+          </div>
+        </div>
       </div>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='fixed inset-0 z-10 overflow-y-auto' onClose={closeModal}>
           <div className='min-h-screen px-4 text-center border-2'>
@@ -99,40 +192,46 @@ export const SearchModal: VFC = () => {
                   </div>
                 </div>
 
-                <div className='mt-8'>
+                <div className='mt-8 text-center'>
                   <button className='text-md text-center bg-red-400 rounded-lg text-white py-4 px-8 border-2'>
                     都道府県
                   </button>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-3'>
-                  {prefectures_name.map((value, index) => (
-                    <option
-                      className='border-2 rounded-lg border-gray-300 py-2 px-4'
-                      key={index}
-                      value={value['id']}
-                    >
-                      {value['prefectures_name']}
-                    </option>
-                  ))}
+                  <Chips
+                    position='center'
+                    multiple
+                    classNames={classes}
+                    onChange={getPrefectureIndex}
+                  >
+                    {prefectures_name.map((value, index) => (
+                      <Chip value={value['prefectures_index']} key={index}>
+                        {value['prefectures_name']}
+                      </Chip>
+                    ))}
+                  </Chips>
                 </div>
-                <div className='mt-12'>
+                <div className='mt-12 text-center'>
                   <button className='text-md text-center bg-red-400 rounded-lg text-white py-4 px-8'>
                     制度
                   </button>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-3'>
-                  {systems_name.map((value, index) => (
-                    <option
-                      className='border-2 rounded-lg border-gray-300 py-2 px-4'
-                      key={index}
-                      value={value['id']}
-                    >
-                      {value['systems_name']}
-                    </option>
-                  ))}
+                  <Chips position='center' multiple classNames={classes} onChange={getSystemIndex}>
+                    {systems_name.map((value, index) => (
+                      <Chip value={value['systems_index']} key={index}>
+                        {value['systems_name']}
+                      </Chip>
+                    ))}
+                  </Chips>
                 </div>
+                {console.log('個数', systemIndex.length + prefecturesIndex.length)}
                 <div className='flex justify-center mt-12'>
-                  <button className='text-md text-center bg-blue-400 rounded-lg text-white py-4 px-8'>
+                  <button
+                    className='text-md text-center bg-blue-400 rounded-lg text-white py-4 px-8'
+                    onClick={handleSearch}
+                    disabled={systemIndex.length === 0 && prefecturesIndex.length === 0}
+                  >
                     絞り込む
                   </button>
                 </div>

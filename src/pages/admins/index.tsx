@@ -185,9 +185,6 @@ const ProfileEdit: VFC = () => {
   //   return <div>エラーが発生しました。</div>;
   // }
 
-  console.log('avatarUrl', avatarUrl);
-  console.log('avatarDownloadUrl', avatarDownloadUrl);
-
   return (
     <>
       <div className='flex bg-gray-100 h-full'>
@@ -202,21 +199,12 @@ const ProfileEdit: VFC = () => {
             })}
           >
             {/* <form> */}
-            {/* TODO: うまく動作できなかったためコメントアウト */}
-            {/* <div className='pt-5 mt-5'>
-              <div className='text-sm mt-2'>
-                {avatarUrl ? (
-                  <Avatar url={avatarDownloadUrl} size={60} />
-                ) : (
-                  <img
-                    src='/icons/profile-icon.png'
-                    alt='image'
-                    className='w-17 h-16 pr-4 rounded-full'
-                  />
-                )}
+            <div className='flex justify-start pt-5 mt-5'>
+              <div className='flex flex-col justify-center items-center text-sm mt-2'>
+                <Avatar url={avatarDownloadUrl} dummyImageUrl="/icons/profile-icon.png" size={80} />
                 <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
-            </div> */}
+            </div>
             <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
               都道府県
             </label>

@@ -5,7 +5,7 @@ import { DEFAULT_AVATARS_BUCKET } from 'src/libs/constant';
 
 type checkFuncType = (path: string) => Promise<void> | void | null;
 
-export default function Avatar({ url, size }: { url: string | null; size: number }) {
+export default function Avatar({ url, dummyImageUrl, size }: { url: string | null, dummyImageUrl?: string | null, size: number }) {
   // const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   // const downloadImage = useCallback(async (path: string) => {
@@ -34,12 +34,16 @@ export default function Avatar({ url, size }: { url: string | null; size: number
   //   }
   // }, [avatarUrl, downloadImage, url]);
 
+  if (!url) {
+    if (dummyImageUrl) {
+      return <img src={dummyImageUrl} alt="avatar" className="rounded-full mb-2" style={{ height: size, width: size }} />
+    } else {
+      return <div className='avatar no-image' style={{ height: size, width: size }} />
+    }
+  }
 
-
-  return url ? (
+  return (
     // eslint-disable-next-line jsx-a11y/alt-text
-    <img src={url} className='rounded-full mb-2' style={{ height: size, width: size }} />
-  ) : (
-    <div className='avatar no-image' style={{ height: size, width: size }} />
+    <img src={url} alt="avatar" className='rounded-full mb-2' style={{ height: size, width: size }} />
   );
 }
