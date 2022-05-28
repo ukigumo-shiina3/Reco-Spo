@@ -19,7 +19,6 @@ export const useUser = () => {
 export const useSpot = (admin_id: string | null) => {
   const [spotList, setSpotList] = useState<Spot[] | null>(null);
   const getSpotsData = useCallback(async () => {
-    // DBからスポット情報を取得　WHERE旬はareaカラムは兵庫県で絞り、admin_idカラムはadminIdで絞ってます
     const { data: spot, error } = await supabase
       .from<Spot>('spots')
       .select('*')
