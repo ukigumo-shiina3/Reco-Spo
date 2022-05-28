@@ -82,7 +82,7 @@ export const useSpotImage: Type = () => {
       }
       // console.log('updata'{ data, error });
 
-      setSpotEdit(dataSet);
+      // setSpotEdit(dataSet);
       setUploading(false);
 
       toast.success('プロフィールが更新されました', {
@@ -91,6 +91,7 @@ export const useSpotImage: Type = () => {
     },
     [spotEdit],
   );
+
   const uploadSpot = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       try {
