@@ -6,11 +6,7 @@ import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { NextPage } from 'next';
-import { Session } from '@supabase/supabase-js';
-import { getSystems } from 'src/hooks/useSystemSelect';
 import { Spot } from 'src/types/spot';
-import { Prefectures } from 'src/types/prefectures';
-import { Systems } from 'src/types/systems';
 import { Spinner } from '@chakra-ui/react';
 import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
 import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
@@ -50,26 +46,13 @@ const SpotsPost: NextPage = () => {
 
   const [prefecturesCreatedAt, setPrefecturesCreatedAt] = useState<PrefecturesCreatedAt[]>([]);
   const [systemsCreatedAt, setSystemsCreatedAt] = useState<SystemsCreatedAt[]>([]);
-  const [prefectures_name, setPrefecturesName] = useState<Prefectures[]>([]);
-  const [systems_name, setSystemsName] = useState<Systems[]>([]);
-  const [spot, setSpot] = useState<Spot>();
   const [spotImage, setSpotImage] = useState<string | null>('');
-  const [session, setSession] = useState<Session | null>(null);
-  const [id, setId] = useState<string>('');
   const [uploading, setUploading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
 
   const user = supabase.auth.user();
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-
-    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
-      setSession(session);
-    });
-  }, []);
 
   useEffect(() => {
     getSpotImgae();
@@ -87,12 +70,6 @@ const SpotsPost: NextPage = () => {
       setLoading(true);
 
       const { data, error } = await supabase.from<Spot>('spots').select('image_url');
-      // console.log('ユーザーアイディ', user?.id);
-      // console.log('スポットデータ', data);
-
-      if (error) {
-        throw error;
-      }
 
       setImage(data);
     } catch (error) {
@@ -116,20 +93,6 @@ const SpotsPost: NextPage = () => {
     fetchPrefecturesCreatedAt();
   }, [user, fetchPrefecturesCreatedAt]);
 
-  const fetchPrefecturesListName = useCallback(async () => {
-    try {
-      const data = await getPrefecturesCreatedAt();
-      setPrefecturesName(data);
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  }, [setPrefecturesName]);
-
-  useEffect(() => {
-    fetchPrefecturesListName();
-  }, [user, fetchPrefecturesListName]);
-
   const fetchSystemsdCreatedAt = useCallback(async () => {
     try {
       const data = await getSystemsCreatedAt();
@@ -143,28 +106,6 @@ const SpotsPost: NextPage = () => {
   useEffect(() => {
     fetchSystemsdCreatedAt();
   }, [user, fetchPrefecturesCreatedAt]);
-
-  const fetchSystemsListName = useCallback(async () => {
-    try {
-      const data = await getSystems();
-      setSystemsName(data);
-    } catch (error) {
-      setError(true);
-    }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchSystemsListName();
-  }, [user, fetchSystemsListName]);
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-
-    supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
-      setSession(session);
-    });
-  }, []);
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -263,8 +204,6 @@ const SpotsPost: NextPage = () => {
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
-            {/* console.log(spotImage)) */}
-            {/* {/* {console.log('spotImage', spotImage)} */}
             {/* {console.log('ファイル', files)} */}
             <div className='flex flex-wrap items-end mt-6'>
               {files && files.length > 0 ? (

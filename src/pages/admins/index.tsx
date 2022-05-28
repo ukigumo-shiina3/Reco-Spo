@@ -9,14 +9,14 @@ import { ChangeEvent, useEffect, VFC } from 'react';
 import { useCallback, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Sidebar } from 'src/components/Layout/Sidebar';
-import UploadButton from 'src/components/Button/UploadButton/UploadButton';
+import UploadButton from 'src/components/Button/UploadButton/AdminUploadButton';
 import Avatar from 'src/components/Avatar';
 import { Spinner } from '@chakra-ui/react';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
 import { Button, TextInput } from '@mantine/core';
 import { useRecoil } from 'src/recoil/hooks';
-import { useSupabase } from 'src/hooks/useSupabase';
+import { useAdminImage } from 'src/hooks/useAdminImage';
 
 const schema = z.object({
   // avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
@@ -31,7 +31,7 @@ const schema = z.object({
 
 const ProfileEdit: VFC = () => {
   const { admins, avatarUrl, loading, errorState } = useRecoil();
-  const { uploading, uploadAvatar, avatarDownloadUrl, update } = useSupabase();
+  const { uploading, uploadAvatar, avatarDownloadUrl, update } = useAdminImage();
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
@@ -201,7 +201,7 @@ const ProfileEdit: VFC = () => {
             {/* <form> */}
             <div className='flex justify-start pt-5 mt-5'>
               <div className='flex flex-col justify-center items-center text-sm mt-2'>
-                <Avatar url={avatarDownloadUrl} dummyImageUrl="/icons/profile-icon.png" size={80} />
+                <Avatar url={avatarDownloadUrl} dummyImageUrl='/icons/profile-icon.png' size={80} />
                 <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
             </div>
