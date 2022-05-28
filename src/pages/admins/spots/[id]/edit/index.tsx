@@ -63,7 +63,7 @@ const SpotsEdit: NextPage<Spot> = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [uploading, setUploading] = useState<boolean>(false);
   const [error, setError] = useState(false);
-  const { spotDownloadUrl, update } = useSpotImage();
+  const { uploadSpot, spotDownloadUrl, update } = useSpotImage();
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -290,14 +290,15 @@ const SpotsEdit: NextPage<Spot> = () => {
             <div className='flex flex-wrap items-end mt-6'>
               <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
                 {/* <form> */}
-                <div className='flex justify-start pt-5 mt-5'>
+                <div className='flex justify-start'>
                   <div className='flex flex-col justify-center items-center text-sm mt-2'>
-                    <SpotImage
-                      url={spotDownloadUrl}
-                      dummyImageUrl='/icons/profile-icon.png'
-                      size={80}
-                    />
-                    <UploadButton onUpload={uploadAvatar} loading={uploading} />
+                    <div className='bg-white h-12 w-12'>
+                      <SpotImage
+                        url={spotDownloadUrl}
+                        dummyImageUrl='/icons/camera-icon.png'
+                        size={40}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

@@ -9,7 +9,7 @@ import { ChangeEvent, useEffect, VFC } from 'react';
 import { useCallback, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Sidebar } from 'src/components/Layout/Sidebar';
-import UploadButton from 'src/components/Button/UploadButton/UploadButton';
+import UploadButton from 'src/components/Button/UploadButton/AdminUploadButton';
 import Avatar from 'src/components/Avatar';
 import { Spinner } from '@chakra-ui/react';
 import { useForm, zodResolver } from '@mantine/form';
@@ -201,7 +201,7 @@ const ProfileEdit: VFC = () => {
             {/* <form> */}
             <div className='flex justify-start pt-5 mt-5'>
               <div className='flex flex-col justify-center items-center text-sm mt-2'>
-                <Avatar url={avatarDownloadUrl} dummyImageUrl="/icons/profile-icon.png" size={80} />
+                <Avatar url={avatarDownloadUrl} dummyImageUrl='/icons/profile-icon.png' size={80} />
                 <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
             </div>
