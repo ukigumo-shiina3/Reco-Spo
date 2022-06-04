@@ -9,6 +9,7 @@ import { NextPage } from 'next';
 import { Spot } from 'src/types/spot';
 import { Spinner } from '@chakra-ui/react';
 import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+import { DEFAULT_SPOT_IMAGES_BUCKET } from 'src/libs/spotImage';
 import { getPrefecturesCreatedAt } from 'src/hooks/usePrefecturesCreatedAtSelect';
 import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
@@ -127,8 +128,11 @@ const SpotsPost: NextPage = () => {
     const fileName = `${Math.random()}.${fileExt}`;
     const filePath = `${fileName}`;
 
+    // const { error: uploadError } = await supabase.storage
+    //   .from(DEFAULT_SPOTS_BUCKET)
+    //   .upload(filePath, file);
     const { error: uploadError } = await supabase.storage
-      .from(DEFAULT_SPOTS_BUCKET)
+      .from(DEFAULT_SPOT_IMAGES_BUCKET)
       .upload(filePath, file);
 
     if (uploadError) {

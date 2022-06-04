@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+// import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+import { DEFAULT_SPOT_IMAGES_BUCKET } from 'src/libs/spotImage';
 import { supabase } from 'src/libs/supabase';
 import { SpotEdit } from 'src/types/spotEdit';
 
@@ -107,18 +108,28 @@ export const useSpotImage: Type = () => {
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `${fileName}`;
 
+        // const { data, error: uploadError } = await supabase.storage
+        //   .from(DEFAULT_SPOTS_BUCKET)
+        //   .upload(filePath, file);
         const { data, error: uploadError } = await supabase.storage
-          .from(DEFAULT_SPOTS_BUCKET)
+          .from(DEFAULT_SPOT_IMAGES_BUCKET)
           .upload(filePath, file);
 
         if (uploadError) {
           throw uploadError;
         }
 
+        // const { error: updateError } = await supabase
+        //   .from('spots')
+        //   .update({
+        //     image_url: filePath,
+        //   })
+        //   .eq('id', user?.id || '');
+
         const { error: updateError } = await supabase
           .from('spots')
           .update({
-            avatar_url: filePath,
+            spot_image: filePath,
           })
           .eq('id', user?.id || '');
 
@@ -142,7 +153,7 @@ export const useSpotImage: Type = () => {
       return;
     }
     try {
-      const { data, error } = await supabase.storage.from(DEFAULT_SPOTS_BUCKET).download(url);
+      const { data, error } = await supabase.storage.from(DEFAULT_SPOT_IMAGES_BUCKET).download(url);
       if (error) {
         throw error;
       }
