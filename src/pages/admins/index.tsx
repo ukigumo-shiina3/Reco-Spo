@@ -17,6 +17,7 @@ import { z } from 'zod';
 import { Button, TextInput } from '@mantine/core';
 import { useRecoil } from 'src/recoil/hooks';
 import { useAdminImage } from 'src/hooks/useAdminImage';
+import { AdminInfoLayout } from 'src/components/Layout/AdminInfoLayout';
 
 const schema = z.object({
   // avatar_url: z.string().min(2, { message: 'アイコンURL は2文字以上の値で入力してください！' }),
@@ -187,10 +188,9 @@ const ProfileEdit: VFC = () => {
 
   return (
     <>
-      <div className='flex bg-gray-100 h-full'>
-        <Sidebar />
-        <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-32 overflow-hidden shadow-lg'>
-          <h1 className='text-3xl mt-24'>プロフィール編集</h1>
+      <AdminInfoLayout>
+        <h1 className='font-bold text-2xl mt-12'>プロフィール編集</h1>
+        <div className='h-full my-10 px-12 overflow-hidden shadow-lg bg-white'>
           {/* <button onClick={() => setGroup(group + '1')}>test</button> */}
           <form
             onSubmit={form.onSubmit((values) => {
@@ -216,7 +216,7 @@ const ProfileEdit: VFC = () => {
               required
               id='prefecture'
               placeholder='山形県'
-              classNames={{ input: 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
               {...form.getInputProps('prefecture')}
             />
             <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
@@ -230,7 +230,7 @@ const ProfileEdit: VFC = () => {
               required
               id='group'
               placeholder='遊佐町役場'
-              classNames={{ input: 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
               {...form.getInputProps('group')}
             />
             <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
@@ -245,7 +245,7 @@ const ProfileEdit: VFC = () => {
               id='email'
               autoComplete='email'
               placeholder='reco-spo@gmail.com'
-              classNames={{ input: 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
               {...form.getInputProps('email')}
             />
             <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
@@ -261,7 +261,7 @@ const ProfileEdit: VFC = () => {
               type='password'
               autoComplete='current-password'
               placeholder='test1234'
-              classNames={{ input: 'w-full p-2 rounded-l-md' }}
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
               {...form.getInputProps('password')}
             />
             {/* <div className='text-center pb-10'>
@@ -285,7 +285,7 @@ const ProfileEdit: VFC = () => {
           </form>
           <Toaster />
         </div>
-      </div>
+      </AdminInfoLayout>
     </>
   );
 };
