@@ -7,9 +7,9 @@ const Signin: NextPage = () => {
   return (
     <AdminSignin
       session={session}
-      title='ログイン'
-      signinButton='ログイン'
-      testSigninButton='テストログイン'
+      title={'ログイン'}
+      signinButton={'ログイン'}
+      testSigninButton={'テストログイン'}
       email={''}
       password={''}
     />
