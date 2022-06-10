@@ -6,28 +6,14 @@ import type { VFC } from 'react';
 import { useState } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { useRouter } from 'next/router';
-import { Session } from '@supabase/supabase-js';
 import { toast, Toaster } from 'react-hot-toast';
 import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
-
-type Props = {
-  title: string;
-  signinButton: string;
-  testSigninButton: string;
-  email: string;
-  password: string;
-  session: Session | null;
-};
-
-export type AdminSignin = {
-  email: string;
-  password: string;
-};
+import { Signin } from 'src/types/signin';
 
 const EMAIL = process.env.NEXT_PUBLIC_EMAIL;
 const PASSWORD = process.env.NEXT_PUBLIC_PASSWORD;
 
-export const AdminSignin: VFC<Props> = (props, session) => {
+export const AdminSignin: VFC<Signin> = (props, session) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -132,6 +118,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
                       {props.signinButton}
                     </button>
                   </Link>
+
                   <Link href='/admins' passHref>
                     <button
                       onClick={handleTestSignin}
