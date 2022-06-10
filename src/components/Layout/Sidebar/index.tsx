@@ -68,25 +68,6 @@ export const Sidebar: VFC = () => {
                 width={70}
                 className='rounded-full'
               />
-              {/* avatar画像を取得するタスクがまだなのでコメントアウト */}
-              {/* {adminData?.avatar_url ? (
-              <Image
-              // avatar_urlだとDBからデータ引っ張れないので別の書き方をしてください 
-                src='/0.5032829142478012.jpeg'
-                alt='admin_image'
-                height={70}
-                width={70}
-                className='rounded-full'
-              />
-            ) : (
-              <Image
-                src='/samples/spot-pic.jpeg'
-                alt='admin_image'
-                height={70}
-                width={70}
-                className='rounded-full'
-              />
-            )} */}
               <div className='text-white p-3'>
                 <p className='text-xs pb-2 md:text-sm'>ようこそ</p>
 
