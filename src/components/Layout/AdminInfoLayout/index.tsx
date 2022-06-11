@@ -95,39 +95,39 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <div className='absolute top-24 right-4 w-48 bg-gray-50 rounded-3xl'>
+                <div className='absolute top-28 right-4 w-48 bg-gray-50 rounded-3xl cursor-pointer'>
                   <div className='flex flex-col'>
-                    <div className='absolute right-2 my-4'>
-                      <button className='' onClick={closeModal}>
+                    <div className='absolute top-8 right-4'>
+                      <button className='outline-none' onClick={closeModal}>
                         <div className='h-8 w-8'>✖︎</div>
                       </button>
                     </div>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl pb-8 mt-12 border-b-2 border-gray-200 pl-4'
+                      className='text-2xl py-8 mt-8 pl-4 border-b-2 border-gray-200'
                     >
                       {adminData ? (
-                        <p className='text-xs pb-2 md:text-sm'>{adminData?.group}様</p>
+                        <p className='text-xs md:text-sm'>{adminData?.group}様</p>
                       ) : (
-                        <p className='text-xs pb-2 md:text-sm'>自治体担当者様</p>
+                        <p className='text-xs md:text-sm'>自治体担当者様</p>
                       )}
                     </Dialog.Title>
                     <Link href='/admins/' passHref>
-                      <a className='text-xs hover:bg-gray-400-400 py-8  pl-4 lg:text-sm border-b-2  border-gray-200 '>
+                      <a className='text-xs hover:bg-blue-100 py-8  pl-4 lg:text-sm border-b-2  border-gray-200 '>
                         プロフィール編集
                       </a>
                     </Link>
                     <Link href='/admins/spots/post' passHref>
-                      <a className='text-xs hover:bg-gray-400 py-8  pl-4 lg:text-sm border-b-2  border-gray-200 '>
+                      <a className='text-xs hover:bg-blue-100 py-8  pl-4 lg:text-sm border-b-2  border-gray-200 '>
                         スポット投稿
                       </a>
                     </Link>
                     <Link href={`/admins/spots/${adminId}/edit`} passHref>
-                      <a className='text-xs hover:bg-gray-400 py-8  pl-4 lg:text-sm border-b-2  border-gray-200 '>
+                      <a className='text-xs hover:bg-blue-100 py-8  pl-4 lg:text-sm border-b-2  border-gray-200 '>
                         スポット編集
                       </a>
                     </Link>
-                    <a className='text-xs hover:bg-gray-400 py-8  pl-4 lg:text-sm border-gray-200 '>
+                    <a className='text-xs hover:bg-blue-100 py-8  pl-4 lg:text-sm border-gray-200 '>
                       <button onClick={HandleLogout}>ログアウト</button>
                     </a>
                   </div>
@@ -138,7 +138,7 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
           </Dialog>
         </Transition>
 
-        <div className='flex justify-center items-center h-screen bg-blue-50'>
+        <div className='flex justify-center items-center h-full bg-blue-50'>
           <div className='flex flex-col w-full justify-center items-center'>{props.children}</div>
         </div>
       </>
