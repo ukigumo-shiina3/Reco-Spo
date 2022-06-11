@@ -148,6 +148,6 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
         </div>
       </>
     ),
-    [adminData, HandleLogout],
+    [adminData, HandleLogout, isOpen, adminId],
   );
 };
