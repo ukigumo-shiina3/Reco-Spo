@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
-import { Sidebar } from 'src/components/Layout/Sidebar';
 import { supabase } from 'src/libs/supabase';
 import { useCallback } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
@@ -14,6 +13,7 @@ import { PrefecturesCreatedAt } from 'src/types/prefecturesCreatedAt';
 import SpotUploadButton from 'src/components/Button/UploadButton/SpotUploadButton';
 import { SystemsCreatedAt } from 'src/types/systemsCreatedAt';
 import { getSystemsCreatedAt } from 'src/hooks/useSystemssCreatedAtSelect';
+import { AdminInfoLayout } from 'src/components/Layout/AdminInfoLayout';
 
 const SpotsPost: NextPage = () => {
   const [spotPost, setSpotPost] = useState<Spot>({
@@ -196,11 +196,10 @@ const SpotsPost: NextPage = () => {
   if (user) {
     return (
       <>
-        <div className='flex bg-gray-100 h-full'>
-          <Sidebar />
-          <div className='bg-gray-200 h-full ml-auto mr-auto my-20 px-6 sm:px-24 overflow-hidden shadow-lg '>
+        <AdminInfoLayout>
+          <h1 className='font-bold text-3xl mt-12'>スポット投稿</h1>
+          <div className='h-full my-10 px-12 overflow-hidden shadow-lg bg-white'>
             {/* スポット投稿 */}
-            <h1 className='text-3xl mt-24'>スポット投稿</h1>
             <h2 className='flex mt-5'>
               スポット画像<p className=''>(最大5枚)</p>
             </h2>
@@ -208,7 +207,6 @@ const SpotsPost: NextPage = () => {
             <div className='flex flex-wrap items-end mt-6'>
               {files && files.length > 0 ? (
                 files.map((file, index) => (
-                  // <SpotImage key={index} url={URL.createObjectURL(file)} size={60} />
                   <div key={index} className='py-2 px-1'>
                     <img
                       src={URL.createObjectURL(file)}
@@ -219,7 +217,7 @@ const SpotsPost: NextPage = () => {
                 ))
               ) : (
                 <div className='flex flex-wrap gap-2 mt-5 sm:gap-6'>
-                  <div className='bg-white w-16 h-16'>
+                  <div className='bg-white w-16 h-16 border-2 border-gray-400'>
                     <img
                       src='/icons/camera-icon.png'
                       alt='カメラアイコン'
@@ -233,9 +231,11 @@ const SpotsPost: NextPage = () => {
             {/* スポット情報 */}
             <div>
               <h2 className='mt-10 '>スポット情報</h2>
-              <div className='mt-10 text-xs'>
+              <div className='text-xs'>
                 <div className='mb-5'>
-                  <label htmlFor='name'>スポット名</label>
+                  <label htmlFor='name' className='flex justify-start pt-10 pb-3'>
+                    スポット名
+                  </label>
                   <input
                     type='text'
                     value={spotPost.name}
@@ -243,11 +243,13 @@ const SpotsPost: NextPage = () => {
                       setSpotPost({ ...spotPost, name: e.target.value.trim() });
                     }}
                     placeholder='穴水町'
-                    className='w-full p-2 rounded-md placeholder-gray-500'
+                    className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2 rounded-md border-2 placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
-                  <label htmlFor='title'>スポットタイトル</label>
+                  <label htmlFor='title' className='flex justify-start pt-10 pb-3'>
+                    スポットタイトル
+                  </label>
                   <input
                     type='text'
                     value={spotPost.title}
@@ -255,11 +257,13 @@ const SpotsPost: NextPage = () => {
                       setSpotPost({ ...spotPost, title: e.target.value.trim() });
                     }}
                     placeholder='自然豊かな穴水町での生活を体験してみませんか'
-                    className='w-full p-2 rounded-md placeholder-gray-500'
+                    className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                   />
                 </div>
                 <div className='mb-5'>
-                  <label htmlFor='prefectures_name'>都道府県名</label>
+                  <label htmlFor='prefectures_name' className='flex justify-start pt-10 pb-3'>
+                    都道府県名
+                  </label>
                   {/* {console.log(prefecturesCreatedAt)} */}
                   {prefecturesCreatedAt.length == 0 ? null : (
                     <select
@@ -267,7 +271,7 @@ const SpotsPost: NextPage = () => {
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, prefecture_id: e.target.value.trim() });
                       }}
-                      className='w-full p-2 rounded-md placeholder-gray-500'
+                      className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                     >
                       {/* {console.log(spotPost.prefecture_id)} */}
                       <option value='prefectures_select'>都道府県を選択</option>
@@ -280,14 +284,16 @@ const SpotsPost: NextPage = () => {
                   )}
                 </div>
                 <div className='mb-5'>
-                  <label htmlFor='system'>制度名</label>
+                  <label htmlFor='system' className='flex justify-start pt-10 pb-3'>
+                    制度名
+                  </label>
                   {systemsCreatedAt.length == 0 ? null : (
                     <select
                       value={spotPost.system_id}
                       onChange={(e) => {
                         setSpotPost({ ...spotPost, system_id: e.target.value.trim() });
                       }}
-                      className='w-full p-2 rounded-md placeholder-gray-500'
+                      className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                     >
                       {/* {console.log(spotPost.system_id)} */}
                       <option value='systems_select'>制度を選択</option>
@@ -303,9 +309,11 @@ const SpotsPost: NextPage = () => {
             </div>
             {/* スポット説明 */}
             <h2 className='mt-10'>スポット説明</h2>
-            <div className='mt-10 text-xs'>
+            <div className='text-xs'>
               <div className='mb-5'>
-                <label htmlFor='appeal'>アピールポイント</label>
+                <label htmlFor='appeal' className='flex justify-start pt-10 pb-3'>
+                  アピールポイント
+                </label>
                 <textarea
                   value={spotPost.appeal}
                   onChange={(e) => {
@@ -316,15 +324,17 @@ const SpotsPost: NextPage = () => {
             そんな穴水町の暮らしぶりを気軽に体験して頂けるように「短期移住体験住宅」をご用意いたしました。
             空港や駅へのアクセスも良く、暮らしやすい場所で移住体験ができます。
             田舎への移住をお考えの方はこの機会にぜひご利用下さい。'
-                  className='w-full h-24  p-2 rounded-md placeholder-gray-500'
+                  className='w-full h-24  p-2 rounded-md border-2 placeholder-gray-500'
                 />
               </div>
             </div>
             {/* スポット詳細 */}
             <h2 className='mt-10'>スポット詳細</h2>
-            <div className='mt-10 text-xs'>
+            <div className='text-xs'>
               <div className='mb-5'>
-                <label htmlFor='area'>物件所在地</label>
+                <label htmlFor='area' className='flex justify-start pt-10 pb-3'>
+                  物件所在地
+                </label>
                 <input
                   type='text'
                   value={spotPost.area}
@@ -332,35 +342,14 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, area: e.target.value.trim() });
                   }}
                   placeholder='石川県穴水町'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
+                  className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                 />
               </div>
+
               <div className='mb-5'>
-                <label htmlFor='スポット画像'>物件関連リンク</label>
-                <input
-                  type='text'
-                  value={spotPost.link}
-                  onChange={(e) => {
-                    setSpotPost({ ...spotPost, link: e.target.value.trim() });
-                  }}
-                  placeholder='https://test.com'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
-                />
-              </div>
-              <div className='mb-5'>
-                <label htmlFor='スポット画像'>対象者</label>
-                <input
-                  type='text'
-                  value={spotPost.target_person}
-                  onChange={(e) => {
-                    setSpotPost({ ...spotPost, target_person: e.target.value.trim() });
-                  }}
-                  placeholder='町外から当町への移住を希望する人物'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
-                />
-              </div>
-              <div className='mb-5'>
-                <label htmlFor='スポット画像'>利用料金</label>
+                <label htmlFor='スポット画像' className='flex justify-start pt-10 pb-3'>
+                  利用料金
+                </label>
                 <input
                   type='text'
                   value={spotPost.usage_fee}
@@ -368,51 +357,17 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, usage_fee: e.target.value.trim() });
                   }}
                   placeholder='無料'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
-                />
-              </div>
-              <div className='mb-5'>
-                <label htmlFor='スポット画像'>利用期間</label>
-                <input
-                  type='text'
-                  value={spotPost.term}
-                  onChange={(e) => {
-                    setSpotPost({ ...spotPost, term: e.target.value.trim() });
-                  }}
-                  placeholder='最長７泊８日'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
+                  className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                 />
               </div>
             </div>
             {/* お問い合わせ */}
             <h2 className='mt-10'>お問い合わせ先</h2>
-            <div className='mt-10 text-xs'>
+            <div className='text-xs'>
               <div className='mb-5'>
-                <label htmlFor='postal_code'>郵便番号</label>
-                <input
-                  type='text'
-                  value={spotPost.postal_code}
-                  onChange={(e) => {
-                    setSpotPost({ ...spotPost, postal_code: e.target.value.trim() });
-                  }}
-                  placeholder='927-8601'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
-                />
-              </div>
-              <div className='mb-5'>
-                <label htmlFor='address'>住所</label>
-                <input
-                  type='text'
-                  value={spotPost.address}
-                  onChange={(e) => {
-                    setSpotPost({ ...spotPost, address: e.target.value.trim() });
-                  }}
-                  placeholder='石川県鳳珠郡穴水町字川島ラの174番地'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
-                />
-              </div>
-              <div className='mb-5'>
-                <label htmlFor='manager'>担当者</label>
+                <label htmlFor='manager' className='flex justify-start pt-10 pb-3'>
+                  担当者
+                </label>
                 <input
                   type='text'
                   value={spotPost.manager}
@@ -420,11 +375,13 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, manager: e.target.value.trim() });
                   }}
                   placeholder='穴水町観光交流課'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
+                  className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
-                <label htmlFor='tel'>電話番号</label>
+                <label htmlFor='tel' className='flex justify-start pt-10 pb-3'>
+                  電話番号
+                </label>
                 <input
                   type='text'
                   value={spotPost.tel}
@@ -432,11 +389,13 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, tel: e.target.value.trim() });
                   }}
                   placeholder='0768-52-3671'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
+                  className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                 />
               </div>
               <div className='mb-5'>
-                <label htmlFor='email'>メールアドレス</label>
+                <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
+                  メールアドレス
+                </label>
                 <input
                   type='text'
                   value={spotPost.email}
@@ -444,7 +403,7 @@ const SpotsPost: NextPage = () => {
                     setSpotPost({ ...spotPost, email: e.target.value.trim() });
                   }}
                   placeholder='test@gmai.com'
-                  className='w-full p-2 rounded-md placeholder-gray-500'
+                  className='w-[280px] sm:w-[300px] md:w-[380px] max-w-full p-2  rounded-md border-2 placeholder-gray-500'
                 />
               </div>
             </div>
@@ -458,7 +417,7 @@ const SpotsPost: NextPage = () => {
             </div>
             <Toaster />
           </div>
-        </div>
+        </AdminInfoLayout>
       </>
     );
   }

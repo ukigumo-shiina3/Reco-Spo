@@ -55,7 +55,7 @@ export const AdminSignup: VFC<Signup> = (props) => {
         </div>
         <div className='flex justify-center items-center z-10 h-screen w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto my-auto lg:w-1/2 bg-blue-50'>
           <div className='flex flex-col w-full justify-center items-center'>
-            <div className='font-bold text-2xl text-center mt-8 mb-2'>{props.title}</div>
+            <div className='font-bold text-2xl text-center mb-2'>{props.title}</div>
             <div className='flex flex-col justify-center items-center w-full max-w-[80%] p-4 mt-8 bg-white md:py-16 md:px-10 '>
               <div className='m-auto max-w-full'>
                 <label htmlFor='email' className='flex justify-start pt-10 pb-3'>

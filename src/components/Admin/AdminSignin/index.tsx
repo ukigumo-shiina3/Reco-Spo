@@ -6,28 +6,14 @@ import type { VFC } from 'react';
 import { useState } from 'react';
 import { supabase } from 'src/libs/supabase';
 import { useRouter } from 'next/router';
-import { Session } from '@supabase/supabase-js';
 import { toast, Toaster } from 'react-hot-toast';
 import { AdminAuthLayout } from 'src/components/Layout/AdminAuthLayout';
-
-type Props = {
-  title: string;
-  signinButton: string;
-  testSigninButton: string;
-  email: string;
-  password: string;
-  session: Session | null;
-};
-
-export type AdminSignin = {
-  email: string;
-  password: string;
-};
+import { Signin } from 'src/types/signin';
 
 const EMAIL = process.env.NEXT_PUBLIC_EMAIL;
 const PASSWORD = process.env.NEXT_PUBLIC_PASSWORD;
 
-export const AdminSignin: VFC<Props> = (props, session) => {
+export const AdminSignin: VFC<Signin> = (props, session) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -93,7 +79,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
         </div>
         <div className='flex justify-center items-center z-10 h-screen w-full rounded overflow-hidden shadow-2xl mr-0 ml-auto my-auto lg:w-1/2 bg-blue-50'>
           <div className='flex flex-col w-full justify-center items-center'>
-            <div className='font-bold text-2xl text-center mt-8 mb-2'>{props.title}</div>
+            <div className='font-bold text-2xl text-center mb-2'>{props.title}</div>
             <div className='flex flex-col justify-center items-center w-full max-w-[80%] p-4 mt-8 bg-white md:py-16 md:px-10 '>
               <div className='m-auto max-w-full'>
                 <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
@@ -132,6 +118,7 @@ export const AdminSignin: VFC<Props> = (props, session) => {
                       {props.signinButton}
                     </button>
                   </Link>
+
                   <Link href='/admins' passHref>
                     <button
                       onClick={handleTestSignin}
