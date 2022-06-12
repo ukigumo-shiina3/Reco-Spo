@@ -58,81 +58,75 @@ const ProfileEdit: VFC = () => {
   return (
     <>
       <AdminInfoLayout>
-        <div className='h-full flex flex-col justify-center items-center'>
-          <h1 className='font-bold text-3xl mt-12'>プロフィール編集</h1>
-          <div className='h-full my-10 px-12 overflow-hidden shadow-lg bg-white'>
-            <form
-              onSubmit={form.onSubmit((values) => {
-                console.log(values);
-                update({ id: admins.id, ...form.values });
-              })}
-            >
-              {/* <form> */}
-              <div className='flex justify-start pt-5 mt-5'>
-                <div className='flex flex-col justify-center items-center text-sm mt-2'>
-                  <Avatar
-                    url={avatarDownloadUrl}
-                    dummyImageUrl='/icons/profile-icon.png'
-                    size={80}
-                  />
-                  <UploadButton onUpload={uploadAvatar} loading={uploading} />
-                </div>
+        <h1 className='font-bold text-3xl mt-12'>プロフィール編集</h1>
+        <div className='h-full my-10 px-12 overflow-hidden shadow-lg bg-white'>
+          <form
+            onSubmit={form.onSubmit((values) => {
+              console.log(values);
+              update({ id: admins.id, ...form.values });
+            })}
+          >
+            {/* <form> */}
+            <div className='flex justify-start pt-5 mt-5'>
+              <div className='flex flex-col justify-center items-center text-sm mt-2'>
+                <Avatar url={avatarDownloadUrl} dummyImageUrl='/icons/profile-icon.png' size={80} />
+                <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
-              <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
-                都道府県
-              </label>
-              <TextInput
-                required
-                id='prefecture'
-                placeholder='山形県'
-                classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
-                {...form.getInputProps('prefecture')}
-              />
-              <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
-                自治体
-              </label>
-              <TextInput
-                required
-                id='group'
-                placeholder='遊佐町役場'
-                classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
-                {...form.getInputProps('group')}
-              />
-              <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
-                メールアドレス
-              </label>
-              <TextInput
-                required
-                id='email'
-                autoComplete='email'
-                placeholder='reco-spo@gmail.com'
-                classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
-                {...form.getInputProps('email')}
-              />
-              <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
-                パスワード
-              </label>
-              <TextInput
-                required
-                id='password'
-                type='password'
-                autoComplete='current-password'
-                placeholder='test1234'
-                classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
-                {...form.getInputProps('password')}
-              />
+            </div>
+            <label htmlFor='prefecture' className='flex justify-start pt-10 pb-3'>
+              都道府県
+            </label>
+            <TextInput
+              required
+              id='prefecture'
+              placeholder='山形県'
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
+              {...form.getInputProps('prefecture')}
+            />
+            <label htmlFor='group' className='flex justify-start pt-10 pb-3'>
+              自治体
+            </label>
+            <TextInput
+              required
+              id='group'
+              placeholder='遊佐町役場'
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
+              {...form.getInputProps('group')}
+            />
+            <label htmlFor='email' className='flex justify-start pt-10 pb-3'>
+              メールアドレス
+            </label>
+            <TextInput
+              required
+              id='email'
+              autoComplete='email'
+              placeholder='reco-spo@gmail.com'
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
+              {...form.getInputProps('email')}
+            />
+            <label htmlFor='password' className='flex justify-start pt-10 pb-3'>
+              パスワード
+            </label>
+            <TextInput
+              required
+              id='password'
+              type='password'
+              autoComplete='current-password'
+              placeholder='test1234'
+              classNames={{ input: 'w-64 sm:w-96 p-2 rounded-l-md' }}
+              {...form.getInputProps('password')}
+            />
 
-              <div className='text-center pb-10'>
-                <Button
-                  type='submit'
-                  classNames={{ root: 'px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg' }}
-                >
-                  変更
-                </Button>
-              </div>
-            </form>
-            <Toaster />
-          </div>
+            <div className='text-center pb-10'>
+              <Button
+                type='submit'
+                classNames={{ root: 'px-4 py-2 mt-10 mx-6 text-white bg-blue-300 rounded-lg' }}
+              >
+                変更
+              </Button>
+            </div>
+          </form>
+          <Toaster />
         </div>
       </AdminInfoLayout>
     </>

@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
-import { supabase } from 'src/libs/supabase';
-import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+import { useState } from 'react';
 
 export default function SpotImage({
   url,
@@ -20,7 +18,7 @@ export default function SpotImage({
         <img
           src={dummyImageUrl}
           alt='spot-image'
-          className='m-auto mt-1.5 w-8 h-8'
+          className='m-auto mt-3 w-8 h-8'
           style={{ height: size, width: size }}
         />
       );
