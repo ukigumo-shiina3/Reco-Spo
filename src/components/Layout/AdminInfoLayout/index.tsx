@@ -139,7 +139,9 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
         </Transition>
 
         <div className='flex justify-center items-center h-full bg-blue-50'>
-          <div className='flex flex-col w-full justify-center items-center'>{props.children}</div>
+          <div className='flex flex-col w-full justify-center items-center h-full'>
+            {props.children}
+          </div>
         </div>
       </>
     ),
