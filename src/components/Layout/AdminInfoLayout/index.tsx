@@ -104,7 +104,7 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
                     </div>
                     <Dialog.Title
                       as='h3'
-                      className='text-2xl py-8 mt-8 pl-4 border-b-2border-gray-200'
+                      className='text-2xl py-8 mt-8 pl-4 border-b-2 border-gray-200'
                     >
                       {adminData ? (
                         <p className='text-xs md:text-sm'>{adminData?.group}様</p>
