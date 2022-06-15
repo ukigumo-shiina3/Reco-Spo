@@ -13,17 +13,6 @@ export default function UploadButton({ loading, onUpload }: UploadButtonProps) {
         <label className='w-full py-1' htmlFor='single'>
           {loading ? '.......' : '変更'}
         </label>
-        {/* <input
-        style={{
-          visibility: 'hidden',
-        }}
-        type='file'
-        id='single'
-        {...props.inputProps}
-        accept='image/*'
-        onChange={props.onUpload}
-        disabled={props.loading}
-      /> */}
         <Input
           type='file'
           id='single'
