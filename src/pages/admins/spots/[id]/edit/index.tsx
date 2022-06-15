@@ -242,7 +242,7 @@ const SpotsEdit: NextPage<Spot> = () => {
     return (
       <>
         <AdminInfoLayout>
-          <h1 className='text-3xl mt-24 pt-12'>スポット編集</h1>
+          <h1 className='font-bold text-3xl pt-12'>スポット編集</h1>
           <div className='h-full my-10 px-6 sm:px-12 md:px-16 overflow-hidden shadow-lg bg-white'>
             {/* 編集するスポットのセレクトボックス */}
             <div className='mt-12'>
