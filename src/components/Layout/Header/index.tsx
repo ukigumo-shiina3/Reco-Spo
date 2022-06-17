@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { VFC } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
@@ -13,84 +12,31 @@ export const Header: VFC = () => {
 
   return (
     <div>
-      <div className='flex justify-center'>
-        <Link href='/' passHref>
-          <a className='font-fancy font-bold text-4xl pt-8 pb-10 md:text-5xl'>Reco Spo</a>
-        </Link>
-      </div>
-      <div className='flex flex-wrap justify-center md:flex '>
-        <Link href='/about' passHref>
-          <a className='px-2 pb-6 text-sm '>
-            <div className='flex'>
-              <Image
-                src='/icons/about-icon.png'
-                quality={100}
-                width={24}
-                height={24}
-                alt='サイト概要アイコン'
-              />
-              <div className='pl-1 pt-0.5 '>サイト概要</div>
-            </div>
-          </a>
-        </Link>
-        <Link href='/system' passHref>
-          <a className='px-2 pb-6 text-sm'>
-            <div className='flex'>
-              <Image
-                src='/icons/system-icon.png'
-                quality={100}
-                width={24}
-                height={24}
-                alt='制度概要アイコン'
-              />
-              <div className='pl-1 pt-0.5'>制度概要</div>
-            </div>
-          </a>
-        </Link>
-        <Link href='/spots' passHref>
-          <a className='px-2 pb-6 text-sm'>
-            <div className='flex'>
-              <Image
-                src='/icons/spot-icon.png'
-                quality={100}
-                width={24}
-                height={24}
-                alt='スポット一覧アイコン'
-              />
-              <div className='pl-1 pt-0.5'>スポット一覧</div>
-            </div>
-          </a>
-        </Link>
-        <Link href='/admins/signin' passHref>
-          <a className='px-2 pb-6 text-sm'>
-            <div className='flex'>
-              <Image
-                src='/icons/admin-icon.png'
-                quality={100}
-                width={24}
-                height={24}
-                alt='自治体登録アイコン'
-              />
+      <div className='flex p-8'>
+        <div className=''>
+          <Link href='/' passHref>
+            <a className='font-fancy font-bold text-4xl pt-4 sm:pt-8 pb-10 md:text-5xl'>Reco Spo</a>
+          </Link>
+        </div>
+        <div className='flex absolute right-8 top-10 '>
+          <Link href='/about' passHref>
+            <a className='px-1 sm:px-2 pb-6 text-sm md:text-base lg:text-lg '>
+              <div className='pl-1 pt-0.5'>About</div>
+            </a>
+          </Link>
+          <Link href='/admins/signin' passHref>
+            <a className='px-1 sm:px-2 pb-6 text-sm md:text-base lg:text-lg'>
               <div className='pl-1 pt-0.5'>自治体登録</div>
-            </div>
-          </a>
-        </Link>
-        {/* <Link href='/map' passHref> */}
-        <a className='px-2 pb-10 text-sm'>
-          <div className='flex'>
-            <Image
-              src='/icons/map-icon.png'
-              quality={100}
-              width={24}
-              height={24}
-              alt='マップ検索アイコン'
-            />
+            </a>
+          </Link>
+          {/* <Link href='/map' passHref> */}
+          <a className='px-1 sm:px-2 pb-10 text-sm md:text-base lg:text-lg'>
             <button onClick={handleProgress} className='pl-1 pt-0.5'>
               マップ検索
             </button>
-          </div>
-        </a>
-        {/* </Link> */}
+          </a>
+          {/* </Link> */}
+        </div>
       </div>
       <Toaster />
     </div>

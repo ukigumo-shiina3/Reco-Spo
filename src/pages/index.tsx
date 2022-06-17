@@ -1,6 +1,4 @@
 import type { NextPage } from 'next';
-import { AboutIntroduction } from 'src/components/About/AboutIntroduction';
-import { SystemIntroduction } from 'src/components/System/SystemIntroduction';
 import NextHeadSeo from 'next-head-seo';
 import { MyPageSeo } from 'src/components/Seo/MyPageSeo';
 import { UserLayout } from 'src/components/Layout/UserLayout';
@@ -9,11 +7,15 @@ import { useEffect, useState } from 'react';
 import { Spot } from 'src/types/spot';
 import { Spinner } from '@chakra-ui/react';
 import { WrapSpotCard } from 'src/components/Spot/WrapSpotCard';
+import SearchModal from 'src/components/SearchModal';
+import { Pagination } from '@mantine/core';
+import { AboutIntroduction } from 'src/components/About/AboutIntroduction';
 
 const Index: NextPage = () => {
   const [spots, setSpots] = useState<Spot[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(false);
+  const [activePage, setPage] = useState(1);
 
   const fetchSpot = async () => {
     try {
@@ -57,10 +59,18 @@ const Index: NextPage = () => {
         noindex={true}
       />
       <AboutIntroduction />
-      <SystemIntroduction />
-      <div className='flex justify-center  my-20 ml-3 mr-3'>
+      <SearchModal />
+      <div className='flex justify-center mt-8 ml-3 mr-3'>
         <WrapSpotCard />
       </div>
+      <Pagination
+        page={activePage}
+        onChange={setPage}
+        total={5}
+        color='dark'
+        position='center'
+        className='py-20'
+      />
     </UserLayout>
   );
 };
