@@ -10,6 +10,7 @@ import { supabase } from 'src/libs/supabase';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { Admin } from 'src/types/admin';
+import { Skeleton } from '@mantine/core';
 
 type Props = {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
   const { adminId } = useUser();
   const [adminData, setAdminData] = useState<Admin | null>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   const HandleLogout = useCallback(() => {
     supabase.auth.signOut();
@@ -50,6 +52,9 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
       if (error) {
         toast.error(error.message);
       }
+      if (loading) {
+        setLoading(false);
+      }
       if (data == null) {
         toast.error('データが取得できませんでした');
       }
@@ -76,7 +81,9 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
           </Link>
           <div className='' onClick={openModal}>
             <div className='absolute right-8 top-5 '>
+              {/* <Skeleton visible={loading} height={70} radius='xl'> */}
               <Avatar url={avatarDownloadUrl} dummyImageUrl='/icons/profile-icon.png' size={70} />
+              {/* </Skeleton> */}
             </div>
           </div>
         </div>
