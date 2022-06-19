@@ -29,7 +29,7 @@ export const AdminAboutLayout: VFC = () => {
             </Box>
           </div>
           {/* スポットを登録する */}
-          <div className='sm:min-w-[360px] 2xl:mr-24'>
+          <div className='sm:min-w-[360px] xl:mr-24'>
             <Box
               bg={useColorModeValue('white', 'gray.800')}
               maxW='sm'
