@@ -2,8 +2,7 @@
 import React, { VFC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { css } from '@emotion/css';
-import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
-
+import { Autoplay, Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -30,7 +29,12 @@ export const AboutCarousel: VFC = () => {
         pagination={true}
         mousewheel={true}
         keyboard={true}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: true,
+        }}
+        speed={300}
+        modules={[Autoplay, Navigation, Pagination, Mousewheel, Keyboard]}
         className={mySwiper}
       >
         {/* メインビジュアル */}
