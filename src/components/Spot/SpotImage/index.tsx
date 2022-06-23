@@ -1,29 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
-import { supabase } from 'src/libs/supabase';
-import { DEFAULT_SPOTS_BUCKET } from 'src/libs/regular';
+import { useState } from 'react';
 
-export default function SpotImage({ url, size }: { url: string | null; size: number }) {
+export default function SpotImage({
+  url,
+  dummyImageUrl,
+  size,
+}: {
+  url: string | null;
+  dummyImageUrl?: string | null;
+  size: number;
+}) {
   const [spotUrl, setSpotUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (url) downloadImage(url);
-  }, [url]);
-
-  async function downloadImage(path: string) {
-    try {
-      const { data, error } = await supabase.storage.from(DEFAULT_SPOTS_BUCKET).download(path);
-      if (error) {
-        throw error;
-      }
-      if (data == null) {
-        return;
-      }
-      // クライアント(ブラウザ) のメモリに保存された blobにアクセス可能な一意のURLを生成
-      const url = URL.createObjectURL(data);
-      setSpotUrl(url);
-    } catch (error) {
-      console.log('画像ダウンロード時のエラー: ', error.message);
+  if (!url) {
+    if (dummyImageUrl) {
+      return (
+        <img
+          src={dummyImageUrl}
+          alt='spot-image'
+          className='m-auto mt-3 w-8 h-8'
+          style={{ height: size, width: size }}
+        />
+      );
+    } else {
+      return <div className='spot-image no-image' style={{ height: size, width: size }} />;
     }
   }
 

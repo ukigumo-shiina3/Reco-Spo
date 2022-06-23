@@ -38,22 +38,22 @@ const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
     position='center'
     spacing='sm'
     direction='column'
-    style={{ minHeight: 120, pointerEvents: 'none' }}
+    style={{ minHeight: 80, pointerEvents: 'none' }}
   >
-    <div className='flex border-2 border-red-600 rounded-lg p-2 mt-6'>
+    <div className='flex border-2 border-red-600 rounded-lg p-2 mt-2'>
       <ImageUploadIcon
         status={status}
         style={{ color: getIconColor(status, theme) }}
         size={20}
         color='red'
       />
-      <Text size='sm' color='red' weight={700} inline mt={3} ml={3}>
+      <Text size='sm' color='red' weight={600} inline mt={3} ml={3}>
         画像を選択する
       </Text>
     </div>
     {console.log(status)}
     <div>
-      <Text size='sm' color='blue' weight={700} inline>
+      <Text size='sm' color='blue' weight={600} inline>
         またはドラッグ&ドロップ
       </Text>
     </div>
@@ -69,7 +69,7 @@ export default function SpotUploadButton(props: SpotUploadButtonProps) {
           {props.loading ? (
             '.......'
           ) : (
-            <div className='mt-5'>
+            <div className='mt-2'>
               <Dropzone
                 onDrop={props.onUpload}
                 onReject={(files) => console.log('rejected files', files)}

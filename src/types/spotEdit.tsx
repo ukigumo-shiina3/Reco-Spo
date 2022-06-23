@@ -1,5 +1,6 @@
 export type SpotEdit = {
   id?: string;
+  admin_id?: string;
   prefecture_id?: string;
   prefectures?: {
     prefectures_name: string[];
@@ -10,7 +11,8 @@ export type SpotEdit = {
   };
   name?: string;
   title?: string;
-  image_url?: string;
+  // image_url?: string;
+  image_url?: any;
   appeal?: string;
   area?: string;
   link?: string;
