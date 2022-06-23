@@ -15,7 +15,9 @@ export const Header: VFC = () => {
       <div className='flex p-8'>
         <div className=''>
           <Link href='/' passHref>
-            <a className='font-fancy font-bold text-4xl pt-4 sm:pt-8 pb-10 md:text-5xl'>Reco Spo</a>
+            <a className='font-fancy font-bold text-2xl sm:text-4xl pt-4 sm:pt-8 pb-10 md:text-5xl'>
+              Reco Spo
+            </a>
           </Link>
         </div>
         <div className='flex absolute right-8 top-10 '>
