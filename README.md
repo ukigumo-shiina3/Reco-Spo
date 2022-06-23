@@ -4,7 +4,7 @@
 
 ### Figma デザインカンプ
 
-https://www.figma.com/file/oBN30myGiQLVeoSY8C7iHn/reco-spo?node-id=0%3A1
+https://www.figma.com/file/Yx2kv1ZoPKrX2gngVlY6Tj/reco-spo(new-design)?node-id=0%3A1
 
 <br/>
 
