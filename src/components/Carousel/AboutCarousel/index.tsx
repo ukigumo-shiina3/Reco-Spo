@@ -29,6 +29,7 @@ export const AboutCarousel: VFC = () => {
         pagination={true}
         mousewheel={true}
         keyboard={true}
+        loop={true}
         autoplay={{
           delay: 5000,
           disableOnInteraction: true,
