@@ -134,6 +134,11 @@ export const AdminInfoLayout: VFC<Props> = (props) => {
                         スポット編集
                       </a>
                     </Link>
+                    <Link href='/' passHref>
+                      <a className='text-xs hover:bg-blue-100 py-8 pl-4 lg:text-sm border-b-2 border-gray-200 '>
+                        ホーム画面
+                      </a>
+                    </Link>
                     <a className='text-xs hover:bg-blue-100 py-8 pl-4 lg:text-sm border-gray-200 '>
                       <button onClick={HandleLogout}>ログアウト</button>
                     </a>
