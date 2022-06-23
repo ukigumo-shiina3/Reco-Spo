@@ -2,8 +2,7 @@
 import React, { VFC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { css } from '@emotion/css';
-import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
-
+import { Autoplay, Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -30,7 +29,12 @@ export const AboutCarousel: VFC = () => {
         pagination={true}
         mousewheel={true}
         keyboard={true}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: true,
+        }}
+        speed={300}
+        modules={[Autoplay, Navigation, Pagination, Mousewheel, Keyboard]}
         className={mySwiper}
       >
         {/* メインビジュアル */}
@@ -63,24 +67,44 @@ export const AboutCarousel: VFC = () => {
           <div>
             <figure className='relative flex justify-center items-center w-full text-xs sm:text-base'>
               <img src='/about/about-pic2.png' alt='サイト概要のメイン画像' className='w-full' />
-              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-6 md:p-12 z-index-1'>
+              <figcaption className='absolute left-0 ml-8 md:ml-24 bg-indigo-300 opacity-90 rounded-full p-5 sm:p-8 md:p-12 z-index-1'>
                 <div className=''>
-                  <p className='text-white text-center pt-2 lg:pt-4 lg:text-xl pb-2 sm:pb-4 '>
-                    仕事に関する助成金
-                  </p>
-                  <Link
-                    href='https://www.vill.nishiokoppe.lg.jp/section/kikaku/hhlo2b0000001bdn.html'
-                    passHref
-                  >
-                    <Button
-                      className='text-white border-white text-xs'
-                      variant='outline'
-                      radius='sm'
-                      size='sm'
+                  {/* スマホ以下 */}
+                  <div className='sm:hidden'>
+                    <p className='text-white text-center text-xs py-2'>仕事に関する助成金</p>
+                    <Link
+                      href='https://www.vill.nishiokoppe.lg.jp/section/kikaku/hhlo2b0000001bdn.html'
+                      passHref
                     >
-                      参考リンクはこちら→
-                    </Button>
-                  </Link>
+                      <Button
+                        className='text-white border-white text-xs'
+                        variant='outline'
+                        radius='xs'
+                        size='xs'
+                      >
+                        参考リンク→
+                      </Button>
+                    </Link>
+                  </div>
+                  {/* スマホ以上 */}
+                  <div className='hidden sm:block'>
+                    <p className='text-white text-center py-2 md:py-4 md:text-xl pb-2'>
+                      仕事に関する助成金
+                    </p>
+                    <Link
+                      href='https://www.vill.nishiokoppe.lg.jp/section/kikaku/hhlo2b0000001bdn.html'
+                      passHref
+                    >
+                      <Button
+                        className='text-white border-white'
+                        variant='outline'
+                        radius='md'
+                        size='md'
+                      >
+                        参考リンクはこちら→
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </figcaption>
             </figure>
@@ -91,24 +115,44 @@ export const AboutCarousel: VFC = () => {
           <div>
             <figure className='relative flex justify-center items-center w-full text-xs sm:text-base'>
               <img src='/about/about-pic3.png' alt='サイト概要のメイン画像' className='w-full' />
-              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-4 sm:p-8 md:p-12 z-index-1'>
+              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-5 sm:p-8 md:p-12 z-index-1'>
                 <div className=''>
-                  <p className='text-white text-center pt-2 lg:pt-4 lg:text-xl pb-2 sm:pb-4 '>
-                    住宅建築補助
-                  </p>
-                  <Link
-                    href='https://www.iju-join.jp/material/files/group/1/45c28765f28bde68.pdf'
-                    passHref
-                  >
-                    <Button
-                      className='text-white border-white text-xs'
-                      variant='outline'
-                      radius='sm'
-                      size='sm'
+                  {/* スマホ以下 */}
+                  <div className='sm:hidden'>
+                    <p className='text-white text-center text-xs py-2'>住宅建築補助</p>
+                    <Link
+                      href='https://www.iju-join.jp/material/files/group/1/45c28765f28bde68.pdf'
+                      passHref
                     >
-                      参考リンクはこちら→
-                    </Button>
-                  </Link>
+                      <Button
+                        className='text-white border-white text-xs'
+                        variant='outline'
+                        radius='xs'
+                        size='xs'
+                      >
+                        参考リンク→
+                      </Button>
+                    </Link>
+                  </div>
+                  {/* スマホ以上 */}
+                  <div className='hidden sm:block'>
+                    <p className='text-white text-center py-2 md:py-4 md:text-xl pb-2'>
+                      住宅建築補助
+                    </p>
+                    <Link
+                      href='https://www.iju-join.jp/material/files/group/1/45c28765f28bde68.pdf'
+                      passHref
+                    >
+                      <Button
+                        className='text-white border-white text-xs'
+                        variant='outline'
+                        radius='md'
+                        size='md'
+                      >
+                        参考リンクはこちら→
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </figcaption>
             </figure>
@@ -119,9 +163,29 @@ export const AboutCarousel: VFC = () => {
           <div>
             <figure className='relative flex justify-center items-center w-full text-xs sm:text-base'>
               <img src='/about/about-pic4.png' alt='サイト概要のメイン画像' className='w-full' />
-              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-6 md:p-12 z-index-1'>
+              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-5 md:p-12 z-index-1'>
                 <div className=''>
-                  <p className='text-white text-center pt-2 lg:pt-4 lg:text-xl pb-2 sm:pb-4 '>
+                  {/* スマホ以下 */}
+                  <div className='sm:hidden'>
+                    <p className='text-white text-center text-xs py-2'>定住促進奨励金</p>
+                    <Link
+                      href='https://www.city.satsumasendai.lg.jp/www/contents/1270046749584/index.html'
+                      passHref
+                    >
+                      <Button
+                        className='text-white border-white text-xs'
+                        variant='outline'
+                        radius='xs'
+                        size='xs'
+                      >
+                        参考リンク→
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+                {/* スマホ以上 */}
+                <div className='hidden sm:block'>
+                  <p className='text-white text-center py-2 md:py-4 md:text-xl pb-2'>
                     定住促進奨励金
                   </p>
                   <Link
@@ -131,8 +195,8 @@ export const AboutCarousel: VFC = () => {
                     <Button
                       className='text-white border-white text-xs'
                       variant='outline'
-                      radius='sm'
-                      size='sm'
+                      radius='md'
+                      size='md'
                     >
                       参考リンクはこちら→
                     </Button>
@@ -147,21 +211,38 @@ export const AboutCarousel: VFC = () => {
           <div>
             <figure className='relative flex justify-center items-center w-full text-xs sm:text-base'>
               <img src='/about/about-pic1.png' alt='サイト概要のメイン画像' className='w-full' />
-              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-6 md:p-12 z-index-1'>
+              <figcaption className='absolute left-0 ml-8 sm:ml-24 bg-indigo-300 opacity-90 rounded-full p-5 md:p-12 z-index-1'>
                 <div className=''>
-                  <p className='text-white text-center pt-2 lg:pt-4 lg:text-xl pb-2 sm:pb-4 '>
-                    お試し移住体験
-                  </p>
-                  <Link href='https://kurashi.city.nanto.toyama.jp/experience/' passHref>
-                    <Button
-                      className='text-white border-white text-xs'
-                      variant='outline'
-                      radius='sm'
-                      size='sm'
-                    >
-                      参考リンクはこちら→
-                    </Button>
-                  </Link>
+                  {/* スマホ以下 */}
+                  <div className='sm:hidden'>
+                    <p className='text-white text-center text-xs py-2'>お試し移住体験</p>
+                    <Link href='https://kurashi.city.nanto.toyama.jp/experience/' passHref>
+                      <Button
+                        className='text-white border-white text-xs'
+                        variant='outline'
+                        radius='xs'
+                        size='xs'
+                      >
+                        参考リンク→
+                      </Button>
+                    </Link>
+                  </div>
+                  {/* スマホ以上 */}
+                  <div className='hidden sm:block'>
+                    <p className='text-white text-center py-2 md:py-4 md:text-xl pb-2'>
+                      お試し移住体験
+                    </p>
+                    <Link href='https://kurashi.city.nanto.toyama.jp/experience/' passHref>
+                      <Button
+                        className='text-white border-white text-xs'
+                        variant='outline'
+                        radius='md'
+                        size='md'
+                      >
+                        参考リンクはこちら→
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </figcaption>
             </figure>

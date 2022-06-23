@@ -4,10 +4,9 @@ import { useEffect, VFC } from 'react';
 import { Toaster } from 'react-hot-toast';
 import UploadButton from 'src/components/Button/UploadButton/AdminUploadButton';
 import Avatar from 'src/components/Avatar';
-import { Spinner } from '@chakra-ui/react';
 import { useForm, zodResolver } from '@mantine/form';
 import { z } from 'zod';
-import { Button, TextInput } from '@mantine/core';
+import { Button, Skeleton, TextInput } from '@mantine/core';
 import { useRecoil } from 'src/recoil/hooks';
 import { useAdminImage } from 'src/hooks/useAdminImage';
 import { AdminInfoLayout } from 'src/components/Layout/AdminInfoLayout';
@@ -47,14 +46,6 @@ const ProfileEdit: VFC = () => {
     });
   }, [admins]);
 
-  if (loading) {
-    return (
-      <div className='flex justify-center mt-64'>
-        <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
-      </div>
-    );
-  }
-
   return (
     <>
       <AdminInfoLayout>
@@ -66,10 +57,11 @@ const ProfileEdit: VFC = () => {
               update({ id: admins.id, ...form.values });
             })}
           >
-            {/* <form> */}
             <div className='flex justify-start pt-5 mt-5'>
               <div className='flex flex-col justify-center items-center text-sm mt-2'>
+                {/* <Skeleton visible={loading} height={80} radius='xl'> */}
                 <Avatar url={avatarDownloadUrl} dummyImageUrl='/icons/profile-icon.png' size={80} />
+                {/* </Skeleton> */}
                 <UploadButton onUpload={uploadAvatar} loading={uploading} />
               </div>
             </div>
