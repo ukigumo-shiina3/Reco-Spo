@@ -43,7 +43,7 @@ https://docs.google.com/spreadsheets/d/1eQOAis1HpEIBGZF8tvFJJLJ5TxZNYRh1RelUl1a2
 | デザイン/設計    | Figma                      |
 | フロントエンド   | Next.js(React)/TypeScript/ |
 | バックエンド     | Supabase(PostgreSQL)       |
-| スタイル         | Tailwind Css/Chakra UI     |
+| スタイル         | Mantine/Tailwind Css/Chakra UI/ |
 | Hosting          | Vercel                     |
 | 認証             | Supabase Authentication    |
 | ストレージ       | Supabase Storage           |
